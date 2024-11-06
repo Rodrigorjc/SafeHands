@@ -1,4 +1,4 @@
-package com.valencia.proyecto1evaluacion.repositorios;
+package com.valencia.proyecto1evaluacion.repositorio;
 
 import com.valencia.proyecto1evaluacion.modelos.Ong;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,10 +3,12 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Producto;
 import com.valencia.proyecto1evaluacion.repositorio.ProductoRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProductoService {
     ProveedorService proveedoresService;
     ProductoRepository productoRepositorio;
@@ -32,16 +34,8 @@ public class ProductoService {
             dto.setUrl(producto.getUrl());
             dto.setPrecio(producto.getPrecio());
             dto.setNombre(producto.getNombre());
-//            ProveedoresDto proveedoresDto = new ProveedoresDto();
-//            proveedoresDto.setCIF(producto.getProveedores().getCIF());
-//            proveedoresDto.setSede(producto.getProveedores().getSede());
-//            proveedoresDto.setUbicacion(producto.getProveedores().getUbicacion());
-
-
             productoDtos.add(dto);
         }
         return productoDtos;
-
-
     }
 }
