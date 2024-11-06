@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 
-public class Aconteciminto {
+public class Acontecimiento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
