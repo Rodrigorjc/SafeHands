@@ -1,9 +1,8 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
-import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.repositorios.AcontecimientoRepositorio;
+import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AcontecimientoService {
-    private AcontecimientoRepositorio acontecimientoRepositorio;
+    private AcontecimientoRepository acontecimientoRepositorio;
 
     /**
      * Devuelve todos los acontecimientos
