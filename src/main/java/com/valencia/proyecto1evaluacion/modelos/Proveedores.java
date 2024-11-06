@@ -4,14 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "ong", schema = "safe_hand", catalog = "postgres")
+@Table(name = "proveedores", schema = "safe_hand", catalog = "postgres")
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode
-public class Ong {
+public class Proveedores {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +26,10 @@ public class Ong {
     @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
 
+    @Column(name = "cif", nullable = false, length = 9)
+    private String cif;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
-
 }
