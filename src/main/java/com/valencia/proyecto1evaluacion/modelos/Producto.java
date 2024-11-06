@@ -28,4 +28,13 @@ public class Producto {
 
     @Column(name = "descripcion", nullable = false, length = 500)
     private String descripcion;
+
+    @ManyToOne
+    @JoinColumn(name = "id_proveedores")
+    private Proveedores proveedores;
+
+
+
+
+
 }
