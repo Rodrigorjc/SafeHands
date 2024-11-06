@@ -3,7 +3,7 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
 import com.valencia.proyecto1evaluacion.dtos.AuthenticationRequestDTO;
-import com.valencia.proyecto1evaluacion.repositorios.UsuarioRepositorio;
+import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
 import com.valencia.proyecto1evaluacion.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final ObjectProvider<AuthenticationManager> authenticationManagerProvider;
-    private final UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepository.UsuarioRepositorio usuarioRepositorio;
     private final JwtService jwtService;
 
 

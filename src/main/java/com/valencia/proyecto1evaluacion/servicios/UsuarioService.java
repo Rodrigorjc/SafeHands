@@ -6,7 +6,7 @@ import com.valencia.proyecto1evaluacion.dtos.AuthenticationRequestDTO;
 import com.valencia.proyecto1evaluacion.dtos.UsuarioDto;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
-import com.valencia.proyecto1evaluacion.repositorios.UsuarioRepositorio;
+import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
 import com.valencia.proyecto1evaluacion.security.JwtService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UsuarioService implements UserDetailsService {
 
-    private final UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepository.UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;

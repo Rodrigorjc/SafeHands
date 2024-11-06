@@ -1,7 +1,7 @@
 package com.valencia.proyecto1evaluacion.security;
 
 
-import com.valencia.proyecto1evaluacion.repositorios.UsuarioRepositorio;
+import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final UsuarioRepositorio repositorio;
+    private final UsuarioRepository.UsuarioRepositorio repositorio;
 
 
     @Bean
