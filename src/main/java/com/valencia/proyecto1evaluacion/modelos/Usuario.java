@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Usuario implements UserDetails {
 
     @Id
