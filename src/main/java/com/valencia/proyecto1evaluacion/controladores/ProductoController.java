@@ -1,11 +1,10 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
+import com.valencia.proyecto1evaluacion.modelos.Producto;
 import com.valencia.proyecto1evaluacion.servicios.ProductoService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +23,11 @@ public class ProductoController {
     @GetMapping
     public List<ProductoDTO> mostrar(){
         return productoService.getAll();
+    }
+
+    @PostMapping("/crear")
+    public Producto crearProducto(@RequestBody ProductoDTO productoDTO){
+        return productoService.anyadirProducto(productoDTO);
     }
 
 }
