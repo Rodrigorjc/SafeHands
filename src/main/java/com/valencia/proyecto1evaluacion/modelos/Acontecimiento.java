@@ -11,20 +11,24 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+
 public class Acontecimiento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id")
+    @Column(name = "id")
     private Integer id;
-    @Column(name="nombre")
+
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
-    @Column(name="descripcion")
+
+    @Column(name = "descripcion", nullable = false, length = 500)
     private String descripcion;
-    @Column(name="ubicacion")
+
+    @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id_ong")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ong", nullable = false)
     private Ong ong;
 }
