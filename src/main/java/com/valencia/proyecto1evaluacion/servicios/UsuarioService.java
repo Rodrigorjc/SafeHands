@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UsuarioService implements UserDetailsService {
 
-    private final UsuarioRepository.UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepository usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;

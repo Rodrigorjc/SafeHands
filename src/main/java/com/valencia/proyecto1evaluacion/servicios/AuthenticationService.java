@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final ObjectProvider<AuthenticationManager> authenticationManagerProvider;
-    private final UsuarioRepository.UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepository usuarioRepositorio;
     private final JwtService jwtService;
 
 
