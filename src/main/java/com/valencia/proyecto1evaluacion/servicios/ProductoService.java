@@ -5,6 +5,7 @@ import com.valencia.proyecto1evaluacion.modelos.Producto;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.repositorio.ProductoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ProductoService {
 
     @Autowired

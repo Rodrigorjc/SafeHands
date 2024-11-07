@@ -5,10 +5,12 @@ import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
 import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ProveedorService {
 
     @Autowired
