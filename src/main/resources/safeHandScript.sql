@@ -92,6 +92,14 @@ create table proveedores_acontecimiento(
 	foreign key (id_acontecimiento) references acontecimiento(id)
 );
 
+create table token_acceso(
+     id serial primary key,
+     token varchar(500) not null,
+     fecha_expiracion timestamp not null,
+     id_usuario int not null,
+     constraint fk_token_acceso_usuario foreign key(id_usuario) references usuario(id)
+);
+
 
 
 --alter table producto drop column id_proveedor ;
