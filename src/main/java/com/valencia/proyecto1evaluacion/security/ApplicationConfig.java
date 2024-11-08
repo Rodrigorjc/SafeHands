@@ -21,10 +21,12 @@ public class ApplicationConfig {
     private final UsuarioRepository repositorio;
 
 
+
+
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> repositorio.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return username -> repositorio.findTopByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @Bean

@@ -25,22 +25,24 @@ public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final AuthenticationService authenticationService;
+//    private final AuthenticationService authenticationService;
     private final ProveedoresRepository proveedoresRepositorio;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return usuarioRepositorio.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+            return usuarioRepositorio.findTopByUsername(email)
+                    .orElseThrow(()-> new UsernameNotFoundException("Usuario no encontrado"));
     }
 
-    public Usuario buscarUsuarioPorNombre(String username){
-        return usuarioRepositorio.findByEmail(username).orElse(null);
+    public Usuario buscarUsuarioPorNombre(String username) {
+        return usuarioRepositorio.findTopByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
 
     public Usuario guardarUsuario(UsuarioDto dto){
         Usuario usuario = new Usuario();
         usuario.setEmail(dto.getEmail());
+        usuario.setUsername(dto.getUsername());
         usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
         usuario.setRol(Rol.CLIENTE);
         return usuarioRepositorio.save(usuario);
@@ -57,9 +59,9 @@ public class UsuarioService implements UserDetailsService {
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
 
-    public AuthenticationDTO authenticate(AuthenticationRequestDTO dto) {
-        return authenticationService.authenticate(dto);
-    }
+//    public AuthenticationDTO authenticate(AuthenticationRequestDTO dto) {
+//        return authenticationService.authenticate(dto);
+//    }
 
     @Transactional
     public Usuario actualizarRol(Integer id, Rol nuevoRol) {
@@ -75,5 +77,10 @@ public class UsuarioService implements UserDetailsService {
 
         return updatedUsuario;
     }
+
+    public boolean validarPassword(Usuario usuario, String passwordSinEncriptar){
+        return passwordEncoder.matches(passwordSinEncriptar, usuario.getPassword());
+    }
+
 
 }
