@@ -1,6 +1,8 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
+import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Producto;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
@@ -31,14 +33,24 @@ public class ProductoService {
 
     public Producto anyadirProducto(ProductoDTO productoDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        Usuario usuario = usuarioService.buscarUsuarioPorNombre(email);
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
 
-        Proveedores proveedor = proveedoresRepositorio.findById(productoDto.getIdProveedor()).orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
-
-        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
-            throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
+        if (usuario == null || !usuario.getRol().equals(Rol.PROVEEDOR)) {
+            throw new SecurityException("No tienes permiso para añadir productos");
         }
+
+
+//        if (productoDto.getIdProveedor() == null) {
+//            throw new IllegalArgumentException("El id del proveedor no debe ser nulo");
+//        }
+//
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+
+//        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
+//            throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
+//        }
 
         Producto producto = new Producto();
         producto.setDescripcion(productoDto.getDescripcion());
@@ -46,8 +58,21 @@ public class ProductoService {
         producto.setPrecio(productoDto.getPrecio());
         producto.setNombre(productoDto.getNombre());
         producto.setProveedores(proveedor);
+        Producto savedProducto = productoRepositorio.save(producto);
 
-        return productoRepositorio.save(producto);
+        // Convert the saved product to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String json = objectMapper.writeValueAsString(savedProducto);
+            System.out.println("Producto en JSON: " + json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return savedProducto;
+
+
+
     }
 
 
