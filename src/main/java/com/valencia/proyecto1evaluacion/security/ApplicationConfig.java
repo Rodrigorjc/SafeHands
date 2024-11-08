@@ -20,7 +20,6 @@ public class ApplicationConfig {
 
     private final UsuarioRepository repositorio;
 
-
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repositorio.findByEmail(username)

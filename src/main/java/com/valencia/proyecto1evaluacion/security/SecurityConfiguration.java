@@ -28,7 +28,6 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/usuarios/**").permitAll();
-                    auth.requestMatchers("producto/crear").hasAnyAuthority(Rol.PROVEEDOR.name());
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

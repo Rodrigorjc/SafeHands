@@ -19,7 +19,7 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class JwtService {
 
-    private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private static final String SECRETkEY = "375ec1bfd98afb0e55aa10907716db40941a160687ba7dd09bdc3ec9a39206dd";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -35,16 +35,16 @@ public class JwtService {
     }
 
     public String generateToken(
-            Map<String, Object> extraClaims,
+            Map<String, Object> extaClaims,
             UserDetails userDetails
     ) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
+                .setClaims(extaClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInkey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -64,14 +64,14 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
-                .setSigningKey(getSignInKey())
+                .setSigningKey(getSignInkey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+    private Key getSignInkey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRETkEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

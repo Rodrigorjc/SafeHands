@@ -28,10 +28,5 @@ public class UsuarioControler {
         return usuarioService.authenticate(dto);
     }
 
-    @PutMapping("/actualizarRol/{id}")
-    public ResponseEntity<Usuario> actualizarRol(@PathVariable Integer id, @RequestParam Rol nuevoRol) {
-        Usuario usuarioActualizado = usuarioService.actualizarRol(id, nuevoRol);
-        return ResponseEntity.ok(usuarioActualizado);
-    }
 }
 

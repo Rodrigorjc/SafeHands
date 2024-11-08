@@ -26,7 +26,6 @@ public class UsuarioService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
-    private final ProveedoresRepository proveedoresRepositorio;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -59,21 +58,6 @@ public class UsuarioService implements UserDetailsService {
 
     public AuthenticationDTO authenticate(AuthenticationRequestDTO dto) {
         return authenticationService.authenticate(dto);
-    }
-
-    @Transactional
-    public Usuario actualizarRol(Integer id, Rol nuevoRol) {
-        Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        usuario.setRol(nuevoRol);
-        Usuario updatedUsuario = usuarioRepositorio.save(usuario);
-
-        if (nuevoRol == Rol.PROVEEDOR) {
-            Proveedores proveedor = new Proveedores();
-            proveedor.setUsuario(updatedUsuario);
-            proveedoresRepositorio.save(proveedor);
-        }
-
-        return updatedUsuario;
     }
 
 }
