@@ -1,11 +1,13 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
 
+import ch.qos.logback.core.subst.Token;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -43,6 +45,9 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.ORDINAL)
     private Rol rol;
 
+    @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private TokenAcceso token;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -50,7 +55,12 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -72,5 +82,4 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
-
 }

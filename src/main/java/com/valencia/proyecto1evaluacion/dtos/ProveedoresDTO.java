@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.dtos;
 
+import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,18 @@ public class ProveedoresDTO {
 
     private String ubicacion;
 
+    private String email;
+
+    private String password;
+
     private String cif;
 
+    private Rol rol= Rol.PROVEEDOR;
+
     private Integer id_usuario;
+
+    private String username;
+
+    private String token;
+
 }

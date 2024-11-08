@@ -22,4 +22,11 @@ public class ProveedorController {
     public Proveedores crearProveedor(@RequestBody ProveedoresDTO proveedor){
         return proveedorService.crearProveedor(proveedor);
     }
+
+
+    @PostMapping("/registrar")
+    public Proveedores registrarProveedor(@RequestBody ProveedoresDTO proveedor) {
+        return proveedorService.registrarProveedor(proveedor);
+    }
+
 }
