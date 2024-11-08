@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,7 +33,11 @@ public class Proveedores {
     @Column(name = "cif", nullable = false, length = 9)
     private String cif;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+
+
+
 }
