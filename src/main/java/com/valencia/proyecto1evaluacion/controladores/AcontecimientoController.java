@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
+import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepositorio;
 import com.valencia.proyecto1evaluacion.servicios.AcontecimientoService;
@@ -18,8 +19,8 @@ public class AcontecimientoController {
     private AcontecimientoService acontecimientoService;
 
     @GetMapping("/listar")
-    public List<Acontecimiento> listarAcontecimientos(){
-        List<Acontecimiento> acontecimiento = acontecimientoService.getAll();
+    public List<AcontecimientoDTO> listarAcontecimientos(){
+        List<AcontecimientoDTO> acontecimiento = acontecimientoService.getAll();
         return acontecimiento;
     }
 }

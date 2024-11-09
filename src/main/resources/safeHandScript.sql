@@ -101,6 +101,8 @@ create table token_acceso (
                               constraint fk_token_acceso_usuario foreign key(id_usuario) references usuario(id)
 );
 
+-- alter table acontecimiento add column img varchar(500);
+
 -- alter table producto add column id_proveedor int ;
 
 -- alter table producto add constraint fk_producto_proveedores foreign key(id_proveedores) references proveedores(id);

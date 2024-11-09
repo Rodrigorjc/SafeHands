@@ -7,7 +7,7 @@ import lombok.*;
 @Table(name = "ong", schema = "safe_hand", catalog = "postgres")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "usuario")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode

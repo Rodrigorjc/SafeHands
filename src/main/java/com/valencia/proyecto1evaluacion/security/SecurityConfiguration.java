@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("producto/crear").hasAnyAuthority(Rol.PROVEEDOR.name());
                     auth.requestMatchers("producto/listar").permitAll();
                     auth.requestMatchers(("proveedor/**")).permitAll();
+                    auth.requestMatchers(("/acontecimiento/listar")).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
