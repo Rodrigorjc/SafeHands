@@ -11,6 +11,8 @@ import com.valencia.proyecto1evaluacion.security.JwtService;
 import com.valencia.proyecto1evaluacion.servicios.TokenService;
 import com.valencia.proyecto1evaluacion.servicios.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +38,12 @@ public class UsuarioControler {
 //        return usuarioService.authenticate(dto);
 //    }
 
+        private static final Logger logger = LoggerFactory.getLogger(UsuarioControler.class);
+
     @PostMapping("/login")
     public AuthenticationDTO login(@RequestBody UsuarioDto usuarioDTO) {
+        logger.debug("Login method called with usuarioDTO: {}", usuarioDTO);
+
         Usuario usuario;
         try {
             usuario = (Usuario) usuarioService.loadUserByUsername(usuarioDTO.getUsername());
@@ -54,35 +60,21 @@ public class UsuarioControler {
             mensaje = "Contraseña no válida";
         } else {
             mensaje = "Usuario Logueado";
-            // Usuario sin token
-            if (usuario.getToken() == null) {
+            if (usuario.getToken() == null || jwtService.isTokenExpired(usuario.getToken().getToken())) {
                 apiKey = jwtService.generateToken(usuario);
-                TokenAcceso token = new TokenAcceso();
+                TokenAcceso token = usuario.getToken() == null ? new TokenAcceso() : usuario.getToken();
                 token.setUsuario(usuario);
                 token.setToken(apiKey);
                 token.setFechaExpiracion(LocalDateTime.now().plusDays(1));
                 tokenService.save(token);
-
-                // Usuario con token caducado
-            } else if (usuario.getToken().getFechaExpiracion().isBefore(LocalDateTime.now())) {
-                TokenAcceso token = usuario.getToken();
-                apiKey = jwtService.generateToken(usuario);
-                token.setToken(apiKey);
-                token.setFechaExpiracion(LocalDateTime.now().plusDays(1));
-                tokenService.save(token);
-
-                // Usuario con token válido
             } else {
                 apiKey = usuario.getToken().getToken();
             }
         }
 
-
-        return AuthenticationDTO
-                .builder()
-                .token(apiKey)
-                .build();
+        return AuthenticationDTO.builder().token(apiKey).build();
     }
+
 
 }
 
