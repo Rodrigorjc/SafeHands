@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,6 +83,33 @@ public class ProveedorService {
 
 
         }
+
+
+    /**
+     * Este método extrae todos los perfiles de base de datos
+     *
+     * @return
+     */
+    public List<PerfilProveedoresDTO> getAll(){
+
+        List<Proveedores> proveedor = proveedoresRepositorio.findAll();
+        List<PerfilProveedoresDTO> DTOS = new ArrayList<>();
+
+        for(Proveedores p : proveedor){
+            PerfilProveedoresDTO dto = new PerfilProveedoresDTO();
+            dto.setNombre(p.getNombre());
+            dto.setDescripcion(p.getDescripcion());
+            dto.setUrl(p.getUrl());
+            dto.setCif(p.getCif());
+            dto.setSede(p.getSede());
+            dto.setNumVoluntarios(p.getNumVoluntarios());
+            dto.setUbicacion(p.getUbicacion());
+
+            DTOS.add(dto);
+        }
+
+        return DTOS;
+    }
 
     /**
      * Busca perfiles por coincidencia en nombre, descripcion o sede

@@ -2,6 +2,7 @@ package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
+import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @RequestMapping("/perfilProveedor")
 @AllArgsConstructor
 public class PerfilProveedorController {
-    private ProveedoresService proveedoresService;
+    private ProveedorService proveedoresService;
 
     @GetMapping("/all")
     public List<PerfilProveedoresDTO>getAllPerfilesProveedores(){
