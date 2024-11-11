@@ -1,11 +1,9 @@
 package com.valencia.proyecto1evaluacion.repositorio;
 
-import com.valencia.proyecto1evaluacion.modelos.Producto;
+import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto, Long> {
+public interface AcontecimientoRepositorio extends JpaRepository<Acontecimiento, Integer> {
 }

@@ -1,5 +1,7 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,6 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Producto {
 
     @Id
@@ -28,4 +32,14 @@ public class Producto {
 
     @Column(name = "descripcion", nullable = false, length = 500)
     private String descripcion;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "id_proveedores", nullable = false)
+    private Proveedores proveedores;
+
+
+
+
+
 }

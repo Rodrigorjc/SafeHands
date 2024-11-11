@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -8,7 +9,6 @@ import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import java.security.Key;
 import java.util.Date;
@@ -20,10 +20,7 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class JwtService {
 
-
-    private static final Dotenv dotenv = Dotenv.load();
-    private static final String SECRETkEY = dotenv.get("JWT_SECRET");
-
+    private static final String SECRETkEY = "375ec1bfd98afb0e55aa10907716db40941a160687ba7dd09bdc3ec9a39206dd";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -57,21 +54,30 @@ public class JwtService {
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInkey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    public Claims extractAllClaims(String token) {
+        try {
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInkey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
+    }
+
+    public boolean isTokenExpired(String token) {
+        try {
+            return extractExpiration(token).before(new Date());
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
     }
 
     private Key getSignInkey() {

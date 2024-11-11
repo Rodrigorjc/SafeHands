@@ -1,11 +1,13 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
+import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
+import com.valencia.proyecto1evaluacion.repositorios.AcontecimientoRepositorio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,8 +20,18 @@ public class AcontecimientoService {
      *
      * @return
      */
-    public List<Acontecimiento> getAll(){
-        return acontecimientoRepositorio.findAll();
+    public List<AcontecimientoDTO> getAll(){
+        List<Acontecimiento> acontecimientos = acontecimientoRepositorio.findAll();
+        List<AcontecimientoDTO> acontecimientoDTOS = new ArrayList<>();
+        for (Acontecimiento a : acontecimientos ) {
+            AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
+            acontecimientoDTO.setNombre(a.getNombre());
+            acontecimientoDTO.setDescripcion(a.getDescripcion());
+            acontecimientoDTO.setImg(a.getImg());
+            acontecimientoDTO.setUbicacion(a.getUbicacion());
+            acontecimientoDTOS.add(acontecimientoDTO);
+        }
+        return acontecimientoDTOS;
     }
 
     /**

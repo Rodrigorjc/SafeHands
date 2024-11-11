@@ -12,5 +12,4 @@ public class UsuarioDto {
     private String username;
     private String email;
     private String password;
-
 }
