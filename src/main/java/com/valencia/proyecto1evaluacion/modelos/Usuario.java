@@ -28,4 +28,7 @@ public class Usuario {
 
     @Column(name = "rol", nullable = false)
     private Integer rol;
+
+    @Column(name = "imagen_url", length = 500)
+    private String imagenUrl;  // Nueva columna para almacenar la URL de la imagen
 }
