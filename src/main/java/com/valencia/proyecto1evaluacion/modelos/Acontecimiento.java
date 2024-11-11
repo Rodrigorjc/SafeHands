@@ -7,8 +7,9 @@ import lombok.*;
 @Table(name = "acontecimiento", schema = "safe_hand", catalog = "postgres")
 @Getter
 @Setter
+@ToString(exclude = "ong")
+@AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 
 public class Acontecimiento {
@@ -24,6 +25,9 @@ public class Acontecimiento {
     @Column(name = "descripcion", nullable = false, length = 500)
     private String descripcion;
 
+    @Column(name = "img", nullable = false)
+    private String img;
+
     @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
 
@@ -31,4 +35,3 @@ public class Acontecimiento {
     @JoinColumn(name = "id_ong", nullable = false)
     private Ong ong;
 }
-

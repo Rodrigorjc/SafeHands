@@ -7,8 +7,9 @@ import lombok.*;
 @Table(name = "ong", schema = "safe_hand", catalog = "postgres")
 @Getter
 @Setter
+@ToString(exclude = "usuario")
+@AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 public class Ong {
 
@@ -29,4 +30,5 @@ public class Ong {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+
 }
