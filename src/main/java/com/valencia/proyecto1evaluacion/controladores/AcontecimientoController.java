@@ -1,8 +1,6 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
-import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepositorio;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.servicios.AcontecimientoService;
 import lombok.AllArgsConstructor;

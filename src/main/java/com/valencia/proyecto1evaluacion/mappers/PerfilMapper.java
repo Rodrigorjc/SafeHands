@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PerfilMapper {
     /**
      * Este método sirve para pasar a Entity un DTO de Perfil

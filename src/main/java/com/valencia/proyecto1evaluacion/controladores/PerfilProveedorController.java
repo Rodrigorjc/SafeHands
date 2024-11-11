@@ -2,7 +2,6 @@ package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
-import com.valencia.proyecto1evaluacion.servicios.ProveedoresService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

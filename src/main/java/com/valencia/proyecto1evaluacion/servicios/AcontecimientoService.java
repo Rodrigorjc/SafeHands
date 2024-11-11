@@ -3,7 +3,7 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.repositorios.AcontecimientoRepositorio;
+import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
