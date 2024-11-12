@@ -47,7 +47,6 @@ public class ProveedorService {
 
 
         public Proveedores registrarProveedor(ProveedoresDTO proveedorDto) {
-            // Additional registration logic if needed
 
 
             if (proveedorDto.getCif() == null || proveedorDto.getCif().isEmpty()) {
@@ -57,7 +56,6 @@ public class ProveedorService {
                 throw new IllegalArgumentException("Number of volunteers must be greater than zero");
             }
 
-            // Create a new user with the role of "provider"
             Usuario usuario = new Usuario();
             usuario.setEmail(proveedorDto.getEmail());
             usuario.setUsername(proveedorDto.getUsername());
@@ -66,10 +64,8 @@ public class ProveedorService {
             usuario = usuarioRepositorio.save(usuario);
 
 
-            // Set the user to the provider
             String token = jwtService.generateToken(usuario);
 
-            // Set the user to the provider
             proveedorDto.setId_usuario(usuario.getId());
 
             return crearProveedor(proveedorDto);

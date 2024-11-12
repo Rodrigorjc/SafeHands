@@ -48,6 +48,10 @@ public class ProductoService {
         Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
 
+        if (!proveedoresRepositorio.existsByIdAndValidado(proveedor.getId(), true)) {
+            throw new RuntimeException("El proveedor no está validado y no puede crear productos.");
+        }
+
 //        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
 //            throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
 //        }
@@ -60,7 +64,8 @@ public class ProductoService {
         producto.setProveedores(proveedor);
         Producto savedProducto = productoRepositorio.save(producto);
 
-        // Convert the saved product to JSON
+
+        // Para comprobar que se ha creado correctamente el producto(OPCIONAL)
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String json = objectMapper.writeValueAsString(savedProducto);

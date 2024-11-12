@@ -25,13 +25,14 @@ create table ong(
 
 
 create table proveedores(
-                            id serial primary key,
-                            num_voluntarios int not null,
-                            sede varchar(100) not null,
-                            ubicacion varchar(500) not null,
-                            cif char(9) not null,
-                            id_usuario int not null,
-                            constraint fk_proveedores_usuario foreign key(id_usuario) references usuario(id)
+	id serial primary key,
+	num_voluntarios int not null,
+	sede varchar(100) not null,
+	ubicacion varchar(500) not null,
+	cif char(9) not null,
+    validado boolean default false,
+    id_usuario int not null,
+	constraint fk_proveedores_usuario foreign key(id_usuario) references usuario(id)
 );
 
 
