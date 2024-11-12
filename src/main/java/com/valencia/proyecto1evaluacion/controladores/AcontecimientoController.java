@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/acontecimiento")
 @AllArgsConstructor
 public class AcontecimientoController {
+    private AcontecimientoRepository acontecimientoRepository;
     private AcontecimientoService acontecimientoService;
 
     @GetMapping("/listar")
