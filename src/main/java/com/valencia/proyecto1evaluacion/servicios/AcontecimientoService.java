@@ -21,7 +21,7 @@ public class AcontecimientoService {
      * @return
      */
     public List<AcontecimientoDTO> getAll(){
-        List<Acontecimiento> acontecimientos = acontecimientoRepositorio.findAll();
+        List<Acontecimiento> acontecimientos = acontecimientoRepository.findAll();
         List<AcontecimientoDTO> acontecimientoDTOS = new ArrayList<>();
         for (Acontecimiento a : acontecimientos ) {
             AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
