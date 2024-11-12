@@ -1,7 +1,7 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepositorio;
+import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.servicios.AcontecimientoService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/acontecimiento")
 @AllArgsConstructor
 public class AcontecimientoController {
-    private AcontecimientoRepositorio acontecimientoRepositorio;
+    private AcontecimientoRepository acontecimientoRepository;
     private AcontecimientoService acontecimientoService;
 
     @GetMapping("/listar")

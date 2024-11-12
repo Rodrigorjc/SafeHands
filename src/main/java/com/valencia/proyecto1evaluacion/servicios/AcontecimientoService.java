@@ -2,7 +2,7 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepositorio;
+import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AcontecimientoService {
-    private AcontecimientoRepositorio acontecimientoRepositorio;
+    private AcontecimientoRepository acontecimientoRepository;
 
     /**
      * Devuelve todos los acontecimientos
@@ -19,7 +19,7 @@ public class AcontecimientoService {
      * @return
      */
     public List<Acontecimiento> getAll(){
-        return acontecimientoRepositorio.findAll();
+        return acontecimientoRepository.findAll();
     }
 
     /**
@@ -29,7 +29,7 @@ public class AcontecimientoService {
      * @return
      */
     public Acontecimiento getById(Integer id){
-        return acontecimientoRepositorio.findById(id).orElse(null);
+        return acontecimientoRepository.findById(id).orElse(null);
     }
 
     /**
@@ -44,7 +44,7 @@ public class AcontecimientoService {
         entity.setDescripcion(acontecimientoCrearDTO.getDescripcion());
         entity.setUbicacion(acontecimientoCrearDTO.getUbicacion());
 
-        return acontecimientoRepositorio.save(entity);
+        return acontecimientoRepository.save(entity);
     }
 
     /**
@@ -55,12 +55,12 @@ public class AcontecimientoService {
      * @return
      */
     public Acontecimiento editar(AcontecimientoCrearDTO dto, Integer id){
-        Acontecimiento entity = acontecimientoRepositorio.getReferenceById(id);
+        Acontecimiento entity = acontecimientoRepository.getReferenceById(id);
         entity.setNombre(dto.getNombre());
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
 
-        return acontecimientoRepositorio.save(entity);
+        return acontecimientoRepository.save(entity);
     }
 
     /**
@@ -75,7 +75,7 @@ public class AcontecimientoService {
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
 
-        return acontecimientoRepositorio.save(entity);
+        return acontecimientoRepository.save(entity);
     }
 
     /**
@@ -91,7 +91,7 @@ public class AcontecimientoService {
             mensaje = "El acontecimiento con el id que está buscando no existe.";
     }
         try{
-            acontecimientoRepositorio.deleteById(id);
+            acontecimientoRepository.deleteById(id);
 
             acontecimiento = getById(id);
             if (acontecimiento != null) {
