@@ -11,4 +11,8 @@ import java.util.Optional;
 public interface ProveedoresRepository  extends JpaRepository<Proveedores, Integer> {
     Optional<Proveedores> findByUsuarioId(Integer usuarioId);
 
+    boolean existsByIdAndValidado(Integer id, Boolean validado);
+
+
+
 }
