@@ -64,7 +64,8 @@ public class ProductoService {
         producto.setProveedores(proveedor);
         Producto savedProducto = productoRepositorio.save(producto);
 
-        // Convert the saved product to JSON
+
+        // Para comprobar que se ha creado correctamente el producto(OPCIONAL)
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String json = objectMapper.writeValueAsString(savedProducto);

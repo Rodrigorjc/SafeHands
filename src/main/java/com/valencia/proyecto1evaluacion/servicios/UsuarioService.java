@@ -25,7 +25,6 @@ public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-//    private final AuthenticationService authenticationService;
     private final ProveedoresRepository proveedoresRepositorio;
 
     @Override
