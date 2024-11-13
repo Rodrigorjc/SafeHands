@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.security;
 
 import com.valencia.proyecto1evaluacion.enums.Rol;
+import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,10 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
 
+
+
+
+
     @Bean
     public SecurityFilterChain secutityFilterChain(HttpSecurity http, AuthenticationManagerBuilder authenticationManagerBuilder, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
@@ -50,6 +55,7 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 
 
     @Bean
