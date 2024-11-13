@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AcontecimientoService {
-    private AcontecimientoRepository acontecimientoRepository;
+    private AcontecimientoRepository acontecimientoRepositorio;
 
     /**
      * Devuelve todos los acontecimientos
@@ -21,7 +21,7 @@ public class AcontecimientoService {
      * @return
      */
     public List<AcontecimientoDTO> getAll(){
-        List<Acontecimiento> acontecimientos = acontecimientoRepository.findAll();
+        List<Acontecimiento> acontecimientos = acontecimientoRepositorio.findAll();
         List<AcontecimientoDTO> acontecimientoDTOS = new ArrayList<>();
         for (Acontecimiento a : acontecimientos ) {
             AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
@@ -41,7 +41,7 @@ public class AcontecimientoService {
      * @return
      */
     public Acontecimiento getById(Integer id){
-        return acontecimientoRepository.findById(id).orElse(null);
+        return acontecimientoRepositorio.findById(id).orElse(null);
     }
 
     /**
@@ -56,7 +56,7 @@ public class AcontecimientoService {
         entity.setDescripcion(acontecimientoCrearDTO.getDescripcion());
         entity.setUbicacion(acontecimientoCrearDTO.getUbicacion());
 
-        return acontecimientoRepository.save(entity);
+        return acontecimientoRepositorio.save(entity);
     }
 
     /**
@@ -67,12 +67,12 @@ public class AcontecimientoService {
      * @return
      */
     public Acontecimiento editar(AcontecimientoCrearDTO dto, Integer id){
-        Acontecimiento entity = acontecimientoRepository.getReferenceById(id);
+        Acontecimiento entity = acontecimientoRepositorio.getReferenceById(id);
         entity.setNombre(dto.getNombre());
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
 
-        return acontecimientoRepository.save(entity);
+        return acontecimientoRepositorio.save(entity);
     }
 
     /**
@@ -87,7 +87,7 @@ public class AcontecimientoService {
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
 
-        return acontecimientoRepository.save(entity);
+        return acontecimientoRepositorio.save(entity);
     }
 
     /**
@@ -103,7 +103,7 @@ public class AcontecimientoService {
             mensaje = "El acontecimiento con el id que está buscando no existe.";
     }
         try{
-            acontecimientoRepository.deleteById(id);
+            acontecimientoRepositorio.deleteById(id);
 
             acontecimiento = getById(id);
             if (acontecimiento != null) {

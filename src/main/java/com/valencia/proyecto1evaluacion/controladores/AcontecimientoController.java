@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/acontecimiento")
 @AllArgsConstructor
 public class AcontecimientoController {
-    private AcontecimientoRepository acontecimientoRepository;
+    private AcontecimientoRepository acontecimientoRepositorio;
     private AcontecimientoService acontecimientoService;
 
     @GetMapping("/listar")

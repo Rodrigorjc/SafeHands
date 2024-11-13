@@ -21,6 +21,15 @@ public class Proveedores {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name="nombre", nullable = false)
+    private String nombre;
+
+    @Column(name="descripcion", nullable = false)
+    private String descripcion;
+
+    @Column(name="url", nullable = false)
+    private String url;
+
     @Column(name = "num_voluntarios", nullable = false)
     private Integer numVoluntarios;
 
