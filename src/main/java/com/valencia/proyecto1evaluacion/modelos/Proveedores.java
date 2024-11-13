@@ -42,6 +42,9 @@ public class Proveedores {
     @Column(name = "cif", nullable = false, length = 9)
     private String cif;
 
+    @Transient
+    private Double totalRecaudado;
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)

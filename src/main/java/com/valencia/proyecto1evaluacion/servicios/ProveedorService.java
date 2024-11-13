@@ -179,6 +179,6 @@ public class ProveedorService {
     public void eliminar(Proveedores proveedor){
         proveedoresRepositorio.delete(proveedor);
     }
-    }
+}
 
 

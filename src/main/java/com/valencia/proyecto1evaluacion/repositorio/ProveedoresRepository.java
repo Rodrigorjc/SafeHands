@@ -19,4 +19,6 @@ public interface ProveedoresRepository  extends JpaRepository<Proveedores, Integ
             "OR LOWER(p.descripcion) LIKE LOWER(CONCAT('%', :busqueda, '%')) " +
             "OR LOWER(p.sede) LIKE LOWER(CONCAT('%', :busqueda, '%'))")
     List<Proveedores> buscar(@Param("busqueda") String busqueda);
+
+
 }
