@@ -44,9 +44,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/usuarios/**").permitAll();
                     auth.requestMatchers("producto/crear").hasAnyAuthority(Rol.PROVEEDOR.name());
-                    auth.requestMatchers("producto/listar").permitAll();
                     auth.requestMatchers(("proveedor/**")).permitAll();
                     auth.requestMatchers("ong/**").hasAnyAuthority(Rol.ONG.name());
+                    auth.requestMatchers("producto/{productoId}/vincular-acontecimiento/{acontecimientoId}").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
