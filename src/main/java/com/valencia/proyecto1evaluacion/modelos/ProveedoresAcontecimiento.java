@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProveedoresAcontecimiento {
 
     @Id
@@ -24,5 +26,9 @@ public class ProveedoresAcontecimiento {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_acontecimiento", nullable = false)
     private Acontecimiento acontecimiento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_producto", nullable = false)
+    private Producto producto;
 }
 
