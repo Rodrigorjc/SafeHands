@@ -3,10 +3,10 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
-import com.valencia.proyecto1evaluacion.modelos.Producto;
-import com.valencia.proyecto1evaluacion.modelos.Proveedores;
-import com.valencia.proyecto1evaluacion.modelos.Usuario;
+import com.valencia.proyecto1evaluacion.modelos.*;
+import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProductoRepository;
+import com.valencia.proyecto1evaluacion.repositorio.ProveedoresAcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,10 @@ public class ProductoService {
     ProveedoresRepository proveedoresRepositorio;
     @Autowired
     UsuarioService usuarioService;
+    @Autowired
+    AcontecimientoRepository acontecimientoRepository;
+    @Autowired
+    ProveedoresAcontecimientoRepository proveedoresAcontecimientoRepository;
 
 
     public Producto anyadirProducto(ProductoDTO productoDto) {
@@ -94,4 +98,22 @@ public class ProductoService {
         }
         return productoDtos;
     }
+
+
+
+    public ProveedoresAcontecimiento vincularProductoAcontecimiento(Integer productoId, Integer acontecimientoId) {
+        Producto producto = productoRepositorio.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
+                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+        Proveedores proveedores = producto.getProveedores();
+
+        ProveedoresAcontecimiento proveedoresAcontecimiento = new ProveedoresAcontecimiento();
+        proveedoresAcontecimiento.setProducto(producto);
+        proveedoresAcontecimiento.setAcontecimiento(acontecimiento);
+        proveedoresAcontecimiento.setProveedores(proveedores);
+
+        return proveedoresAcontecimientoRepository.save(proveedoresAcontecimiento);
+    }
+
 }
