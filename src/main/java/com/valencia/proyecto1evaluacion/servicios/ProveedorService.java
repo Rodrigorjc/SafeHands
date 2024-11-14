@@ -46,32 +46,32 @@ public class ProveedorService {
     }
 
 
-        public Proveedores registrarProveedor(ProveedoresDTO proveedorDto) {
+    public Proveedores registrarProveedor(ProveedoresDTO proveedorDto) {
 
 
-            if (proveedorDto.getCif() == null || proveedorDto.getCif().isEmpty()) {
-                throw new IllegalArgumentException("CIF cannot be null or empty");
-            }
-            if (proveedorDto.getNumVoluntarios() <= 0) {
-                throw new IllegalArgumentException("Number of volunteers must be greater than zero");
-            }
-
-            Usuario usuario = new Usuario();
-            usuario.setEmail(proveedorDto.getEmail());
-            usuario.setUsername(proveedorDto.getUsername());
-            usuario.setPassword(passwordEncoder.encode(proveedorDto.getPassword())); // Ensure to encode the password
-            usuario.setRol(Rol.PROVEEDOR);
-            usuario = usuarioRepositorio.save(usuario);
-
-
-            String token = jwtService.generateToken(usuario);
-
-            proveedorDto.setId_usuario(usuario.getId());
-
-            return crearProveedor(proveedorDto);
-
-
+        if (proveedorDto.getCif() == null || proveedorDto.getCif().isEmpty()) {
+            throw new IllegalArgumentException("El campo CIF no puede estar vacio");
         }
+        if (proveedorDto.getNumVoluntarios() <= 0) {
+            throw new IllegalArgumentException("El numero de voluntarios no puede ser menor o igual a 0");
+        }
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail(proveedorDto.getEmail());
+        usuario.setUsername(proveedorDto.getUsername());
+        usuario.setPassword(passwordEncoder.encode(proveedorDto.getPassword()));
+        usuario.setRol(Rol.PROVEEDOR);
+        usuario = usuarioRepositorio.save(usuario);
+
+
+        String token = jwtService.generateToken(usuario);
+
+        proveedorDto.setId_usuario(usuario.getId());
+
+        return crearProveedor(proveedorDto);
+
+
     }
+}
 
 
