@@ -71,6 +71,7 @@ create table acontecimiento(
                                nombre varchar(50) not null,
                                descripcion varchar(500) not null,
                                ubicacion varchar(500) not null,
+                               img varchar(500) not null,
                                id_ong int not null,
                                constraint fk_acontecimiento_ong foreign key(id_ong) references ong(id)
 );
