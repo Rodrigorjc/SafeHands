@@ -25,14 +25,14 @@ create table ong(
 
 
 create table proveedores(
-	id serial primary key,
-	num_voluntarios int not null,
-	sede varchar(100) not null,
-	ubicacion varchar(500) not null,
-	cif char(9) not null,
-    validado boolean default false,
-    id_usuario int not null,
-	constraint fk_proveedores_usuario foreign key(id_usuario) references usuario(id)
+                            id serial primary key,
+                            num_voluntarios int not null,
+                            sede varchar(100) not null,
+                            ubicacion varchar(500) not null,
+                            cif char(9) not null,
+                            validado boolean default false,
+                            id_usuario int not null,
+                            constraint fk_proveedores_usuario foreign key(id_usuario) references usuario(id)
 );
 
 
@@ -71,7 +71,6 @@ create table acontecimiento(
                                nombre varchar(50) not null,
                                descripcion varchar(500) not null,
                                ubicacion varchar(500) not null,
-                               img varchar(500) not null,
                                id_ong int not null,
                                constraint fk_acontecimiento_ong foreign key(id_ong) references ong(id)
 );
@@ -109,5 +108,6 @@ create table token_acceso (
 
 -- alter table producto add constraint fk_producto_proveedores foreign key(id_proveedores) references proveedores(id);
 
+-- alter table proveedores_acontecimiento add constraint fk_producto_proveedores_acontecimineto foreign key(id_producto) references producto(id);
 
-
+-- alter table ong add column img varchar(500);
