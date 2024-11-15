@@ -90,8 +90,10 @@ create table proveedores_acontecimiento(
                                            id serial primary key,
                                            id_proveedores int not null,
                                            id_acontecimiento int not null,
+                                            id_producto int not null,
                                            foreign key (id_proveedores) references proveedores(id),
-                                           foreign key (id_acontecimiento) references acontecimiento(id)
+                                           foreign key (id_acontecimiento) references acontecimiento(id),
+                                           constraint fk_proveedores_aconteciminetos_producto foreign key(id_producto) references producto(id)
 );
 
 
