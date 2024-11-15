@@ -43,10 +43,12 @@ public class SecurityConfiguration {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/usuarios/**").permitAll();
-                    auth.requestMatchers("producto/crear").hasAnyAuthority(Rol.PROVEEDOR.name());
+                    auth.requestMatchers("producto/crear").permitAll();
                     auth.requestMatchers(("proveedor/**")).permitAll();
-                    auth.requestMatchers("ong/**").hasAnyAuthority(Rol.ONG.name());
+                    auth.requestMatchers("ong/**").permitAll();
                     auth.requestMatchers("producto/{productoId}/vincular-acontecimiento/{acontecimientoId}").permitAll();
+                    auth.requestMatchers("acontecimiento/**").permitAll();
+                    auth.requestMatchers("producto/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
