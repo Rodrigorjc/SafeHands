@@ -29,6 +29,9 @@ public class Ong {
     @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
 
+    @Column(name = "img", nullable = false)
+    private String img;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
