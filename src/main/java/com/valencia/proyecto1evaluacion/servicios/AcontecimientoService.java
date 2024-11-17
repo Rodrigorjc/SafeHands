@@ -3,17 +3,21 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
+import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
+import com.valencia.proyecto1evaluacion.repositorio.OngAcontecimientoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class AcontecimientoService {
     private AcontecimientoRepository acontecimientoRepository;
+    private OngAcontecimientoRepository ongAcontecimientoRepository;
 
     /**
      * Devuelve todos los acontecimientos
@@ -118,4 +122,14 @@ public class AcontecimientoService {
 
 
     }
+
+//    public List<Acontecimiento> obtenerAcontecimientosPorOng(Integer ongId) {
+//        List<OngAcontecimiento> ongAcontecimientos = ongAcontecimientoRepository.findByOngId(ongId);
+//        List<Acontecimiento> acontecimientos = new ArrayList<>();
+//        for (OngAcontecimiento ongAcontecimiento : ongAcontecimientos) {
+//            acontecimientos.add(ongAcontecimiento.getAcontecimiento());
+//        }
+//        return acontecimientos;
+//
+//    }
 }
