@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/usuarios/**").permitAll();
+                    auth.requestMatchers("/usuarios/**").permitAll();
                     auth.requestMatchers("producto/crear").permitAll();
                     auth.requestMatchers(("proveedor/**")).permitAll();
                     auth.requestMatchers("ong/**").permitAll();
