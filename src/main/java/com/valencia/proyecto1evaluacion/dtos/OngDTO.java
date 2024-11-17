@@ -11,7 +11,11 @@ public class OngDTO {
 
     private Integer numVoluntarios;
     private String sede;
+    private String descripcion;
     private String ubicacion;
     private String img;
-    private String descripcion;
+    private String email;
+    private String username;
+    private String password;
+    private Integer id_usuario;
 }
