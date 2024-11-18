@@ -105,6 +105,15 @@ create table token_acceso (
                               constraint fk_token_acceso_usuario foreign key(id_usuario) references usuario(id)
 );
 
+CREATE TABLE ong_acontecimiento (
+                                    id serial primary key,
+                                    id_ong INT NOT NULL,
+                                    id_acontecimiento INT NOT NULL,
+                                    FOREIGN KEY (id_ong) REFERENCES ong(id),
+                                    FOREIGN KEY (id_acontecimiento) REFERENCES acontecimiento(id)
+);
+
+
 -- alter table acontecimiento add column img varchar(500);
 
 -- alter table producto add column id_proveedor int ;
