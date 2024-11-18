@@ -16,7 +16,7 @@ public class OngController {
 
     private final OngService ongService;
 
-    @PostMapping("/validar-proveedor/{id}")
+    @PostMapping("/validar/proveedor/{id}")
     public void validarProveedor(@PathVariable Integer id) {
         ongService.validarSolicitudProveedor(id);
     }
@@ -25,6 +25,7 @@ public class OngController {
     public void eliminarProveedor(@PathVariable Integer id) {
         ongService.eliminarSolicitudProveedor(id);
     }
+
 
     @GetMapping("/detalles/{id}")
     public Ong obtenerOngPorId(@PathVariable Integer id) {
@@ -35,7 +36,6 @@ public class OngController {
     public Ong crearOng(@RequestBody OngDTO ongDto) {
         return ongService.registrarOng(ongDto);
     }
-
 
 //    @GetMapping("/acontecimiento/{id}")
 //    public List<Ong> obtenerOngsPorAcontecimiento(@PathVariable Integer id) {
