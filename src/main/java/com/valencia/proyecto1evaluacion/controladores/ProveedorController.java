@@ -5,10 +5,7 @@ import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/proveedor")
@@ -27,6 +24,11 @@ public class ProveedorController {
     @PostMapping("/registrar")
     public Proveedores registrarProveedor(@RequestBody ProveedoresDTO proveedor) {
         return proveedorService.registrarProveedor(proveedor);
+    }
+
+    @GetMapping("/listar")
+    public Iterable<Proveedores> listarProveedores(){
+        return proveedorService.listarProveedores();
     }
 
 }
