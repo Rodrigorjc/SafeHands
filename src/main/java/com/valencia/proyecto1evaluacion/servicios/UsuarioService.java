@@ -5,8 +5,10 @@ import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
 import com.valencia.proyecto1evaluacion.dtos.AuthenticationRequestDTO;
 import com.valencia.proyecto1evaluacion.dtos.UsuarioDto;
 import com.valencia.proyecto1evaluacion.enums.Rol;
+import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
+import com.valencia.proyecto1evaluacion.repositorio.ClienteRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
 import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
 import com.valencia.proyecto1evaluacion.security.JwtService;
@@ -26,6 +28,7 @@ public class UsuarioService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final ProveedoresRepository proveedoresRepositorio;
+    private final ClienteRepository clienteRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -54,6 +57,11 @@ public class UsuarioService implements UserDetailsService {
         usuario.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         usuario.setRol(Rol.CLIENTE);
         usuarioRepositorio.save(usuario);
+        Cliente cliente = new Cliente();
+        cliente.setUsuario(usuario);
+        cliente.setDni(userDTO.getDni());
+        clienteRepository.save(cliente);
+
         var jwtToken = jwtService.generateToken(usuario);
         return AuthenticationDTO.builder().token(jwtToken).build();
     }

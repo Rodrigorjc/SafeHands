@@ -1,6 +1,8 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 
+import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
+import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
@@ -17,15 +19,15 @@ public class ProveedorController {
 
     ProveedorService proveedorService;
 
-    @PostMapping("/crear")
-    public Proveedores crearProveedor(@RequestBody ProveedoresDTO proveedor){
-        return proveedorService.crearProveedor(proveedor);
-    }
+//    @PostMapping("/crear")
+//    public Proveedores crearProveedor(@RequestBody ProveedoresDTO proveedor){
+//        return proveedorService.crearProveedor(proveedor);
+//    }
 
 
     @PostMapping("/registrar")
-    public Proveedores registrarProveedor(@RequestBody ProveedoresDTO proveedor) {
-        return proveedorService.registrarProveedor(proveedor);
+    public AuthenticationDTO registrarProveedor(@RequestBody CrearProveedorDTO crearProveedorDTO) {
+        return proveedorService.registrarProveedor(crearProveedorDTO);
     }
 
     @GetMapping("/listar")

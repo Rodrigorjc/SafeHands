@@ -1,5 +1,7 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
+import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
+import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
@@ -49,31 +51,23 @@ public class ProveedorService {
     }
 
 
-    public Proveedores registrarProveedor(ProveedoresDTO proveedorDto) {
-
-
-        if (proveedorDto.getCif() == null || proveedorDto.getCif().isEmpty()) {
-            throw new IllegalArgumentException("El campo CIF no puede estar vacio");
-        }
-        if (proveedorDto.getNumVoluntarios() <= 0) {
-            throw new IllegalArgumentException("El numero de voluntarios no puede ser menor o igual a 0");
-        }
-
+    public AuthenticationDTO registrarProveedor(CrearProveedorDTO crearProveedorDTO) {
         Usuario usuario = new Usuario();
-        usuario.setEmail(proveedorDto.getEmail());
-        usuario.setUsername(proveedorDto.getUsername());
-        usuario.setPassword(passwordEncoder.encode(proveedorDto.getPassword()));
+        usuario.setEmail(crearProveedorDTO.getEmail());
+        usuario.setUsername(crearProveedorDTO.getUsername());
+        usuario.setPassword(passwordEncoder.encode(crearProveedorDTO.getPassword()));
         usuario.setRol(Rol.PROVEEDOR);
-        usuario = usuarioRepositorio.save(usuario);
+        usuarioRepositorio.save(usuario);
+        Proveedores proveedor = new Proveedores();
+        proveedor.setUsuario(usuario);
+        proveedor.setNumVoluntarios(crearProveedorDTO.getNumVoluntarios());
+        proveedor.setCif(crearProveedorDTO.getCif());
+        proveedor.setSede(crearProveedorDTO.getSede());
+        proveedor.setUbicacion(crearProveedorDTO.getUbicacion());
+        proveedoresRepositorio.save(proveedor);
+        var jwtToken = jwtService.generateToken(usuario);
 
-
-        String token = jwtService.generateToken(usuario);
-
-        proveedorDto.setId_usuario(usuario.getId());
-
-        return crearProveedor(proveedorDto);
-
-
+        return AuthenticationDTO.builder().token(jwtToken).build();
     }
 
     /**
