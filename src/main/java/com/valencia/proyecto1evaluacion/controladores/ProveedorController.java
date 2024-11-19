@@ -7,6 +7,8 @@ import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/proveedor")
 @AllArgsConstructor
@@ -27,7 +29,7 @@ public class ProveedorController {
     }
 
     @GetMapping("/listar")
-    public Iterable<Proveedores> listarProveedores(){
+    public List<ProveedoresDTO> listarProveedoresDTO(){
         return proveedorService.listarProveedores();
     }
 

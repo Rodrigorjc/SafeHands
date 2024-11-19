@@ -4,6 +4,7 @@ import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -12,6 +13,7 @@ public interface ProveedoresRepository  extends JpaRepository<Proveedores, Integ
     Optional<Proveedores> findByUsuarioId(Integer usuarioId);
 
     boolean existsByIdAndValidado(Integer id, Boolean validado);
+    List<Proveedores> findByValidadoFalse();
 
 
 
