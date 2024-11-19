@@ -62,7 +62,7 @@ public class ProveedorService {
         proveedor.setSede(crearProveedorDTO.getSede());
         proveedor.setUbicacion(crearProveedorDTO.getUbicacion());
         proveedoresRepositorio.save(proveedor);
-        var jwtToken = jwtService.generateToken(usuario);
+        var jwtToken = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
 
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
