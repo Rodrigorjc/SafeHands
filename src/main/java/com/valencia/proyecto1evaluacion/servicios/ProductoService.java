@@ -55,6 +55,9 @@ public class ProductoService {
         if (!proveedoresRepositorio.existsByIdAndValidado(proveedor.getId(), true)) {
             throw new RuntimeException("El proveedor no está validado y no puede crear productos.");
         }
+        if (productoDto.getPrecio() < 0) {
+            throw new IllegalArgumentException("El precio no puede ser menor que 0");
+        }
 
 //        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
 //            throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
@@ -88,6 +91,20 @@ public class ProductoService {
     public List<ProductoDTO> getAll() {
         List<ProductoDTO> productoDtos = new ArrayList<>();
         List<Producto> productos = productoRepositorio.findAll();
+        for (Producto producto : productos) {
+            ProductoDTO dto = new ProductoDTO();
+            dto.setDescripcion(producto.getDescripcion());
+            dto.setUrl(producto.getUrl());
+            dto.setPrecio(producto.getPrecio());
+            dto.setNombre(producto.getNombre());
+            productoDtos.add(dto);
+        }
+        return productoDtos;
+    }
+
+    public List<ProductoDTO> getProductosByProveedorId(Integer proveedorId) {
+        List<Producto> productos = productoRepositorio.findByProveedoresId(proveedorId);
+        List<ProductoDTO> productoDtos = new ArrayList<>();
         for (Producto producto : productos) {
             ProductoDTO dto = new ProductoDTO();
             dto.setDescripcion(producto.getDescripcion());
