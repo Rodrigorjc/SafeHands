@@ -1,6 +1,8 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
+import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
+import com.valencia.proyecto1evaluacion.modelos.Ong;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.OngRepository;
@@ -53,5 +55,11 @@ public class OngService {
         proveedoresRepositorio.delete(proveedor);
     }
 
+    public ImgDTO getImgbyId  (Integer id){
+        Ong ong = ongRepositorio.findClienteByUsuarioId(id);
+        ImgDTO imgDTO = new ImgDTO();
+        imgDTO.setImg(ong.getImg());
+        return imgDTO;
+    }
 
 }

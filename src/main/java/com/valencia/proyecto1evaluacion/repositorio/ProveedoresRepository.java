@@ -14,5 +14,5 @@ public interface ProveedoresRepository  extends JpaRepository<Proveedores, Integ
     boolean existsByIdAndValidado(Integer id, Boolean validado);
 
 
-
+    Proveedores findClienteByUsuarioId(Integer id);
 }
