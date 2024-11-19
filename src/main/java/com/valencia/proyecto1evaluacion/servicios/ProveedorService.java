@@ -85,7 +85,7 @@ public class ProveedorService {
         List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
         for (Proveedores proveedor : proveedores) {
             ProveedoresDTO dto = new ProveedoresDTO();
-//            dto.setId(proveedor.getId());
+            dto.setId(proveedor.getId());
             dto.setCif(proveedor.getCif());
             dto.setNumVoluntarios(proveedor.getNumVoluntarios());
             dto.setSede(proveedor.getSede());

@@ -50,6 +50,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("ong/validar/proveedor/{id}").permitAll();
                     auth.requestMatchers("acontecimiento/**").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
+                    auth.requestMatchers("ong/:id").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
