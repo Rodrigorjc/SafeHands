@@ -27,6 +27,11 @@ public class    ProductoController {
         return productoService.getAll();
     }
 
+    @GetMapping("/listar/{proveedorId}")
+    public List<ProductoDTO> listarProductosPorProveedor(@PathVariable Integer proveedorId) {
+        return productoService.getProductosByProveedorId(proveedorId);
+    }
+
     @PostMapping("/crear")
 //    @PreAuthorize("hasAuthority('PROVEEDOR')")
     public Producto crearProducto(@RequestBody ProductoDTO productoDTO){
