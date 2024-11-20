@@ -7,10 +7,7 @@ import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.servicios.AcontecimientoService;
 import com.valencia.proyecto1evaluacion.servicios.OngAcontecimientoService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +33,11 @@ public class AcontecimientoController {
     @GetMapping("/ong/{id}/acontecimientos")
     public List<AcontecimientoDTO> obtenerAcontecimientosPorOng2(@PathVariable Integer id) {
         return ongAcontecimientoService.obtenerAcontecimientosPorOng(id);
+    }
+
+    @PostMapping("/crear")
+    public AcontecimientoDTO crearAcontecimiento(@RequestBody AcontecimientoDTO acontecimientoDTO){
+        return acontecimientoService.crearAcontecimiento(acontecimientoDTO);
     }
 
 }
