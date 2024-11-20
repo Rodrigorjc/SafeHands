@@ -23,7 +23,7 @@ public class OngController {
         ongService.validarSolicitudProveedor(id);
     }
 
-    @DeleteMapping("/eliminar-proveedor/{id}")
+    @DeleteMapping("/eliminar/proveedor/{id}")
     public void eliminarProveedor(@PathVariable Integer id) {
         ongService.eliminarSolicitudProveedor(id);
     }
