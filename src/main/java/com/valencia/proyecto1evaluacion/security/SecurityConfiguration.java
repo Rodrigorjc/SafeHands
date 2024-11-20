@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.security;
 
 import com.valencia.proyecto1evaluacion.enums.Rol;
+import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,16 +32,25 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
 
+
+
+
+
     @Bean
     public SecurityFilterChain secutityFilterChain(HttpSecurity http, AuthenticationManagerBuilder authenticationManagerBuilder, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/usuarios/**").permitAll();
-                    auth.requestMatchers("producto/crear").hasAnyAuthority(Rol.PROVEEDOR.name());
-                    auth.requestMatchers("producto/listar").permitAll();
+                    auth.requestMatchers("/usuarios/**").permitAll();
+                    auth.requestMatchers("producto/crear").permitAll();
                     auth.requestMatchers(("proveedor/**")).permitAll();
+                    auth.requestMatchers("ong/**").permitAll();
+                    auth.requestMatchers("producto/{productoId}/vincular-acontecimiento/{acontecimientoId}").permitAll();
+                    auth.requestMatchers("ong/validar/proveedor/{id}").permitAll();
+                    auth.requestMatchers("acontecimiento/**").permitAll();
+                    auth.requestMatchers("producto/**").permitAll();
+                    auth.requestMatchers("ong/:id").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -50,11 +60,13 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

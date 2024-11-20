@@ -45,6 +45,12 @@ public class Proveedores {
     @Transient
     private Double totalRecaudado;
 
+    @Column(name = "img")
+    private String img;
+
+    @Column(name = "validado", nullable = false)
+    private Boolean validado = false;
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)

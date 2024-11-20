@@ -2,9 +2,13 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedorCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
+import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
+import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
+import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.mappers.PerfilMapper;
+import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
@@ -53,33 +57,53 @@ public class ProveedorService {
     }
 
 
-        public Proveedores registrarProveedor(ProveedoresDTO proveedorDto) {
-            // Additional registration logic if needed
+    public AuthenticationDTO registrarProveedor(CrearProveedorDTO crearProveedorDTO) {
+        Usuario usuario = new Usuario();
+        usuario.setEmail(crearProveedorDTO.getEmail());
+        usuario.setUsername(crearProveedorDTO.getUsername());
+        usuario.setPassword(passwordEncoder.encode(crearProveedorDTO.getPassword()));
+        usuario.setRol(Rol.PROVEEDOR);
+        usuarioRepositorio.save(usuario);
+        Proveedores proveedor = new Proveedores();
+        proveedor.setUsuario(usuario);
+        proveedor.setNumVoluntarios(crearProveedorDTO.getNumVoluntarios());
+        proveedor.setCif(crearProveedorDTO.getCif());
+        proveedor.setSede(crearProveedorDTO.getSede());
+        proveedor.setUbicacion(crearProveedorDTO.getUbicacion());
+        proveedoresRepositorio.save(proveedor);
+        var jwtToken = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
 
+        return AuthenticationDTO.builder().token(jwtToken).build();
+    }
 
-            if (proveedorDto.getCif() == null || proveedorDto.getCif().isEmpty()) {
-                throw new IllegalArgumentException("CIF cannot be null or empty");
-            }
-            if (proveedorDto.getNumVoluntarios() <= 0) {
-                throw new IllegalArgumentException("Number of volunteers must be greater than zero");
-            }
+    public ImgDTO getImgbyId  (Integer id){
+        Proveedores proveedores = proveedoresRepositorio.findClienteByUsuarioId(id);
+        ImgDTO imgDTO = new ImgDTO();
+        imgDTO.setImg(proveedores.getImg());
+        return imgDTO;
+    }
 
-            // Create a new user with the role of "provider"
-            Usuario usuario = new Usuario();
-            usuario.setEmail(proveedorDto.getEmail());
-            usuario.setUsername(proveedorDto.getUsername());
-            usuario.setPassword(passwordEncoder.encode(proveedorDto.getPassword())); // Ensure to encode the password
-            usuario.setRol(Rol.PROVEEDOR);
-            usuario = usuarioRepositorio.save(usuario);
+    /**
+     * listar proveedores
+     */
 
-
-            // Set the user to the provider
-            String token = jwtService.generateToken(usuario);
-
-            // Set the user to the provider
-            proveedorDto.setId_usuario(usuario.getId());
-
-            return crearProveedor(proveedorDto);
+    public List<ProveedoresDTO> listarProveedores() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findByValidadoFalse();
+        List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
+        for (Proveedores proveedor : proveedores) {
+            ProveedoresDTO dto = new ProveedoresDTO();
+            dto.setId(proveedor.getId());
+            dto.setCif(proveedor.getCif());
+            dto.setNumVoluntarios(proveedor.getNumVoluntarios());
+            dto.setSede(proveedor.getSede());
+            dto.setUbicacion(proveedor.getUbicacion());
+            dto.setId_usuario(proveedor.getUsuario().getId());
+            dto.setEmail(proveedor.getUsuario().getEmail());
+            dto.setUsername(proveedor.getUsuario().getUsername());
+            proveedoresDTOs.add(dto);
+        }
+        return proveedoresDTOs;
+    }
 
 
         }
@@ -179,6 +203,7 @@ public class ProveedorService {
     public void eliminar(Proveedores proveedor){
         proveedoresRepositorio.delete(proveedor);
     }
+}
 }
 
 

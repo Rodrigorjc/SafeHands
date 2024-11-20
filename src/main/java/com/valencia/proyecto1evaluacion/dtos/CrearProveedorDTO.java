@@ -1,6 +1,5 @@
 package com.valencia.proyecto1evaluacion.dtos;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
+public class CrearProveedorDTO {
+    private Integer numVoluntarios;
+    private String sede;
+    private String ubicacion;
+    private String cif;
     private String username;
-    private String dni;
     private String email;
     private String password;
 }

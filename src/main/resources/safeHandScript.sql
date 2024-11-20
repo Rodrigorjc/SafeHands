@@ -30,6 +30,7 @@ create table proveedores(
                             sede varchar(100) not null,
                             ubicacion varchar(500) not null,
                             cif char(9) not null,
+                            validado boolean default false,
                             id_usuario int not null,
                             constraint fk_proveedores_usuario foreign key(id_usuario) references usuario(id)
 );
@@ -88,8 +89,10 @@ create table proveedores_acontecimiento(
                                            id serial primary key,
                                            id_proveedores int not null,
                                            id_acontecimiento int not null,
+                                            id_producto int not null,
                                            foreign key (id_proveedores) references proveedores(id),
-                                           foreign key (id_acontecimiento) references acontecimiento(id)
+                                           foreign key (id_acontecimiento) references acontecimiento(id),
+                                           constraint fk_proveedores_aconteciminetos_producto foreign key(id_producto) references producto(id)
 );
 
 
@@ -103,11 +106,21 @@ create table token_acceso (
 
 alter table proveedores add column validado boolean not null default false;
 
+CREATE TABLE ong_acontecimiento (
+                                    id serial primary key,
+                                    id_ong INT NOT NULL,
+                                    id_acontecimiento INT NOT NULL,
+                                    FOREIGN KEY (id_ong) REFERENCES ong(id),
+                                    FOREIGN KEY (id_acontecimiento) REFERENCES acontecimiento(id)
+);
+
+
 -- alter table acontecimiento add column img varchar(500);
 
 -- alter table producto add column id_proveedor int ;
 
 -- alter table producto add constraint fk_producto_proveedores foreign key(id_proveedores) references proveedores(id);
 
+-- alter table proveedores_acontecimiento add constraint fk_producto_proveedores_acontecimineto foreign key(id_producto) references producto(id);
 
-
+-- alter table ong add column img varchar(500);

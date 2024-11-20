@@ -24,6 +24,9 @@ public class Cliente {
     @Column(name = "dni", nullable = false, length = 9)
     private String dni;
 
+    @Column(name = "foto_perfil", nullable = true)
+    private String fotoPerfil;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;

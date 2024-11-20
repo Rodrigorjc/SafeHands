@@ -18,4 +18,6 @@ public interface ClienteRepository  extends JpaRepository<Cliente, Integer> {
             "GROUP BY u.username, c.id, c.dni " +
             "ORDER BY SUM(lp.cantidad * lp.precioUnitario) DESC")
     List<Cliente> findTotalPedidosPorCliente();
+
+    Cliente findClienteByUsuarioId(Integer id);
 }

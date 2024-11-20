@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ProveedoresDTO {
 
+    private Integer id;
     private Integer numVoluntarios;
 
     private String sede;

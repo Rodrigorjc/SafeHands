@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
-    private String username;
-    private String dni;
-    private String email;
-    private String password;
+public class ImgDTO {
+    private String img;
 }
