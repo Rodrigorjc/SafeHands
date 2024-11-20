@@ -3,17 +3,21 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
+import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
+import com.valencia.proyecto1evaluacion.repositorio.OngAcontecimientoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class AcontecimientoService {
     private AcontecimientoRepository acontecimientoRepository;
+    private OngAcontecimientoRepository ongAcontecimientoRepository;
 
     /**
      * Devuelve todos los acontecimientos
@@ -25,6 +29,7 @@ public class AcontecimientoService {
         List<AcontecimientoDTO> acontecimientoDTOS = new ArrayList<>();
         for (Acontecimiento a : acontecimientos ) {
             AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
+            acontecimientoDTO.setId(a.getId());
             acontecimientoDTO.setNombre(a.getNombre());
             acontecimientoDTO.setDescripcion(a.getDescripcion());
             acontecimientoDTO.setImg(a.getImg());
@@ -118,4 +123,25 @@ public class AcontecimientoService {
 
 
     }
+
+
+    public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
+        Acontecimiento acontecimiento = new Acontecimiento();
+        acontecimiento.setNombre(acontecimientoDTO.getNombre());
+        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
+        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
+        acontecimiento.setImg(acontecimientoDTO.getImg());
+        acontecimientoRepository.save(acontecimiento);
+        return acontecimientoDTO;
+    }
+
+//    public List<Acontecimiento> obtenerAcontecimientosPorOng(Integer ongId) {
+//        List<OngAcontecimiento> ongAcontecimientos = ongAcontecimientoRepository.findByOngId(ongId);
+//        List<Acontecimiento> acontecimientos = new ArrayList<>();
+//        for (OngAcontecimiento ongAcontecimiento : ongAcontecimientos) {
+//            acontecimientos.add(ongAcontecimiento.getAcontecimiento());
+//        }
+//        return acontecimientos;
+//
+//    }
 }

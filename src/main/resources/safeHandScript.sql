@@ -89,8 +89,10 @@ create table proveedores_acontecimiento(
                                            id serial primary key,
                                            id_proveedores int not null,
                                            id_acontecimiento int not null,
+                                            id_producto int not null,
                                            foreign key (id_proveedores) references proveedores(id),
-                                           foreign key (id_acontecimiento) references acontecimiento(id)
+                                           foreign key (id_acontecimiento) references acontecimiento(id),
+                                           constraint fk_proveedores_aconteciminetos_producto foreign key(id_producto) references producto(id)
 );
 
 
@@ -101,6 +103,15 @@ create table token_acceso (
                               id_usuario int not null,
                               constraint fk_token_acceso_usuario foreign key(id_usuario) references usuario(id)
 );
+
+CREATE TABLE ong_acontecimiento (
+                                    id serial primary key,
+                                    id_ong INT NOT NULL,
+                                    id_acontecimiento INT NOT NULL,
+                                    FOREIGN KEY (id_ong) REFERENCES ong(id),
+                                    FOREIGN KEY (id_acontecimiento) REFERENCES acontecimiento(id)
+);
+
 
 -- alter table acontecimiento add column img varchar(500);
 

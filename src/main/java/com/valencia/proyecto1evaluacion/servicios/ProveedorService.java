@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ProveedorService {
@@ -75,6 +78,30 @@ public class ProveedorService {
         imgDTO.setImg(proveedores.getImg());
         return imgDTO;
     }
+
+    /**
+     * listar proveedores
+     */
+
+    public List<ProveedoresDTO> listarProveedores() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findByValidadoFalse();
+        List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
+        for (Proveedores proveedor : proveedores) {
+            ProveedoresDTO dto = new ProveedoresDTO();
+            dto.setId(proveedor.getId());
+            dto.setCif(proveedor.getCif());
+            dto.setNumVoluntarios(proveedor.getNumVoluntarios());
+            dto.setSede(proveedor.getSede());
+            dto.setUbicacion(proveedor.getUbicacion());
+            dto.setId_usuario(proveedor.getUsuario().getId());
+            dto.setEmail(proveedor.getUsuario().getEmail());
+            dto.setUsername(proveedor.getUsuario().getUsername());
+            proveedoresDTOs.add(dto);
+        }
+        return proveedoresDTOs;
+    }
+
+
 }
 
 

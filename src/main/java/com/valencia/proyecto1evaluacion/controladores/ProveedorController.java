@@ -9,6 +9,9 @@ import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/proveedor")
@@ -40,4 +43,9 @@ public class ProveedorController {
             return proveedorService.getImgbyId(10);
         }
     }
+    @GetMapping("/listar")
+    public List<ProveedoresDTO> listarProveedoresDTO(){
+        return proveedorService.listarProveedores();
+    }
+
 }

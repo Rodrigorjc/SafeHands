@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,7 +33,8 @@ public class Acontecimiento {
     @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_ong", nullable = false)
-    private Ong ong;
+//    @JsonBackReference
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_ong", nullable = false)
+//    private Ong ong;
 }
