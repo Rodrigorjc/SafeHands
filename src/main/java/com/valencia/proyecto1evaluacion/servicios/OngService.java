@@ -1,15 +1,10 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
+import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
 import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
-import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.modelos.Ong;
-import com.valencia.proyecto1evaluacion.modelos.Proveedores;
-import com.valencia.proyecto1evaluacion.modelos.Usuario;
-import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
-import com.valencia.proyecto1evaluacion.repositorio.OngRepository;
-import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
-import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
+import com.valencia.proyecto1evaluacion.modelos.*;
+import com.valencia.proyecto1evaluacion.repositorio.*;
 import com.valencia.proyecto1evaluacion.security.JwtService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +35,9 @@ public class OngService {
 
     @Autowired
     AcontecimientoRepository acontecimientoRepository;
+
+    @Autowired
+    OngAcontecimientoRepository ongAcontecimientoRepository;
 
     public void validarSolicitudProveedor(Integer proveedorId) {
 
@@ -109,8 +107,32 @@ public class OngService {
                 .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
     }
 
+    public AcontecimientoOngVincularDTO acontecimientoOngVincular(Integer acontecimientoId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
 
+        if (usuario == null || !usuario.getRol().equals(Rol.ONG)) {
+            throw new SecurityException("No tienes permiso para vincular acontecimientos a ONGs");
+        }
 
+        Ong ong = ongRepositorio.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
+
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
+                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+
+        OngAcontecimiento ongAcontecimiento = new OngAcontecimiento();
+        ongAcontecimiento.setOng(ong);
+        ongAcontecimiento.setAcontecimiento(acontecimiento);
+        ongAcontecimientoRepository.save(ongAcontecimiento);
+
+        AcontecimientoOngVincularDTO dto = new AcontecimientoOngVincularDTO();
+        dto.setIdAcontecimiento(acontecimiento.getId());
+        dto.setIdOng(ong.getId());
+
+        return dto;
+    }
 
 
 
