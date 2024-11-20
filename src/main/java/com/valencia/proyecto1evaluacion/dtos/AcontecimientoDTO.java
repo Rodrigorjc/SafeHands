@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.dtos;
 
 
+import com.valencia.proyecto1evaluacion.modelos.Ong;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,5 @@ public class AcontecimientoDTO {
     private String descripcion;
     private String ubicacion;
     private String img;
+    private Ong idOng;
 }
