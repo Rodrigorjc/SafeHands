@@ -48,6 +48,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("ong/**").permitAll();
                     auth.requestMatchers("producto/{productoId}/vincular-acontecimiento/{acontecimientoId}").permitAll();
                     auth.requestMatchers("ong/validar/proveedor/{id}").permitAll();
+                    auth.requestMatchers("ong/eliminar/proveedor/{id}").permitAll();
                     auth.requestMatchers("acontecimiento/**").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
                     auth.requestMatchers("ong/:id").permitAll();
