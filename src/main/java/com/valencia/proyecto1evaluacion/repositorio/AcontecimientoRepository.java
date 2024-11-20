@@ -11,5 +11,5 @@ import java.util.List;
 public interface AcontecimientoRepository extends JpaRepository<Acontecimiento, Integer> {
 //    List<Acontecimiento>findByAcontecimiento(Acontecimiento acontecimiento);
 
-    List<Acontecimiento> findAcontecimientoByOng(Ong ong);
+//    List<Acontecimiento> findAcontecimientoByOng(Ong ong);
 }

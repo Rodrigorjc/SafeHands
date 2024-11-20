@@ -29,6 +29,7 @@ public class AcontecimientoService {
         List<AcontecimientoDTO> acontecimientoDTOS = new ArrayList<>();
         for (Acontecimiento a : acontecimientos ) {
             AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
+            acontecimientoDTO.setId(a.getId());
             acontecimientoDTO.setNombre(a.getNombre());
             acontecimientoDTO.setDescripcion(a.getDescripcion());
             acontecimientoDTO.setImg(a.getImg());
@@ -121,6 +122,17 @@ public class AcontecimientoService {
         return mensaje;
 
 
+    }
+
+
+    public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
+        Acontecimiento acontecimiento = new Acontecimiento();
+        acontecimiento.setNombre(acontecimientoDTO.getNombre());
+        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
+        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
+        acontecimiento.setImg(acontecimientoDTO.getImg());
+        acontecimientoRepository.save(acontecimiento);
+        return acontecimientoDTO;
     }
 
 //    public List<Acontecimiento> obtenerAcontecimientosPorOng(Integer ongId) {
