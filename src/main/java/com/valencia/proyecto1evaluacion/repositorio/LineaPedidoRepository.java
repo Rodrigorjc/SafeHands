@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.repositorio;
 
+import com.valencia.proyecto1evaluacion.dtos.ConsultasProveedorDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.LineaPedido;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
@@ -22,14 +23,12 @@ public interface LineaPedidoRepository  extends JpaRepository<LineaPedido, Integ
      *
      * @return una lista de ProveedoresDTO que contiene el nombre del proveedor y el total recaudado por cada proveedor.
      */
-    @Query("SELECT(p.nombre, SUM(lp.cantidad * lp.precioUnitario)) " +
-            "FROM LineaPedido lp " +
-            "JOIN lp.producto prod " +
-            "JOIN prod.proveedores p " +
-            "GROUP BY p.nombre " +
-            "ORDER BY SUM(lp.cantidad * lp.precioUnitario) DESC")
-    List<ProveedoresDTO> findTotalRecaudadoPorProveedor();
-
+    @Query(value = "SELECT p.nombre, SUM(lp.cantidad * lp.precio_unitario) as total_recaudado " +
+            "FROM safe_hand.linea_pedido lp " +
+            "JOIN safe_hand.producto prod ON lp.id_producto = prod.id " +
+            "JOIN safe_hand.proveedores p ON prod.id_proveedores = p.id " +
+            "GROUP BY p.nombre", nativeQuery = true)
+    List<Object[]> findTotalRecaudadoPorProveedorRaw();
 
     /**
      * Esta consulta recupera el resumen de las líneas de pedido.

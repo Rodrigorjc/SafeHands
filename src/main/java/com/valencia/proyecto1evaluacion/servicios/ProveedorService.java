@@ -1,14 +1,8 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
-import com.valencia.proyecto1evaluacion.dtos.PerfilProveedorCrearDTO;
-import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
-import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
-import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
-import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
-import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
+import com.valencia.proyecto1evaluacion.dtos.*;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.mappers.PerfilMapper;
-import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
@@ -38,8 +32,8 @@ public class ProveedorService {
     JwtService jwtService;
 
 
-
-    /**crearProveedor con todos sus campos mediante la dto
+    /**
+     * crearProveedor con todos sus campos mediante la dto
      *
      * @param proveedor
      * @return
@@ -76,7 +70,7 @@ public class ProveedorService {
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
 
-    public ImgDTO getImgbyId  (Integer id){
+    public ImgDTO getImgbyId(Integer id) {
         Proveedores proveedores = proveedoresRepositorio.findClienteByUsuarioId(id);
         ImgDTO imgDTO = new ImgDTO();
         imgDTO.setImg(proveedores.getImg());
@@ -106,20 +100,17 @@ public class ProveedorService {
     }
 
 
-        }
-
-
     /**
      * Este método extrae todos los perfiles de base de datos
      *
      * @return
      */
-    public List<PerfilProveedoresDTO> getAll(){
+    public List<PerfilProveedoresDTO> getAll() {
 
         List<Proveedores> proveedor = proveedoresRepositorio.findAll();
         List<PerfilProveedoresDTO> DTOS = new ArrayList<>();
 
-        for(Proveedores p : proveedor){
+        for (Proveedores p : proveedor) {
             PerfilProveedoresDTO dto = new PerfilProveedoresDTO();
             dto.setNombre(p.getNombre());
             dto.setDescripcion(p.getDescripcion());
@@ -141,16 +132,17 @@ public class ProveedorService {
      * @param busqueda
      * @return
      */
-    public List<PerfilProveedoresDTO> buscar(String busqueda){
+    public List<PerfilProveedoresDTO> buscar(String busqueda) {
         return perfilMapper.toDTO(proveedoresRepositorio.buscar(busqueda));
     }
+
     /**
      * Este método busca un proveedor a partir de su id
      *
      * @param id
      * @return
      */
-    public Proveedores getById(Integer id){
+    public Proveedores getById(Integer id) {
         return proveedoresRepositorio.findById(id).orElse(null);
     }
 
@@ -160,7 +152,7 @@ public class ProveedorService {
      * @param dto
      * @return
      */
-    public Proveedores guardar(PerfilProveedorCrearDTO dto){
+    public Proveedores guardar(PerfilProveedorCrearDTO dto) {
         Proveedores perfilGuardar = new Proveedores();
         perfilGuardar.setNombre(dto.getNombre());
         perfilGuardar.setDescripcion(dto.getDescripcion());
@@ -178,32 +170,32 @@ public class ProveedorService {
      *
      * @param id
      */
-    public String eliminar(Integer id){
+    public String eliminar(Integer id) {
         String mensaje;
         Proveedores proveedores = getById(id);
 
-        if(proveedores == null){
+        if (proveedores == null) {
             return "El perfil del proveedor con el id indicado no existe";
         }
 
-        try{
+        try {
             proveedoresRepositorio.deleteById(id);
             proveedores = getById(id);
-            if(proveedores == null){
+            if (proveedores == null) {
                 mensaje = "El perfil del proveedor no se ha podido eliminar.";
-            }else{
+            } else {
                 mensaje = "El perfil del proveedor se ha eliminado correctamente.";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             mensaje = "El perfil del proveedor no se ha podido eliminar.";
         }
         return mensaje;
     }
 
-    public void eliminar(Proveedores proveedor){
+    public void eliminar(Proveedores proveedor) {
         proveedoresRepositorio.delete(proveedor);
     }
-}
+
 }
 
 
