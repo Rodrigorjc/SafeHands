@@ -101,7 +101,7 @@ public class OngService {
         usuario.setRol(Rol.ONG);
         usuario = usuarioRepositorio.save(usuario);
 
-        String token = jwtService.generateToken(usuario);
+        String token = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
 
         ongDto.setId_usuario(usuario.getId());
 
