@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
+import com.valencia.proyecto1evaluacion.dtos.AconteciminetoProveedorVinculacionDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Producto;
 import com.valencia.proyecto1evaluacion.modelos.ProveedoresAcontecimiento;
@@ -39,8 +40,8 @@ public class    ProductoController {
     }
 
 
-    @PostMapping("/{productoId}/vincular-acontecimiento/{acontecimientoId}")
-    public ProveedoresAcontecimiento vincularProductoAcontecimiento(@PathVariable Integer productoId, @PathVariable Integer acontecimientoId) {
+    @PostMapping("/{productoId}/vincular/{acontecimientoId}")
+    public AconteciminetoProveedorVinculacionDTO vincularProductoAcontecimiento(@PathVariable Integer productoId, @PathVariable Integer acontecimientoId) {
         return productoService.vincularProductoAcontecimiento(productoId, acontecimientoId);
     }
 
