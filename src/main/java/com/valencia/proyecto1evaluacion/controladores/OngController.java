@@ -1,10 +1,12 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
+import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
 import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.Ong;
 import com.valencia.proyecto1evaluacion.servicios.OngService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +37,13 @@ public class OngController {
     @PostMapping("/crear")
     public Ong crearOng(@RequestBody OngDTO ongDto) {
         return ongService.registrarOng(ongDto);
+    }
+
+
+    @PostMapping("/asociarAcontecimiento/{acontecimientoId}")
+    public AcontecimientoOngVincularDTO asociarAcontecimiento(@PathVariable Integer acontecimientoId) {
+       return ongService.acontecimientoOngVincular(acontecimientoId);
+
     }
 
 //    @GetMapping("/acontecimiento/{id}")
