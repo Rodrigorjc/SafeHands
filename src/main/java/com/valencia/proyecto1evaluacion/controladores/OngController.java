@@ -30,7 +30,7 @@ public class OngController {
 
 
     @GetMapping("/detalles/{id}")
-    public Ong obtenerOngPorId(@PathVariable Integer id) {
+    public OngDTO   obtenerOngPorId(@PathVariable Integer id) {
         return ongService.obtenerOngPorId(id);
     }
 
