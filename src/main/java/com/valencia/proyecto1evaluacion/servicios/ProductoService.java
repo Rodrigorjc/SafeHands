@@ -22,7 +22,7 @@ import java.util.List;
 public class ProductoService {
 
     @Autowired
-    ProveedorService proveedoresService;
+    ProveedorService proveedorService;
     @Autowired
     ProductoRepository productoRepositorio;
     @Autowired
@@ -94,4 +94,14 @@ public class ProductoService {
         }
         return productoDtos;
     }
+
+
+    // Método que recibe los parámetros de filtro y llama al repositorio
+    public List<Producto> buscarProductos(Double precioMin, Double precioMax, String proveedor, String nombre) {
+        return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
+    }
+
+
+
+
 }

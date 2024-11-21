@@ -4,7 +4,8 @@ import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Producto;
 import com.valencia.proyecto1evaluacion.servicios.ProductoService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +32,22 @@ public class ProductoController {
     public Producto crearProducto(@RequestBody ProductoDTO productoDTO){
         return productoService.anyadirProducto(productoDTO);
     }
+
+
+    // Endpoint con filtros para buscar productos
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Producto>> buscarProductos(
+            @RequestParam(value = "precioMin", required = false) Double precioMin,
+            @RequestParam(value = "precioMax", required = false) Double precioMax,
+            @RequestParam(value = "proveedor", required = false) String proveedor,
+            @RequestParam(value = "nombre", required = false) String nombre) {
+
+        // Llamar al servicio para obtener los productos filtrados
+        List<Producto> productos = productoService.buscarProductos(precioMin, precioMax, proveedor, nombre);
+
+        return ResponseEntity.ok(productos);
+    }
+
+
 
 }

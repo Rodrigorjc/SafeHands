@@ -21,15 +21,6 @@ public class Proveedores {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name="nombre", nullable = false)
-    private String nombre;
-
-    @Column(name="descripcion", nullable = false)
-    private String descripcion;
-
-    @Column(name="url", nullable = false)
-    private String url;
-
     @Column(name = "num_voluntarios", nullable = false)
     private Integer numVoluntarios;
 
@@ -42,6 +33,9 @@ public class Proveedores {
     @Column(name = "cif", nullable = false, length = 9)
     private String cif;
 
+    @Column(name = "img")
+    private String img;
+
     @Column(name = "validado", nullable = false)
     private Boolean validado = false;
 
@@ -49,7 +43,4 @@ public class Proveedores {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
-
-
-
 }

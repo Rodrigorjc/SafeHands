@@ -17,6 +17,8 @@ public class AcontecimientoController {
     private AcontecimientoRepository acontecimientoRepositorio;
     private AcontecimientoService acontecimientoService;
 
+
+
     @GetMapping("/listar")
     public List<AcontecimientoDTO> listarAcontecimientos(){
         List<AcontecimientoDTO> acontecimiento = acontecimientoService.getAll();

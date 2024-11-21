@@ -15,6 +15,7 @@ import java.util.List;
 public class AcontecimientoService {
     private AcontecimientoRepository acontecimientoRepositorio;
 
+
     /**
      * Devuelve todos los acontecimientos
      *

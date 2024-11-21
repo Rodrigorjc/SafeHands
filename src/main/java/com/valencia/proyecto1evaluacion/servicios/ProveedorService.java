@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
+import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedorCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
@@ -29,7 +30,6 @@ public class ProveedorService {
     UsuarioRepository usuarioRepositorio;
 
     PasswordEncoder passwordEncoder;
-    private PerfilMapper perfilMapper;
 
     JwtService jwtService;
 
@@ -53,128 +53,53 @@ public class ProveedorService {
     }
 
 
-        public Proveedores registrarProveedor(ProveedoresDTO proveedorDto) {
+    public AuthenticationDTO registrarProveedor(CrearProveedorDTO crearProveedorDTO) {
+        Usuario usuario = new Usuario();
+        usuario.setEmail(crearProveedorDTO.getEmail());
+        usuario.setUsername(crearProveedorDTO.getUsername());
+        usuario.setPassword(passwordEncoder.encode(crearProveedorDTO.getPassword()));
+        usuario.setRol(Rol.PROVEEDOR);
+        usuarioRepositorio.save(usuario);
+        Proveedores proveedor = new Proveedores();
+        proveedor.setUsuario(usuario);
+        proveedor.setNumVoluntarios(crearProveedorDTO.getNumVoluntarios());
+        proveedor.setCif(crearProveedorDTO.getCif());
+        proveedor.setSede(crearProveedorDTO.getSede());
+        proveedor.setUbicacion(crearProveedorDTO.getUbicacion());
+        proveedoresRepositorio.save(proveedor);
+        var jwtToken = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
 
+        return AuthenticationDTO.builder().token(jwtToken).build();
+    }
 
-            if (proveedorDto.getCif() == null || proveedorDto.getCif().isEmpty()) {
-                throw new IllegalArgumentException("CIF cannot be null or empty");
-            }
-            if (proveedorDto.getNumVoluntarios() <= 0) {
-                throw new IllegalArgumentException("Number of volunteers must be greater than zero");
-            }
+    public ImgDTO getImgbyId  (Integer id){
+        Proveedores proveedores = proveedoresRepositorio.findClienteByUsuarioId(id);
+        ImgDTO imgDTO = new ImgDTO();
+        imgDTO.setImg(proveedores.getImg());
+        return imgDTO;
+    }
 
-            Usuario usuario = new Usuario();
-            usuario.setEmail(proveedorDto.getEmail());
-            usuario.setUsername(proveedorDto.getUsername());
-            usuario.setPassword(passwordEncoder.encode(proveedorDto.getPassword())); // Ensure to encode the password
-            usuario.setRol(Rol.PROVEEDOR);
-            usuario = usuarioRepositorio.save(usuario);
+    /**
+     * listar proveedores
+     */
 
-
-            String token = jwtService.generateToken(usuario);
-
-            proveedorDto.setId_usuario(usuario.getId());
-
-            return crearProveedor(proveedorDto);
-
-
+    public List<ProveedoresDTO> listarProveedores() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findByValidadoFalse();
+        List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
+        for (Proveedores proveedor : proveedores) {
+            ProveedoresDTO dto = new ProveedoresDTO();
+            dto.setId(proveedor.getId());
+            dto.setCif(proveedor.getCif());
+            dto.setNumVoluntarios(proveedor.getNumVoluntarios());
+            dto.setSede(proveedor.getSede());
+            dto.setUbicacion(proveedor.getUbicacion());
+            dto.setId_usuario(proveedor.getUsuario().getId());
+            dto.setEmail(proveedor.getUsuario().getEmail());
+            dto.setUsername(proveedor.getUsuario().getUsername());
+            proveedoresDTOs.add(dto);
         }
-
-
-    /**
-     * Este método extrae todos los perfiles de base de datos
-     *
-     * @return
-     */
-    public List<PerfilProveedoresDTO> getAll(){
-
-        List<Proveedores> proveedor = proveedoresRepositorio.findAll();
-        List<PerfilProveedoresDTO> DTOS = new ArrayList<>();
-
-        for(Proveedores p : proveedor){
-            PerfilProveedoresDTO dto = new PerfilProveedoresDTO();
-            dto.setNombre(p.getNombre());
-            dto.setDescripcion(p.getDescripcion());
-            dto.setUrl(p.getUrl());
-            dto.setCif(p.getCif());
-            dto.setSede(p.getSede());
-            dto.setNumVoluntarios(p.getNumVoluntarios());
-            dto.setUbicacion(p.getUbicacion());
-
-            DTOS.add(dto);
-        }
-
-        return DTOS;
-    }
-
-    /**
-     * Busca perfiles por coincidencia en nombre, descripcion o sede
-     *
-     * @param busqueda
-     * @return
-     */
-    public List<PerfilProveedoresDTO> buscar(String busqueda){
-        return perfilMapper.toDTO(proveedoresRepositorio.buscar(busqueda));
-    }
-    /**
-     * Este método busca un proveedor a partir de su id
-     *
-     * @param id
-     * @return
-     */
-    public Proveedores getById(Integer id){
-        return proveedoresRepositorio.findById(id).orElse(null);
-    }
-
-    /**
-     * Este método guarda un perfilProveedor nuevo o modifica uno existente
-     *
-     * @param dto
-     * @return
-     */
-    public Proveedores guardar(PerfilProveedorCrearDTO dto){
-        Proveedores perfilGuardar = new Proveedores();
-        perfilGuardar.setNombre(dto.getNombre());
-        perfilGuardar.setDescripcion(dto.getDescripcion());
-        perfilGuardar.setUrl(dto.getUrl());
-        perfilGuardar.setNumVoluntarios(dto.getNumVoluntarios());
-        perfilGuardar.setSede(dto.getSede());
-        perfilGuardar.setCif(dto.getCif());
-        perfilGuardar.setUbicacion(dto.getUbicacion());
-
-        return proveedoresRepositorio.save(perfilGuardar);
-    }
-
-    /**
-     * Elimina un perfilProveedor a traves de su id
-     *
-     * @param id
-     */
-    public String eliminar(Integer id){
-        String mensaje;
-        Proveedores proveedores = getById(id);
-
-        if(proveedores == null){
-            return "El perfil del proveedor con el id indicado no existe";
-        }
-
-        try{
-            proveedoresRepositorio.deleteById(id);
-            proveedores = getById(id);
-            if(proveedores == null){
-                mensaje = "El perfil del proveedor no se ha podido eliminar.";
-            }else{
-                mensaje = "El perfil del proveedor se ha eliminado correctamente.";
-            }
-        }catch (Exception e){
-            mensaje = "El perfil del proveedor no se ha podido eliminar.";
-        }
-        return mensaje;
-    }
-
-    public void eliminar(Proveedores proveedor){
-        proveedoresRepositorio.delete(proveedor);
-    }
+        return proveedoresDTOs;
     }
 
 
+}
