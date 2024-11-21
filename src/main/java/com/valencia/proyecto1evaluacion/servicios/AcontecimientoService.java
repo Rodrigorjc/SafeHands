@@ -3,18 +3,21 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
+import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
+import com.valencia.proyecto1evaluacion.repositorio.OngAcontecimientoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class AcontecimientoService {
-    private AcontecimientoRepository acontecimientoRepositorio;
-
+    private AcontecimientoRepository acontecimientoRepository;
+    private OngAcontecimientoRepository ongAcontecimientoRepository;
 
     /**
      * Devuelve todos los acontecimientos
@@ -22,10 +25,11 @@ public class AcontecimientoService {
      * @return
      */
     public List<AcontecimientoDTO> getAll(){
-        List<Acontecimiento> acontecimientos = acontecimientoRepositorio.findAll();
+        List<Acontecimiento> acontecimientos = acontecimientoRepository.findAll();
         List<AcontecimientoDTO> acontecimientoDTOS = new ArrayList<>();
         for (Acontecimiento a : acontecimientos ) {
             AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
+            acontecimientoDTO.setId(a.getId());
             acontecimientoDTO.setNombre(a.getNombre());
             acontecimientoDTO.setDescripcion(a.getDescripcion());
             acontecimientoDTO.setImg(a.getImg());
@@ -42,7 +46,7 @@ public class AcontecimientoService {
      * @return
      */
     public Acontecimiento getById(Integer id){
-        return acontecimientoRepositorio.findById(id).orElse(null);
+        return acontecimientoRepository.findById(id).orElse(null);
     }
 
     /**
@@ -57,7 +61,7 @@ public class AcontecimientoService {
         entity.setDescripcion(acontecimientoCrearDTO.getDescripcion());
         entity.setUbicacion(acontecimientoCrearDTO.getUbicacion());
 
-        return acontecimientoRepositorio.save(entity);
+        return acontecimientoRepository.save(entity);
     }
 
     /**
@@ -68,12 +72,12 @@ public class AcontecimientoService {
      * @return
      */
     public Acontecimiento editar(AcontecimientoCrearDTO dto, Integer id){
-        Acontecimiento entity = acontecimientoRepositorio.getReferenceById(id);
+        Acontecimiento entity = acontecimientoRepository.getReferenceById(id);
         entity.setNombre(dto.getNombre());
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
 
-        return acontecimientoRepositorio.save(entity);
+        return acontecimientoRepository.save(entity);
     }
 
     /**
@@ -88,7 +92,7 @@ public class AcontecimientoService {
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
 
-        return acontecimientoRepositorio.save(entity);
+        return acontecimientoRepository.save(entity);
     }
 
     /**
@@ -104,7 +108,7 @@ public class AcontecimientoService {
             mensaje = "El acontecimiento con el id que está buscando no existe.";
     }
         try{
-            acontecimientoRepositorio.deleteById(id);
+            acontecimientoRepository.deleteById(id);
 
             acontecimiento = getById(id);
             if (acontecimiento != null) {
@@ -119,4 +123,25 @@ public class AcontecimientoService {
 
 
     }
+
+
+    public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
+        Acontecimiento acontecimiento = new Acontecimiento();
+        acontecimiento.setNombre(acontecimientoDTO.getNombre());
+        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
+        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
+        acontecimiento.setImg(acontecimientoDTO.getImg());
+        acontecimientoRepository.save(acontecimiento);
+        return acontecimientoDTO;
+    }
+
+//    public List<Acontecimiento> obtenerAcontecimientosPorOng(Integer ongId) {
+//        List<OngAcontecimiento> ongAcontecimientos = ongAcontecimientoRepository.findByOngId(ongId);
+//        List<Acontecimiento> acontecimientos = new ArrayList<>();
+//        for (OngAcontecimiento ongAcontecimiento : ongAcontecimientos) {
+//            acontecimientos.add(ongAcontecimiento.getAcontecimiento());
+//        }
+//        return acontecimientos;
+//
+//    }
 }

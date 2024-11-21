@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 @RequiredArgsConstructor
 public class UsuarioControler {
 
@@ -61,7 +61,7 @@ public class UsuarioControler {
         } else {
             mensaje = "Usuario Logueado";
             if (usuario.getToken() == null || jwtService.isTokenExpired(usuario.getToken().getToken())) {
-                apiKey = jwtService.generateToken(usuario);
+                apiKey = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
                 TokenAcceso token = usuario.getToken() == null ? new TokenAcceso() : usuario.getToken();
                 token.setUsuario(usuario);
                 token.setToken(apiKey);

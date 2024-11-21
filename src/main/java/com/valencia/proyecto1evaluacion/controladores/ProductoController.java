@@ -1,7 +1,9 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
+import com.valencia.proyecto1evaluacion.dtos.AconteciminetoProveedorVinculacionDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Producto;
+import com.valencia.proyecto1evaluacion.modelos.ProveedoresAcontecimiento;
 import com.valencia.proyecto1evaluacion.servicios.ProductoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/producto")
 @AllArgsConstructor
-public class ProductoController {
+public class    ProductoController {
 
     ProductoService productoService;
 
@@ -25,6 +27,11 @@ public class ProductoController {
     @GetMapping("/listar")
     public List<ProductoDTO> mostrar(){
         return productoService.getAll();
+    }
+
+    @GetMapping("/listar/{proveedorId}")
+    public List<ProductoDTO> listarProductosPorProveedor(@PathVariable Integer proveedorId) {
+        return productoService.getProductosByProveedorId(proveedorId);
     }
 
     @PostMapping("/crear")
@@ -49,5 +56,11 @@ public class ProductoController {
     }
 
 
+
+
+    @PostMapping("/{productoId}/vincular/{acontecimientoId}")
+    public AconteciminetoProveedorVinculacionDTO vincularProductoAcontecimiento(@PathVariable Integer productoId, @PathVariable Integer acontecimientoId) {
+        return productoService.vincularProductoAcontecimiento(productoId, acontecimientoId);
+    }
 
 }

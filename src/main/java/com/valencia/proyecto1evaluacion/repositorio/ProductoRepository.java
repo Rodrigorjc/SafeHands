@@ -21,4 +21,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
                                    @Param("precioMax") Double precioMax,
                                    @Param("proveedor") String proveedor,
                                    @Param("nombre") String nombre);
+
+    List<Producto> findByProveedoresId(Integer proveedorId);
+
 }

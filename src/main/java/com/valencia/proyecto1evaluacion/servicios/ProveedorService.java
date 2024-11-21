@@ -3,9 +3,13 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedorCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
+import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
+import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
+import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.mappers.PerfilMapper;
+import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
@@ -100,6 +104,12 @@ public class ProveedorService {
         }
         return proveedoresDTOs;
     }
+
+    /**
+     * listar proveedores
+     */
+
+}
 
 
 }

@@ -42,10 +42,15 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/usuarios/**").permitAll();
-                    auth.requestMatchers("producto/crear").hasAnyAuthority(Rol.PROVEEDOR.name());
-                    auth.requestMatchers("producto/listar").permitAll();
+                    auth.requestMatchers("/usuarios/**").permitAll();
+                    auth.requestMatchers("producto/crear").permitAll();
                     auth.requestMatchers(("proveedor/**")).permitAll();
+                    auth.requestMatchers("ong/**").permitAll();
+                    auth.requestMatchers("producto/{productoId}/vincular-acontecimiento/{acontecimientoId}").permitAll();
+                    auth.requestMatchers("ong/validar/proveedor/{id}").permitAll();
+                    auth.requestMatchers("acontecimiento/**").permitAll();
+                    auth.requestMatchers("producto/**").permitAll();
+                    auth.requestMatchers("ong/:id").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
                     auth.requestMatchers("ong/**").hasAnyAuthority(Rol.ONG.name());
                     auth.anyRequest().authenticated();
@@ -63,7 +68,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

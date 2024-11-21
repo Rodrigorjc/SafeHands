@@ -1,12 +1,13 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.valencia.proyecto1evaluacion.dtos.AconteciminetoProveedorVinculacionDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
-import com.valencia.proyecto1evaluacion.modelos.Producto;
-import com.valencia.proyecto1evaluacion.modelos.Proveedores;
-import com.valencia.proyecto1evaluacion.modelos.Usuario;
+import com.valencia.proyecto1evaluacion.modelos.*;
+import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProductoRepository;
+import com.valencia.proyecto1evaluacion.repositorio.ProveedoresAcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,10 @@ public class ProductoService {
     ProveedoresRepository proveedoresRepositorio;
     @Autowired
     UsuarioService usuarioService;
+    @Autowired
+    AcontecimientoRepository acontecimientoRepository;
+    @Autowired
+    ProveedoresAcontecimientoRepository proveedoresAcontecimientoRepository;
 
 
     public Producto anyadirProducto(ProductoDTO productoDto) {
@@ -50,6 +55,9 @@ public class ProductoService {
 
         if (!proveedoresRepositorio.existsByIdAndValidado(proveedor.getId(), true)) {
             throw new RuntimeException("El proveedor no está validado y no puede crear productos.");
+        }
+        if (productoDto.getPrecio() < 0) {
+            throw new IllegalArgumentException("El precio no puede ser menor que 0");
         }
 
 //        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
@@ -86,6 +94,7 @@ public class ProductoService {
         List<Producto> productos = productoRepositorio.findAll();
         for (Producto producto : productos) {
             ProductoDTO dto = new ProductoDTO();
+            dto.setId(producto.getId());
             dto.setDescripcion(producto.getDescripcion());
             dto.setUrl(producto.getUrl());
             dto.setPrecio(producto.getPrecio());
@@ -103,5 +112,60 @@ public class ProductoService {
 
 
 
+
+
+    public List<ProductoDTO> getProductosByProveedorId(Integer proveedorId) {
+        List<Producto> productos = productoRepositorio.findByProveedoresId(proveedorId);
+        List<ProductoDTO> productoDtos = new ArrayList<>();
+        for (Producto producto : productos) {
+            ProductoDTO dto = new ProductoDTO();
+            dto.setId(producto.getId());
+            dto.setDescripcion(producto.getDescripcion());
+            dto.setUrl(producto.getUrl());
+            dto.setPrecio(producto.getPrecio());
+            dto.setNombre(producto.getNombre());
+            productoDtos.add(dto);
+        }
+        return productoDtos;
+    }
+
+
+
+    public AconteciminetoProveedorVinculacionDTO vincularProductoAcontecimiento(Integer productoId, Integer acontecimientoId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !usuario.getRol().equals(Rol.PROVEEDOR)) {
+            throw new SecurityException("No tienes permiso para vincular productos a acontecimientos");
+        }
+
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+
+        Producto producto = productoRepositorio.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (!producto.getProveedores().getId().equals(proveedor.getId())) {
+            throw new SecurityException("No tienes permiso para vincular este producto a acontecimientos");
+        }
+
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
+                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+
+        ProveedoresAcontecimiento proveedoresAcontecimiento = new ProveedoresAcontecimiento();
+        proveedoresAcontecimiento.setProducto(producto);
+        proveedoresAcontecimiento.setAcontecimiento(acontecimiento);
+        proveedoresAcontecimiento.setProveedores(proveedor);
+
+        proveedoresAcontecimientoRepository.save(proveedoresAcontecimiento);
+
+        AconteciminetoProveedorVinculacionDTO dto = new AconteciminetoProveedorVinculacionDTO();
+        dto.setIdAcontecimiento(acontecimiento.getId());
+        dto.setIdProveedor(proveedor.getId());
+        dto.setIdProducto(producto.getId());
+
+        return dto;
+    }
 
 }

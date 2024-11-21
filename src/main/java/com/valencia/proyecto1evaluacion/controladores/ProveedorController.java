@@ -1,14 +1,17 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 
+import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
+import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
+import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/proveedor")
@@ -18,15 +21,31 @@ public class ProveedorController {
 
     ProveedorService proveedorService;
 
-    @PostMapping("/crear")
-    public Proveedores crearProveedor(@RequestBody ProveedoresDTO proveedor){
-        return proveedorService.crearProveedor(proveedor);
-    }
+//    @PostMapping("/crear")
+//    public Proveedores crearProveedor(@RequestBody ProveedoresDTO proveedor){
+//        return proveedorService.crearProveedor(proveedor);
+//    }
 
 
     @PostMapping("/registrar")
-    public Proveedores registrarProveedor(@RequestBody ProveedoresDTO proveedor) {
-        return proveedorService.registrarProveedor(proveedor);
+    public AuthenticationDTO registrarProveedor(@RequestBody CrearProveedorDTO crearProveedorDTO) {
+        return proveedorService.registrarProveedor(crearProveedorDTO);
+    }
+
+
+    @GetMapping("/img/{id}")
+    public ImgDTO getItemById(@PathVariable("id") String id) {
+        try {
+            Integer intId = Integer.parseInt(id);
+            return proveedorService.getImgbyId(intId);
+        } catch (NumberFormatException e) {
+            // Handle the error appropriately
+            return proveedorService.getImgbyId(10);
+        }
+    }
+    @GetMapping("/listar")
+    public List<ProveedoresDTO> listarProveedoresDTO(){
+        return proveedorService.listarProveedores();
     }
 
 }
