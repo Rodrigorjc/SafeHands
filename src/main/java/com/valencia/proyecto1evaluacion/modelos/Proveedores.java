@@ -33,6 +33,9 @@ public class Proveedores {
     @Column(name = "cif", nullable = false, length = 9)
     private String cif;
 
+    @Column(name = "img")
+    private String img;
+
     @Column(name = "validado", nullable = false)
     private Boolean validado = false;
 

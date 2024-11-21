@@ -1,8 +1,14 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
+import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
 import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
+import com.valencia.proyecto1evaluacion.modelos.Ong;
+import com.valencia.proyecto1evaluacion.modelos.Proveedores;
+import com.valencia.proyecto1evaluacion.modelos.Usuario;
+import com.valencia.proyecto1evaluacion.repositorio.OngRepository;
+import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
 import com.valencia.proyecto1evaluacion.modelos.*;
 import com.valencia.proyecto1evaluacion.repositorio.*;
 import com.valencia.proyecto1evaluacion.security.JwtService;
@@ -96,7 +102,7 @@ public class OngService {
         usuario.setRol(Rol.ONG);
         usuario = usuarioRepositorio.save(usuario);
 
-        String token = jwtService.generateToken(usuario);
+        String token = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
 
         ongDto.setId_usuario(usuario.getId());
 
@@ -153,5 +159,11 @@ public class OngService {
     }
 
 
+    public ImgDTO getImgbyId  (Integer id){
+        Ong ong = ongRepositorio.findClienteByUsuarioId(id);
+        ImgDTO imgDTO = new ImgDTO();
+        imgDTO.setImg(ong.getImg());
+        return imgDTO;
+    }
 
 }

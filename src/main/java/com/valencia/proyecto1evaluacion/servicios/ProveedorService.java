@@ -2,8 +2,10 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
 import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
+import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
+import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
@@ -65,9 +67,16 @@ public class ProveedorService {
         proveedor.setSede(crearProveedorDTO.getSede());
         proveedor.setUbicacion(crearProveedorDTO.getUbicacion());
         proveedoresRepositorio.save(proveedor);
-        var jwtToken = jwtService.generateToken(usuario);
+        var jwtToken = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
 
         return AuthenticationDTO.builder().token(jwtToken).build();
+    }
+
+    public ImgDTO getImgbyId  (Integer id){
+        Proveedores proveedores = proveedoresRepositorio.findClienteByUsuarioId(id);
+        ImgDTO imgDTO = new ImgDTO();
+        imgDTO.setImg(proveedores.getImg());
+        return imgDTO;
     }
 
     /**

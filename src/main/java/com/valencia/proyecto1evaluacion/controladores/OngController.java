@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
+import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
 import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
@@ -28,6 +29,16 @@ public class OngController {
         ongService.eliminarSolicitudProveedor(id);
     }
 
+    @GetMapping("/img/{id}")
+    public ImgDTO getItemById(@PathVariable("id") String id) {
+        try {
+            Integer intId = Integer.parseInt(id);
+            return ongService.getImgbyId(intId);
+        } catch (NumberFormatException e) {
+            // Handle the error appropriately
+            return ongService.getImgbyId(10);
+        }
+    }
 
     @GetMapping("/detalles/{id}")
     public OngDTO   obtenerOngPorId(@PathVariable Integer id) {

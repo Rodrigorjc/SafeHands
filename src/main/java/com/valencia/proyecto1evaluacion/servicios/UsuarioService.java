@@ -62,7 +62,7 @@ public class UsuarioService implements UserDetailsService {
         cliente.setDni(userDTO.getDni());
         clienteRepository.save(cliente);
 
-        var jwtToken = jwtService.generateToken(usuario);
+        var jwtToken = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
 
