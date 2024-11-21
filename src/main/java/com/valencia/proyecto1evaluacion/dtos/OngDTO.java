@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OngDTO {
-
+    private Integer id;
     private Integer numVoluntarios;
     private String sede;
     private String descripcion;
