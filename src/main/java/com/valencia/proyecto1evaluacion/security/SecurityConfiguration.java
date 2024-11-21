@@ -53,6 +53,8 @@ public class SecurityConfiguration {
                     auth.requestMatchers("ong/:id").permitAll();
                     auth.requestMatchers(("peticiones/**")).permitAll();
                     auth.requestMatchers(("total/**")).permitAll();
+                    auth.requestMatchers(("acontecimiento/**")).permitAll();
+
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

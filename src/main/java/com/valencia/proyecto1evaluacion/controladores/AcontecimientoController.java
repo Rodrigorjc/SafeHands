@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
+import com.valencia.proyecto1evaluacion.dtos.ConsultaAcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
@@ -8,6 +9,7 @@ import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.servicios.AcontecimientoService;
 import com.valencia.proyecto1evaluacion.servicios.OngAcontecimientoService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +42,17 @@ public class AcontecimientoController {
     @PostMapping("/crear")
     public AcontecimientoDTO crearAcontecimiento(@RequestBody AcontecimientoDTO acontecimientoDTO){
         return acontecimientoService.crearAcontecimiento(acontecimientoDTO);
+    }
+
+    /**
+     * Endpoint para obtener el total recaudado por cada acontecimiento.
+     *
+     * @return Lista de ConsultasAcontecimientoDTO con el nombre del acontecimiento y el total recaudado.
+     */
+    @GetMapping("/total")
+    public ResponseEntity<List<ConsultaAcontecimientoDTO>> getTotalRecaudadoPorAcontecimiento() {
+        List<ConsultaAcontecimientoDTO> totalRecaudado = acontecimientoService.findTotalRecaudadoPorAcontecimiento();
+        return ResponseEntity.ok(totalRecaudado);
     }
 
 }
