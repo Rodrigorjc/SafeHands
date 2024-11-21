@@ -71,6 +71,7 @@ public class OngService {
     }
     public Ong crearOng(OngDTO ongDto) {
         Ong entity = new Ong();
+        entity.setId(ongDto.getId());
         entity.setNumVoluntarios(ongDto.getNumVoluntarios());
         entity.setSede(ongDto.getSede());
         entity.setDescripcion(ongDto.getDescripcion());
@@ -102,9 +103,21 @@ public class OngService {
         return crearOng(ongDto);
     }
 
-    public Ong obtenerOngPorId(Integer id) {
-        return ongRepositorio.findById(id)
+    public OngDTO obtenerOngPorId(Integer id) {
+        Ong ong = ongRepositorio.findById(id)
                 .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
+
+        OngDTO dto = new OngDTO();
+        dto.setNumVoluntarios(ong.getNumVoluntarios());
+        dto.setSede(ong.getSede());
+        dto.setDescripcion(ong.getDescripcion());
+        dto.setUbicacion(ong.getUbicacion());
+        dto.setImg(ong.getImg());
+        dto.setEmail(ong.getUsuario().getEmail());
+        dto.setUsername(ong.getUsuario().getUsername());
+        dto.setId_usuario(ong.getUsuario().getId());
+
+        return dto;
     }
 
     public AcontecimientoOngVincularDTO acontecimientoOngVincular(Integer acontecimientoId) {
@@ -121,6 +134,11 @@ public class OngService {
 
         Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
                 .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+
+        boolean exists = ongAcontecimientoRepository.existsByOngAndAcontecimiento(ong, acontecimiento);
+        if (exists) {
+            throw new RuntimeException("La ONG ya está vinculada a este acontecimiento");
+        }
 
         OngAcontecimiento ongAcontecimiento = new OngAcontecimiento();
         ongAcontecimiento.setOng(ong);
