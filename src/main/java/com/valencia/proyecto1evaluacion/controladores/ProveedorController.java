@@ -48,4 +48,7 @@ public class ProveedorController {
         return proveedorService.listarProveedores();
     }
 
-}
+    @GetMapping("/obtenerId/{idProveedor}")
+    public Integer obtenerIdProveedor(@PathVariable Integer idProveedor) {
+        return proveedorService.obtenerIdProveedor(idProveedor);
+    }}

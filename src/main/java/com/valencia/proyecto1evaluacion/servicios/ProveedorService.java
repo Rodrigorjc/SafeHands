@@ -101,6 +101,11 @@ public class ProveedorService {
         return proveedoresDTOs;
     }
 
+    public Integer obtenerIdProveedor(Integer idProveedor) {
+        return proveedoresRepositorio.findById(idProveedor)
+                .map(Proveedores::getId)
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+    }
 
 }
 
