@@ -105,7 +105,7 @@ public class ProductoService {
     }
 
     public List<ProductoDTO> getProductosByProveedorId(Integer proveedorId) {
-        List<Producto> productos = productoRepositorio.findByProveedoresId(proveedorId);
+        List<Producto> productos = productoRepositorio.findByProveedoresUsuarioId(proveedorId);
         List<ProductoDTO> productoDtos = new ArrayList<>();
         for (Producto producto : productos) {
             ProductoDTO dto = new ProductoDTO();
