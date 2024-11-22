@@ -46,7 +46,7 @@ public class OngController {
     }
 
     @PostMapping("/crear")
-    public Ong crearOng(@RequestBody OngDTO ongDto) {
+    public OngDTO crearOng(@RequestBody OngDTO ongDto) {
         return ongService.registrarOng(ongDto);
     }
 
