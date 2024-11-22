@@ -19,8 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class OngService {
@@ -75,7 +73,7 @@ public class OngService {
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
         proveedoresRepositorio.delete(proveedor);
     }
-    public Ong crearOng(OngDTO ongDto) {
+    public OngDTO crearOng(OngDTO ongDto) {
         Ong entity = new Ong();
         entity.setId(ongDto.getId());
         entity.setNumVoluntarios(ongDto.getNumVoluntarios());
@@ -83,19 +81,33 @@ public class OngService {
         entity.setDescripcion(ongDto.getDescripcion());
         entity.setUbicacion(ongDto.getUbicacion());
         entity.setImg(ongDto.getImg());
-        Usuario usuario = usuarioRepositorio.findById(ongDto.getId_usuario()).orElse(null);
+        Usuario usuario = usuarioRepositorio.findById(ongDto.getIdUsuario()).orElse(null);
         entity.setUsuario(usuario);
 
-        return ongRepositorio.save(entity);
+        Ong savedOng = ongRepositorio.save(entity);
+
+        OngDTO resultDto = new OngDTO();
+        resultDto.setId(savedOng.getId());
+        resultDto.setNumVoluntarios(savedOng.getNumVoluntarios());
+        resultDto.setSede(savedOng.getSede());
+        resultDto.setDescripcion(savedOng.getDescripcion());
+        resultDto.setUbicacion(savedOng.getUbicacion());
+        resultDto.setImg(savedOng.getImg());
+        resultDto.setIdUsuario(savedOng.getUsuario().getId());
+        resultDto.setEmail(savedOng.getUsuario().getEmail());
+        resultDto.setUsername(savedOng.getUsuario().getUsername());
+
+        return resultDto;
     }
 
-    public Ong registrarOng(OngDTO ongDto) {
+    public OngDTO registrarOng(OngDTO ongDto) {
 
         if (ongDto.getNumVoluntarios() <= 0) {
             throw new IllegalArgumentException("El numero de voluntarios no puede ser menor o igual a 0");
         }
 
         Usuario usuario = new Usuario();
+        usuario.setId(ongDto.getIdUsuario());
         usuario.setEmail(ongDto.getEmail());
         usuario.setUsername(ongDto.getUsername());
         usuario.setPassword(passwordEncoder.encode(ongDto.getPassword()));
@@ -104,16 +116,17 @@ public class OngService {
 
         String token = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
 
-        ongDto.setId_usuario(usuario.getId());
+        ongDto.setIdUsuario(usuario.getId());
 
         return crearOng(ongDto);
     }
 
     public OngDTO obtenerOngPorId(Integer id) {
-        Ong ong = ongRepositorio.findById(id)
+        Ong ong = ongRepositorio.findOngByUsuarioId(id)
                 .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
 
         OngDTO dto = new OngDTO();
+        dto.setId(ong.getId());
         dto.setNumVoluntarios(ong.getNumVoluntarios());
         dto.setSede(ong.getSede());
         dto.setDescripcion(ong.getDescripcion());
@@ -121,12 +134,12 @@ public class OngService {
         dto.setImg(ong.getImg());
         dto.setEmail(ong.getUsuario().getEmail());
         dto.setUsername(ong.getUsuario().getUsername());
-        dto.setId_usuario(ong.getUsuario().getId());
+        dto.setIdUsuario(ong.getUsuario().getId());
 
         return dto;
     }
 
-    public AcontecimientoOngVincularDTO acontecimientoOngVincular(Integer acontecimientoId) {
+    public AcontecimientoOngVincularDTO   acontecimientoOngVincular(Integer acontecimientoId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
         Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
