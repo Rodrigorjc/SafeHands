@@ -5,10 +5,8 @@ import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
 import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
-import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +43,7 @@ public class ProveedorController {
     }
     @GetMapping("/listar")
     public List<ProveedoresDTO> listarProveedoresDTO(){
-        return proveedorService.listarProveedores();
+        return proveedorService.listarProveedoresPorValidadoFalso();
     }
 
     //listar proveedores por id, cambiar id por usuario
