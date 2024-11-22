@@ -17,5 +17,5 @@ public class OngDTO {
     private String email;
     private String username;
     private String password;
-    private Integer id_usuario;
+    private Integer idUsuario;
 }
