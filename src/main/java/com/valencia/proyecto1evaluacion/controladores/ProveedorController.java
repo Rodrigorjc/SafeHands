@@ -48,7 +48,8 @@ public class ProveedorController {
         return proveedorService.listarProveedores();
     }
 
+    //listar proveedores por id, cambiar id por usuario
     @GetMapping("/obtenerId/{idProveedor}")
-    public Integer obtenerIdProveedor(@PathVariable Integer idProveedor) {
-        return proveedorService.obtenerIdProveedor(idProveedor);
+    public ProveedoresDTO obtenerIdProveedor(@PathVariable Integer idProveedor) {
+        return proveedorService.obtenerProveedorPorId(idProveedor);
     }}

@@ -5,7 +5,6 @@ import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
-import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
@@ -46,7 +45,7 @@ public class ProveedorService {
         entity.setNumVoluntarios(proveedor.getNumVoluntarios());
         entity.setSede(proveedor.getSede());
         entity.setUbicacion(proveedor.getUbicacion());
-        Usuario usuario = usuarioRepositorio.findById(proveedor.getId_usuario()).orElse(null);
+        Usuario usuario = usuarioRepositorio.findById(proveedor.getIdUsuario()).orElse(null);
         entity.setUsuario(usuario);
 
         return proveedoresRepositorio.save(entity);
@@ -93,7 +92,7 @@ public class ProveedorService {
             dto.setNumVoluntarios(proveedor.getNumVoluntarios());
             dto.setSede(proveedor.getSede());
             dto.setUbicacion(proveedor.getUbicacion());
-            dto.setId_usuario(proveedor.getUsuario().getId());
+            dto.setIdUsuario(proveedor.getUsuario().getId());
             dto.setEmail(proveedor.getUsuario().getEmail());
             dto.setUsername(proveedor.getUsuario().getUsername());
             proveedoresDTOs.add(dto);
@@ -101,11 +100,22 @@ public class ProveedorService {
         return proveedoresDTOs;
     }
 
-    public Integer obtenerIdProveedor(Integer idProveedor) {
-        return proveedoresRepositorio.findById(idProveedor)
-                .map(Proveedores::getId)
+    public ProveedoresDTO obtenerProveedorPorId(Integer idProveedor) {
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(idProveedor)
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        ProveedoresDTO dto = new ProveedoresDTO();
+        dto.setId(proveedor.getId());
+        dto.setCif(proveedor.getCif());
+        dto.setNumVoluntarios(proveedor.getNumVoluntarios());
+        dto.setSede(proveedor.getSede());
+        dto.setUbicacion(proveedor.getUbicacion());
+        dto.setIdUsuario(proveedor.getUsuario().getId());
+        dto.setEmail(proveedor.getUsuario().getEmail());
+        dto.setUsername(proveedor.getUsuario().getUsername());
+        return dto;
     }
+
+
 
 }
 
