@@ -82,7 +82,7 @@ public class ProveedorService {
      * listar proveedores
      */
 
-    public List<ProveedoresDTO> listarProveedores() {
+    public List<ProveedoresDTO> listarProveedoresPorValidadoFalso() {
         List<Proveedores> proveedores = proveedoresRepositorio.findByValidadoFalse();
         List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
         for (Proveedores proveedor : proveedores) {
