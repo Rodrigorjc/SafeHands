@@ -111,6 +111,10 @@ public class ProveedorService {
         }
         return proveedoresSliderDTOS;
     }
+
+    public List<ProveedorRankingDTO> obtenerRankingProveedores() {
+        return proveedoresRepositorio.obtenerRankingProveedores();
+    }
 }
 
 
