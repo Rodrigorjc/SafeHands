@@ -1,9 +1,6 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
-import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
-import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
-import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
-import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
+import com.valencia.proyecto1evaluacion.dtos.*;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
@@ -102,6 +99,18 @@ public class ProveedorService {
     }
 
 
+    public List<ProveedoresSliderDTO> listadoProveedoresSlider() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findAll();
+        List<ProveedoresSliderDTO> proveedoresSliderDTOS = new ArrayList<>();
+        for (Proveedores p: proveedores) {
+            ProveedoresSliderDTO proveedoresSliderDTO = new ProveedoresSliderDTO();
+            proveedoresSliderDTO.setNombre(p.getNombre());
+            proveedoresSliderDTO.setImg(p.getImg());
+            proveedoresSliderDTO.setId(p.getId());
+            proveedoresSliderDTOS.add(proveedoresSliderDTO);
+        }
+        return proveedoresSliderDTOS;
+    }
 }
 
 

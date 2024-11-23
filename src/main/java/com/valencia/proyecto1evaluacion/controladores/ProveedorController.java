@@ -1,10 +1,7 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 
-import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
-import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
-import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
-import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
+import com.valencia.proyecto1evaluacion.dtos.*;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
@@ -46,6 +43,11 @@ public class ProveedorController {
     @GetMapping("/listar")
     public List<ProveedoresDTO> listarProveedoresDTO(){
         return proveedorService.listarProveedores();
+    }
+
+    @GetMapping("/listado")
+    public List<ProveedoresSliderDTO> listadoProveedores(){
+        return proveedorService.listadoProveedoresSlider();
     }
 
 }
