@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
+import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
@@ -38,6 +39,11 @@ public class AcontecimientoController {
     @PostMapping("/crear")
     public AcontecimientoDTO crearAcontecimiento(@RequestBody AcontecimientoDTO acontecimientoDTO){
         return acontecimientoService.crearAcontecimiento(acontecimientoDTO);
+    }
+
+    @GetMapping("/info")
+    public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento()  {
+        return acontecimientoService.obtenerInfoAcontecimiento();
     }
 
 }
