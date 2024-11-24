@@ -115,6 +115,10 @@ public class ProveedorService {
     public List<ProveedorRankingDTO> obtenerRankingProveedores() {
         return proveedoresRepositorio.obtenerRankingProveedores();
     }
+
+    public List<ProveedorInfoDTO> obtenerInfoProveedores() {
+        return proveedoresRepositorio.obtenerInfoProveedores();
+    }
 }
 
 
