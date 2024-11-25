@@ -17,10 +17,6 @@ public class    ProductoController {
 
     ProductoService productoService;
 
-//    @PostMapping("/crear")
-//    public Producto crear(@RequestBody ProductoDto productoDto){
-//        return productoService.anyadirProducto(productoDto);
-//    }
 
     @GetMapping("/listar")
     public List<ProductoDTO> mostrar(){
@@ -59,6 +55,12 @@ public class    ProductoController {
     @PostMapping("/{productoId}/vincular/{acontecimientoId}")
     public AconteciminetoProveedorVinculacionDTO vincularProductoAcontecimiento(@PathVariable Integer productoId, @PathVariable Integer acontecimientoId) {
         return productoService.vincularProductoAcontecimiento(productoId, acontecimientoId);
+    }
+
+
+    @GetMapping("/acontecimiento")
+    public List<ProductoDTO> obtenerProductosPorAcontecimiento(@RequestParam Integer idAcontecimiento) {
+        return productoService.getProductosByAcontecimientoId(idAcontecimiento);
     }
 
 }
