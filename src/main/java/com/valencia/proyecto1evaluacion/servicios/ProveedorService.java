@@ -59,6 +59,8 @@ public class ProveedorService {
         usuarioRepositorio.save(usuario);
         Proveedores proveedor = new Proveedores();
         proveedor.setUsuario(usuario);
+        proveedor.setImg(crearProveedorDTO.getImg());
+        proveedor.setNombre(crearProveedorDTO.getNombre());
         proveedor.setNumVoluntarios(crearProveedorDTO.getNumVoluntarios());
         proveedor.setCif(crearProveedorDTO.getCif());
         proveedor.setSede(crearProveedorDTO.getSede());
