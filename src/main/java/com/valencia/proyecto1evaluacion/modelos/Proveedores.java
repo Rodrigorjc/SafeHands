@@ -36,6 +36,9 @@ public class Proveedores {
     @Column(name = "img")
     private String img;
 
+    @Column(name="nombre",nullable = false)
+    private String nombre;
+
     @Column(name = "validado", nullable = false)
     private Boolean validado = false;
 

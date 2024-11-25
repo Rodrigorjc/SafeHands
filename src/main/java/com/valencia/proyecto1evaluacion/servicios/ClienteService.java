@@ -4,7 +4,6 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.repositorio.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +15,20 @@ import java.util.Optional;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
-    private ClienteRepository clienteRepository;
 
-    @Autowired
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
     public ImgDTO getImgbyId  (Integer id){
         Cliente cliente = clienteRepository.findClienteByUsuarioId(id);
         ImgDTO imgDTO = new ImgDTO();
-        imgDTO.setImg(cliente.getFotoPsubida de cliente cotroles, servicio y DTOerfil());
+        imgDTO.setImg(cliente.getFotoPerfil());
         return imgDTO;
     }
+
 
     // Obtener todos los clientes
     public List<Cliente> findAll() {
         return clienteRepository.findAll();
     }
-}
+
 
     // Obtener un cliente por su ID
     public Optional<Cliente> findById(Integer id) {

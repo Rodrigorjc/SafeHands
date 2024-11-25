@@ -21,9 +21,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ProductoService {
-
-    @Autowired
-    ProveedorService proveedorService;
+    
     @Autowired
     ProductoRepository productoRepositorio;
     @Autowired
@@ -106,7 +104,7 @@ public class ProductoService {
 
 
     // Método que recibe los parámetros de filtro y llama al repositorio
-    public List<Producto> buscarProductos(Double precioMin, Double precioMax, String proveedor, String nombre) {
+    public List<Producto> buscarProductos(Double precioMin, Double precioMax, Integer proveedor, String nombre) {
         return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
     }
 

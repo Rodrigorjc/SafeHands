@@ -24,11 +24,6 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    @Autowired
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
-
     // Obtener todos los clientes
     @GetMapping
     public ResponseEntity<List<Cliente>> getAllClientes() {
@@ -57,15 +52,6 @@ public class ClienteController {
         Optional<Cliente> updatedCliente = clienteService.updateCliente(id, clienteDetails);
         return updatedCliente.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    @GetMapping("/img/{id}")
-    public ImgDTO getItemById(@PathVariable("id") String id) {
-        try {
-            Integer intId = Integer.parseInt(id);
-            return clienteService.getImgbyId(intId);
-        } catch (NumberFormatException e) {
-            // Hsubida de cliente cotroles, servicio y DTOandle the error appropriately
-            return clienteService.getImgbyId(10);
-        }
     }
 
     // Eliminar un cliente por su ID
@@ -74,7 +60,11 @@ public class ClienteController {
         clienteService.deleteCliente(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-}
 
-
+    // Obtener imagen de cliente por ID
+    @GetMapping("/img/{id}")
+    public ResponseEntity<ImgDTO> getImgById(@PathVariable Integer id) {
+        ImgDTO imgDTO = clienteService.getImgbyId(id);
+        return new ResponseEntity<>(imgDTO, HttpStatus.OK);
+    }
 }

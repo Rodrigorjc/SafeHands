@@ -52,6 +52,9 @@ public class SecurityConfiguration {
                     auth.requestMatchers("producto/**").permitAll();
                     auth.requestMatchers("ong/:id").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
+                    auth.requestMatchers("producto/buscar").permitAll();
+                    auth.requestMatchers("producto/filtrar").permitAll();
+                    auth.requestMatchers("producto/donaciones").permitAll();
                     auth.requestMatchers("ong/**").hasAnyAuthority(Rol.ONG.name());
                     auth.anyRequest().authenticated();
                 })
