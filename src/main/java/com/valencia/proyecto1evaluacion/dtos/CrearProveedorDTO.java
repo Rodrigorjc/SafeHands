@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CrearProveedorDTO {
+    private String nombre;
     private Integer numVoluntarios;
     private String sede;
     private String ubicacion;
     private String cif;
+    private String img;
     private String username;
     private String email;
     private String password;
