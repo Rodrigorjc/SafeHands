@@ -39,11 +39,14 @@ public class Ong {
     @Column(name = "img", nullable = false, length = 1500)
     private String img;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("usuario-ong")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "ong", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<OngAcontecimiento> ongAcontecimientos;
 
 
 }
