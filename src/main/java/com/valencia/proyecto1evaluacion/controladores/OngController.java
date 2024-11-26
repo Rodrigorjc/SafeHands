@@ -57,6 +57,12 @@ public class OngController {
 
     }
 
+    @GetMapping("/listar")
+    public List<OngDTO> listarOngs() {
+        return ongService.listar();
+    }
+
+
 //    @GetMapping("/acontecimiento/{id}")
 //    public List<Ong> obtenerOngsPorAcontecimiento(@PathVariable Integer id) {
 //        return ongService.obtenerOngsPorAcontecimiento(id);

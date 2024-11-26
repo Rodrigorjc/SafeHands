@@ -19,6 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class OngService {
@@ -74,6 +77,14 @@ public class OngService {
         proveedoresRepositorio.delete(proveedor);
     }
     public OngDTO crearOng(OngDTO ongDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !usuario.getRol().equals(Rol.ADMIN)) {
+            throw new SecurityException("No tienes permiso para crear ONGs");
+        }
+
         Ong entity = new Ong();
         entity.setId(ongDto.getId());
         entity.setNumVoluntarios(ongDto.getNumVoluntarios());
@@ -81,8 +92,8 @@ public class OngService {
         entity.setDescripcion(ongDto.getDescripcion());
         entity.setUbicacion(ongDto.getUbicacion());
         entity.setImg(ongDto.getImg());
-        Usuario usuario = usuarioRepositorio.findById(ongDto.getIdUsuario()).orElse(null);
-        entity.setUsuario(usuario);
+        Usuario usuarioOng = usuarioRepositorio.findById(ongDto.getIdUsuario()).orElse(null);
+        entity.setUsuario(usuarioOng);
 
         Ong savedOng = ongRepositorio.save(entity);
 
@@ -101,22 +112,29 @@ public class OngService {
     }
 
     public OngDTO registrarOng(OngDTO ongDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !usuario.getRol().equals(Rol.ADMIN)) {
+            throw new SecurityException("No tienes permiso para registrar ONGs");
+        }
 
         if (ongDto.getNumVoluntarios() <= 0) {
             throw new IllegalArgumentException("El numero de voluntarios no puede ser menor o igual a 0");
         }
 
-        Usuario usuario = new Usuario();
-        usuario.setId(ongDto.getIdUsuario());
-        usuario.setEmail(ongDto.getEmail());
-        usuario.setUsername(ongDto.getUsername());
-        usuario.setPassword(passwordEncoder.encode(ongDto.getPassword()));
-        usuario.setRol(Rol.ONG);
-        usuario = usuarioRepositorio.save(usuario);
+        Usuario usuarioOng = new Usuario();
+        usuarioOng.setId(ongDto.getIdUsuario());
+        usuarioOng.setEmail(ongDto.getEmail());
+        usuarioOng.setUsername(ongDto.getUsername());
+        usuarioOng.setPassword(passwordEncoder.encode(ongDto.getPassword()));
+        usuarioOng.setRol(Rol.ONG);
+        usuarioOng = usuarioRepositorio.save(usuarioOng);
 
-        String token = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
+        String token = jwtService.generateToken(usuarioOng, usuarioOng.getId(), usuarioOng.getRol().name());
 
-        ongDto.setIdUsuario(usuario.getId());
+        ongDto.setIdUsuario(usuarioOng.getId());
 
         return crearOng(ongDto);
     }
@@ -177,6 +195,25 @@ public class OngService {
         ImgDTO imgDTO = new ImgDTO();
         imgDTO.setImg(ong.getImg());
         return imgDTO;
+    }
+
+    public List<OngDTO> listar(){
+      List<Ong> ongs = ongRepositorio.findAll();
+      List<OngDTO> ongDTOs = new ArrayList<>();
+        for (Ong ong : ongs) {
+            OngDTO dto = new OngDTO();
+            dto.setId(ong.getId());
+            dto.setNumVoluntarios(ong.getNumVoluntarios());
+            dto.setSede(ong.getSede());
+            dto.setDescripcion(ong.getDescripcion());
+            dto.setUbicacion(ong.getUbicacion());
+            dto.setImg(ong.getImg());
+            dto.setEmail(ong.getUsuario().getEmail());
+            dto.setUsername(ong.getUsuario().getUsername());
+            dto.setIdUsuario(ong.getUsuario().getId());
+            ongDTOs.add(dto);
+        }
+        return ongDTOs;
     }
 
 }
