@@ -33,9 +33,9 @@ public class Acontecimiento {
     @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
 
-//    @JsonBackReference
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id_ong", nullable = false)
-//    private Ong ong;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ong", nullable = false)
+    private Ong ong;
 }
 
