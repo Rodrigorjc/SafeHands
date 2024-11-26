@@ -128,6 +128,7 @@ public class AcontecimientoService {
 
     public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
         Acontecimiento acontecimiento = new Acontecimiento();
+        acontecimiento.setId(acontecimientoDTO.getId());
         acontecimiento.setNombre(acontecimientoDTO.getNombre());
         acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
         acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());

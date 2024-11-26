@@ -15,5 +15,6 @@ public interface OngRepository extends JpaRepository<Ong, Integer> {
     Optional<Ong> findByUsuarioId(Integer usuarioId);
 
     Ong findClienteByUsuarioId(Integer id);
+    Optional<Ong> findOngByUsuarioId(Integer id);
 }
 

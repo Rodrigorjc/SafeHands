@@ -2,7 +2,6 @@ package com.valencia.proyecto1evaluacion.controladores;
 
 
 import com.valencia.proyecto1evaluacion.dtos.*;
-import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -42,9 +41,14 @@ public class ProveedorController {
     }
     @GetMapping("/listar")
     public List<ProveedoresDTO> listarProveedoresDTO(){
-        return proveedorService.listarProveedores();
+        return proveedorService.listarProveedoresPorValidadoFalso();
     }
 
+    //listar proveedores por id, cambiar id por usuario
+    @GetMapping("/obtenerId/{idProveedor}")
+    public ProveedoresDTO obtenerIdProveedor(@PathVariable Integer idProveedor) {
+        return proveedorService.obtenerProveedorPorId(idProveedor);
+    }}
     @GetMapping("/listado")
     public List<ProveedoresSliderDTO> listadoProveedores(){
         return proveedorService.listadoProveedoresSlider();

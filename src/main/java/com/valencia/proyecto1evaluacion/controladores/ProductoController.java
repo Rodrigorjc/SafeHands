@@ -28,6 +28,7 @@ public class    ProductoController {
         return productoService.getAll();
     }
 
+    //cambiar para buscar por ususario
     @GetMapping("/listar/{proveedorId}")
     public List<ProductoDTO> listarProductosPorProveedor(@PathVariable Integer proveedorId) {
         return productoService.getProductosByProveedorId(proveedorId);
@@ -37,6 +38,11 @@ public class    ProductoController {
 //    @PreAuthorize("hasAuthority('PROVEEDOR')")
     public Producto crearProducto(@RequestBody ProductoDTO productoDTO){
         return productoService.anyadirProducto(productoDTO);
+    }
+
+    @DeleteMapping("/eliminar/{productoId}")
+    public void eliminarProducto(@PathVariable Integer productoId) {
+        productoService.eliminarProducto(productoId);
     }
 
 

@@ -23,7 +23,7 @@ public class Cliente {
     private String dni;
 
     @Column(name = "foto_perfil", nullable = true)
-    private String fotoPerfil;
+    private String fotoPerfil = "default.jpg";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
