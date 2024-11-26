@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "producto", schema = "safe_hand", catalog = "postgres")
 @Getter
@@ -37,6 +39,10 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_proveedores", nullable = false)
     private Proveedores proveedores;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ProveedoresAcontecimiento> proveedoresAcontecimientos;
 
 
 
