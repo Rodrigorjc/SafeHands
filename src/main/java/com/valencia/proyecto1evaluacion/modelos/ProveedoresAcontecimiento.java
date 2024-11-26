@@ -3,6 +3,7 @@ package com.valencia.proyecto1evaluacion.modelos;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.sql.Delete;
 
 @Entity
 @Table(name = "proveedores_acontecimiento", schema = "safe_hand", catalog = "postgres")

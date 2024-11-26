@@ -40,6 +40,11 @@ public class    ProductoController {
         return productoService.anyadirProducto(productoDTO);
     }
 
+    @DeleteMapping("/eliminar/{productoId}")
+    public void eliminarProducto(@PathVariable Integer productoId) {
+        productoService.eliminarProducto(productoId);
+    }
+
 
     @PostMapping("/{productoId}/vincular/{acontecimientoId}")
     public AconteciminetoProveedorVinculacionDTO vincularProductoAcontecimiento(@PathVariable Integer productoId, @PathVariable Integer acontecimientoId) {

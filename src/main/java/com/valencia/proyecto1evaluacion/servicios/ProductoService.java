@@ -88,6 +88,28 @@ public class ProductoService {
 
     }
 
+    public void eliminarProducto(Integer productoId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !usuario.getRol().equals(Rol.PROVEEDOR)) {
+            throw new SecurityException("No tienes permiso para eliminar productos");
+        }
+
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+
+        Producto producto = productoRepositorio.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (!producto.getProveedores().getId().equals(proveedor.getId())) {
+            throw new SecurityException("No tienes permiso para eliminar este producto");
+        }
+
+        productoRepositorio.delete(producto);
+    }
+
 
     public List<ProductoDTO> getAll() {
         List<ProductoDTO> productoDtos = new ArrayList<>();
@@ -142,6 +164,11 @@ public class ProductoService {
 
         Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
                 .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+
+        boolean isAlreadyAssociated = proveedoresAcontecimientoRepository.existsByProductoAndAcontecimiento(producto, acontecimiento);
+        if (isAlreadyAssociated) {
+            throw new RuntimeException("El producto ya está asociado a este acontecimiento");
+        }
 
         ProveedoresAcontecimiento proveedoresAcontecimiento = new ProveedoresAcontecimiento();
         proveedoresAcontecimiento.setProducto(producto);
