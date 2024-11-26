@@ -28,6 +28,6 @@ public interface AcontecimientoRepository extends JpaRepository<Acontecimiento, 
             "JOIN safe_hand.proveedores_acontecimiento pa ON prod.id = pa.id_producto " +
             "JOIN safe_hand.acontecimiento a ON pa.id_acontecimiento = a.id " +
             "GROUP BY a.nombre", nativeQuery = true)
-    List<Object[]> findTotalRecaudadoPorAcontecimientoRaw();
+    List<Object[]>findTotalRecaudadoPorAcontecimientoRaw();
 
 }

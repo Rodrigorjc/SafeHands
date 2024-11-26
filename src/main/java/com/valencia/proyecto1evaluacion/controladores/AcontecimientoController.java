@@ -50,9 +50,13 @@ public class AcontecimientoController {
      * @return Lista de ConsultasAcontecimientoDTO con el nombre del acontecimiento y el total recaudado.
      */
     @GetMapping("/total")
-    public ResponseEntity<List<ConsultaAcontecimientoDTO>> getTotalRecaudadoPorAcontecimiento() {
-        List<ConsultaAcontecimientoDTO> totalRecaudado = acontecimientoService.findTotalRecaudadoPorAcontecimiento();
-        return ResponseEntity.ok(totalRecaudado);
+    public List<ConsultaAcontecimientoDTO> llamadaAcontecimiento() {
+        return acontecimientoService.findTotalRecaudadoPorAcontecimiento();
     }
 
+    @GetMapping("/total-donaciones")
+    public ResponseEntity<Double> getTotalDonaciones() {
+        Double totalDonaciones = acontecimientoService.findTotalDonaciones();
+        return ResponseEntity.ok(totalDonaciones);
+    }
 }

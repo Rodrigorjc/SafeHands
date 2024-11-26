@@ -11,4 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PagosDTO {
     private Double totalDonaciones;
+    private Integer id;
+    private Float cuantia;
+    private Boolean estado;
+
+    public PagosDTO(Double totalDonaciones) {
+        this.totalDonaciones = totalDonaciones;
+    }
 }

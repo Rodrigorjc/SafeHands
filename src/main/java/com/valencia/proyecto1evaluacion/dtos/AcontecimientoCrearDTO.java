@@ -11,5 +11,6 @@ public class AcontecimientoCrearDTO {
     private String nombre;
     private String descripcion;
     private String ubicacion;
+    private String img;
 
 }

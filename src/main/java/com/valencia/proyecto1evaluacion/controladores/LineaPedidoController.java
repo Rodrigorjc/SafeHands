@@ -21,4 +21,6 @@ public class LineaPedidoController {
     public List<ConsultasProveedorDTO> llamadaLineaPedido() {
         return lineaPedidoService.findTotalRecaudadoPorProveedor();
     }
+
+
 }

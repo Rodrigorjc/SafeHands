@@ -17,7 +17,7 @@ public class PagosController {
     private final PagosService pagosService;
 
     @GetMapping("/donaciones")
-    public List<PagosDTO> totalDonaciones() {
+    public PagosDTO totalDonaciones() {
         return pagosService.findTotalDonaciones();
     }
 
