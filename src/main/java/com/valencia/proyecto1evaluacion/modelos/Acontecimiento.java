@@ -38,3 +38,4 @@ public class Acontecimiento {
 //    @JoinColumn(name = "id_ong", nullable = false)
 //    private Ong ong;
 }
+

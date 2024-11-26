@@ -53,6 +53,13 @@ public class SecurityConfiguration {
                     auth.requestMatchers("producto/**").permitAll();
                     auth.requestMatchers("ong/:id").permitAll();
                     auth.requestMatchers("linea/total").permitAll();
+                    auth.requestMatchers("producto/**").permitAll();
+                    auth.requestMatchers("producto/buscar").permitAll();
+                    auth.requestMatchers("producto/filtrar").permitAll();
+                    auth.requestMatchers("producto/donaciones").permitAll();
+                    auth.requestMatchers("producto/donaciones/registrar").permitAll();
+                    auth.requestMatchers("producto/acontecimiento").permitAll();
+                    auth.requestMatchers("/proveedores-acontecimiento/productos").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

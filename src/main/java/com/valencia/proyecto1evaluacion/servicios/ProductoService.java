@@ -17,13 +17,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ProductoService {
 
-    @Autowired
-    ProveedorService proveedoresService;
     @Autowired
     ProductoRepository productoRepositorio;
     @Autowired
@@ -126,6 +125,16 @@ public class ProductoService {
         return productoDtos;
     }
 
+
+    // Método que recibe los parámetros de filtro y llama al repositorio
+    public List<Producto> buscarProductos(Double precioMin, Double precioMax, Integer proveedor, String nombre) {
+        return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
+    }
+
+
+
+
+
     public List<ProductoDTO> getProductosByProveedorId(Integer proveedorId) {
         List<Producto> productos = productoRepositorio.findByProveedoresUsuarioId(proveedorId);
         List<ProductoDTO> productoDtos = new ArrayList<>();
@@ -185,4 +194,26 @@ public class ProductoService {
         return dto;
     }
 
+    // Método para obtener los productos por el id del acontecimiento
+    public List<ProductoDTO> getProductosByAcontecimientoId(Integer idAcontecimiento) {
+        List<Producto> productos = productoRepositorio.findByAcontecimiento_Id(idAcontecimiento);
+
+        // Convertir la lista de Productos a DTOs si es necesario
+        return productos.stream()
+                .map(this::convertirAProductoDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Método para convertir un Producto a ProductoDTO (si lo necesitas)
+    private ProductoDTO convertirAProductoDTO(Producto producto) {
+        ProductoDTO productoDTO = new ProductoDTO();
+        productoDTO.setId(producto.getId());
+        productoDTO.setNombre(producto.getNombre());
+        productoDTO.setUrl(producto.getUrl());
+        productoDTO.setPrecio(producto.getPrecio());
+        productoDTO.setDescripcion(producto.getDescripcion());
+        // Puedes agregar otros atributos si es necesario
+        return productoDTO;
+    }
 }
+
