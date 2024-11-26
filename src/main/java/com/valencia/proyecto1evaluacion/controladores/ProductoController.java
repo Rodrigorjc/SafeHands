@@ -69,4 +69,9 @@ public class    ProductoController {
 //        return productoService.getProductosByAcontecimientoId(idAcontecimiento);
 //    }
 
+    @GetMapping("/getProductosAcontecimiento/{id}")
+    public List<ProductoDTO> getProductosAcontecimiento(@PathVariable Integer id) {
+        return productoService.getProductosAcontecimiento(id);
+    }
+
 }
