@@ -60,6 +60,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("producto/donaciones/registrar").permitAll();
                     auth.requestMatchers("producto/acontecimiento").permitAll();
                     auth.requestMatchers("/proveedores-acontecimiento/productos").permitAll();
+                    auth.requestMatchers("/acontecimiento/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
