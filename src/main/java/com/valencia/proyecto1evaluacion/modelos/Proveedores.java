@@ -42,9 +42,6 @@ public class Proveedores {
     @Column(name = "validado", nullable = false)
     private Boolean validado = false;
 
-    @Column(name= "nombre", nullable = false)
-    private String nombre;
-
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)

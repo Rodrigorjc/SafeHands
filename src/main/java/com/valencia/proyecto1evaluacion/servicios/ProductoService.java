@@ -127,9 +127,9 @@ public class ProductoService {
 
 
     // Método que recibe los parámetros de filtro y llama al repositorio
-    public List<Producto> buscarProductos(Double precioMin, Double precioMax, Integer proveedor, String nombre) {
-        return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
-    }
+//    public List<Producto> buscarProductos(Double precioMin, Double precioMax, Integer proveedor, String nombre) {
+//        return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
+//    }
 
 
 
@@ -195,14 +195,14 @@ public class ProductoService {
     }
 
     // Método para obtener los productos por el id del acontecimiento
-    public List<ProductoDTO> getProductosByAcontecimientoId(Integer idAcontecimiento) {
-        List<Producto> productos = productoRepositorio.findByAcontecimiento_Id(idAcontecimiento);
-
-        // Convertir la lista de Productos a DTOs si es necesario
-        return productos.stream()
-                .map(this::convertirAProductoDTO)
-                .collect(Collectors.toList());
-    }
+//    public List<ProductoDTO> getProductosByAcontecimientoId(Integer idAcontecimiento) {
+//        List<Producto> productos = productoRepositorio.findByAcontecimiento_Id(idAcontecimiento);
+//
+//        // Convertir la lista de Productos a DTOs si es necesario
+//        return productos.stream()
+//                .map(this::convertirAProductoDTO)
+//                .collect(Collectors.toList());
+//    }
 
     // Método para convertir un Producto a ProductoDTO (si lo necesitas)
     private ProductoDTO convertirAProductoDTO(Producto producto) {

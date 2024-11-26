@@ -48,7 +48,7 @@ public class ProveedorController {
     @GetMapping("/obtenerId/{idProveedor}")
     public ProveedoresDTO obtenerIdProveedor(@PathVariable Integer idProveedor) {
         return proveedorService.obtenerProveedorPorId(idProveedor);
-    }}
+    }
     @GetMapping("/listado")
     public List<ProveedoresSliderDTO> listadoProveedores(){
         return proveedorService.listadoProveedoresSlider();
@@ -64,3 +64,5 @@ public class ProveedorController {
         return proveedorService.obtenerInfoProveedores();
     }
 }
+
+
