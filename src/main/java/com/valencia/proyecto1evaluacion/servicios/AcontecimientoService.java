@@ -150,4 +150,19 @@ public class AcontecimientoService {
     public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento() {
         return acontecimientoRepository.obtenerTotalesAcontecimientos();
     }
+    public AcontecimientoDTO obtenerAcontecimientoPorId(Integer id) {
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+        AcontecimientoDTO dto = new AcontecimientoDTO();
+        dto.setId(acontecimiento.getId());
+        dto.setNombre(acontecimiento.getNombre());
+        dto.setDescripcion(acontecimiento.getDescripcion());
+        dto.setUbicacion(acontecimiento.getUbicacion());
+        dto.setImg(acontecimiento.getImg());
+        return dto;
+    }
+
+
+
+
 }
