@@ -5,8 +5,8 @@ import com.valencia.proyecto1evaluacion.dtos.TotalDonacionesDTO;
 import com.valencia.proyecto1evaluacion.modelos.Ong;
 import com.valencia.proyecto1evaluacion.repositorio.LineaPedidoRepository;
 import com.valencia.proyecto1evaluacion.dtos.ConsultasProveedorDTO;
-import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.servicios.LineaPedidoService;
+import lombok.RequiredArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +18,8 @@ import java.util.List;
 
 @RestController
 //@RequestMapping("/linea")
-@RequiredArgsConstructor
 @RequestMapping("/peticiones")
-//@AllArgsConstructor
+@RequiredArgsConstructor
 public class LineaPedidoController {
 
     private final LineaPedidoService lineaPedidoService;
@@ -34,6 +33,5 @@ public class LineaPedidoController {
     public List<ConsultasProveedorDTO> llamadaLineaPedido() {
         return lineaPedidoService.findTotalRecaudadoPorProveedor();
     }
-
 
 }
