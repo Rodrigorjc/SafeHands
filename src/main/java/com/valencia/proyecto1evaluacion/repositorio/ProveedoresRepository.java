@@ -20,7 +20,6 @@ public interface ProveedoresRepository extends JpaRepository<Proveedores, Intege
     Optional<Proveedores> findByUsuarioId(Integer usuarioId);
 
     @Query("SELECT p FROM Proveedores p WHERE LOWER(p.nombre) LIKE LOWER(CONCAT('%', :busqueda, '%')) " +
-            "OR LOWER(p.descripcion) LIKE LOWER(CONCAT('%', :busqueda, '%')) " +
             "OR LOWER(p.sede) LIKE LOWER(CONCAT('%', :busqueda, '%'))")
     List<Proveedores> buscar(@Param("busqueda") String busqueda);
 

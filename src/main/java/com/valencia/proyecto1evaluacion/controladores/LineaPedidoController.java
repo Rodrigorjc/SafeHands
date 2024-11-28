@@ -28,6 +28,8 @@ public class LineaPedidoController {
     @GetMapping("/total")
     public TotalDonacionesDTO obtenerTotal() {
         return lineaPedidoService.totalDonaciones();
+    }
+
     @GetMapping("/proveedores")
     public List<ConsultasProveedorDTO> llamadaLineaPedido() {
         return lineaPedidoService.findTotalRecaudadoPorProveedor();

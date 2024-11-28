@@ -151,8 +151,7 @@ public class ProveedorService {
         for (Proveedores p : proveedor) {
             PerfilProveedoresDTO dto = new PerfilProveedoresDTO();
             dto.setNombre(p.getNombre());
-            dto.setDescripcion(p.getDescripcion());
-            dto.setUrl(p.getUrl());
+            dto.setUrl(p.getImg());
             dto.setCif(p.getCif());
             dto.setSede(p.getSede());
             dto.setNumVoluntarios(p.getNumVoluntarios());
@@ -193,8 +192,7 @@ public class ProveedorService {
     public Proveedores guardar(PerfilProveedorCrearDTO dto) {
         Proveedores perfilGuardar = new Proveedores();
         perfilGuardar.setNombre(dto.getNombre());
-        perfilGuardar.setDescripcion(dto.getDescripcion());
-        perfilGuardar.setUrl(dto.getUrl());
+        perfilGuardar.setImg(dto.getUrl());
         perfilGuardar.setNumVoluntarios(dto.getNumVoluntarios());
         perfilGuardar.setSede(dto.getSede());
         perfilGuardar.setCif(dto.getCif());
