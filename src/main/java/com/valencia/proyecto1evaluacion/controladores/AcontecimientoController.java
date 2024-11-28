@@ -8,6 +8,7 @@ import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.servicios.AcontecimientoService;
 import com.valencia.proyecto1evaluacion.servicios.OngAcontecimientoService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,5 +46,11 @@ public class AcontecimientoController {
     public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento()  {
         return acontecimientoService.obtenerInfoAcontecimiento();
     }
+    @GetMapping("/detalles/{id}")
+    public ResponseEntity<AcontecimientoDTO> obtenerAcontecimientoPorId(@PathVariable Integer id) {
+        AcontecimientoDTO dto = acontecimientoService.obtenerAcontecimientoPorId(id);
+        return ResponseEntity.ok(dto);
+    }
+
 
 }
