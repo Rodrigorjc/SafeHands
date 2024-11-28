@@ -51,6 +51,7 @@ public class AcontecimientoService {
     public AcontecimientoDTO getById(Integer id){
         Acontecimiento acontecimiento = acontecimientoRepository.findById(id).orElse(null);
         AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
+        assert acontecimiento != null;
         acontecimientoDTO.setUbicacion(acontecimiento.getUbicacion());
         acontecimientoDTO.setIdOng(acontecimiento.getOng().getId());
         acontecimientoDTO.setNombre(acontecimiento.getNombre());
