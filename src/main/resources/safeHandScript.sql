@@ -106,6 +106,8 @@ create table token_acceso (
                               constraint fk_token_acceso_usuario foreign key(id_usuario) references usuario(id)
 );
 
+alter table proveedores add column validado boolean not null default false;
+
 CREATE TABLE ong_acontecimiento (
                                     id serial primary key,
                                     id_ong INT NOT NULL,

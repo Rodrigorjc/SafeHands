@@ -1,6 +1,8 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
+import com.valencia.proyecto1evaluacion.dtos.ConsultaAcontecimientoDTO;
+import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
@@ -8,6 +10,7 @@ import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.servicios.AcontecimientoService;
 import com.valencia.proyecto1evaluacion.servicios.OngAcontecimientoService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.List;
 @RequestMapping("/acontecimiento")
 @AllArgsConstructor
 public class AcontecimientoController {
+
     private final AcontecimientoService acontecimientoService;
     private final OngAcontecimientoService ongAcontecimientoService;
 
@@ -41,6 +45,21 @@ public class AcontecimientoController {
         return acontecimientoService.crearAcontecimiento(acontecimientoDTO);
     }
 
+    /**
+     * Endpoint para obtener el total recaudado por cada acontecimiento.
+     *
+     * @return Lista de ConsultasAcontecimientoDTO con el nombre del acontecimiento y el total recaudado.
+     */
+    @GetMapping("/total")
+    public List<ConsultaAcontecimientoDTO> llamadaAcontecimiento() {
+        return acontecimientoService.findTotalRecaudadoPorAcontecimiento();
+    }
+
+    @GetMapping("/total-donaciones")
+    public ResponseEntity<Double> getTotalDonaciones() {
+        Double totalDonaciones = acontecimientoService.findTotalDonaciones();
+        return ResponseEntity.ok(totalDonaciones);
+    }
     @GetMapping("/info")
     public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento()  {
         return acontecimientoService.obtenerInfoAcontecimiento();

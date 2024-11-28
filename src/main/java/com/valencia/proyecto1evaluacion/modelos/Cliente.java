@@ -4,6 +4,8 @@ package com.valencia.proyecto1evaluacion.modelos;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cliente", schema = "safe_hand", catalog = "postgres")
 @Getter
@@ -28,4 +30,7 @@ public class Cliente {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<Pedido> pedidos;
 }

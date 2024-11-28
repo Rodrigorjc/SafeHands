@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,5 +32,9 @@ public class ProveedoresDTO {
     private String username;
 
     private String token;
+
+    private String nombre;
+    private Integer cantidad;
+    private Double precioUnitario;
 
 }
