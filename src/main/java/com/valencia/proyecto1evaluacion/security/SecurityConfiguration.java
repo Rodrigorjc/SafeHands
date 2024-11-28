@@ -48,9 +48,11 @@ public class SecurityConfiguration {
                     auth.requestMatchers("ong/**").permitAll();
                     auth.requestMatchers("producto/{productoId}/vincular-acontecimiento/{acontecimientoId}").permitAll();
                     auth.requestMatchers("ong/validar/proveedor/{id}").permitAll();
+                    auth.requestMatchers("ong/eliminar/proveedor/{id}").permitAll();
                     auth.requestMatchers("acontecimiento/**").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
                     auth.requestMatchers("ong/:id").permitAll();
+                    auth.requestMatchers("linea/total").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
                     auth.requestMatchers("producto/buscar").permitAll();
                     auth.requestMatchers("producto/filtrar").permitAll();
@@ -58,7 +60,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("producto/donaciones/registrar").permitAll();
                     auth.requestMatchers("producto/acontecimiento").permitAll();
                     auth.requestMatchers("/proveedores-acontecimiento/productos").permitAll();
-                    auth.requestMatchers("ong/**").hasAnyAuthority(Rol.ONG.name());
+                    auth.requestMatchers("admin/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

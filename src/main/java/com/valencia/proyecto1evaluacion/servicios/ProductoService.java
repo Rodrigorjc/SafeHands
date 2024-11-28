@@ -87,6 +87,28 @@ public class ProductoService {
 
     }
 
+    public void eliminarProducto(Integer productoId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !usuario.getRol().equals(Rol.PROVEEDOR)) {
+            throw new SecurityException("No tienes permiso para eliminar productos");
+        }
+
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+
+        Producto producto = productoRepositorio.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (!producto.getProveedores().getId().equals(proveedor.getId())) {
+            throw new SecurityException("No tienes permiso para eliminar este producto");
+        }
+
+        productoRepositorio.delete(producto);
+    }
+
 
     public List<ProductoDTO> getAll() {
         List<ProductoDTO> productoDtos = new ArrayList<>();
@@ -105,16 +127,16 @@ public class ProductoService {
 
 
     // Método que recibe los parámetros de filtro y llama al repositorio
-    public List<Producto> buscarProductos(Double precioMin, Double precioMax, Integer proveedor, String nombre) {
-        return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
-    }
+//    public List<Producto> buscarProductos(Double precioMin, Double precioMax, Integer proveedor, String nombre) {
+//        return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
+//    }
 
 
 
 
 
     public List<ProductoDTO> getProductosByProveedorId(Integer proveedorId) {
-        List<Producto> productos = productoRepositorio.findByProveedoresId(proveedorId);
+        List<Producto> productos = productoRepositorio.findByProveedoresUsuarioId(proveedorId);
         List<ProductoDTO> productoDtos = new ArrayList<>();
         for (Producto producto : productos) {
             ProductoDTO dto = new ProductoDTO();
@@ -152,6 +174,11 @@ public class ProductoService {
         Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
                 .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
 
+        boolean isAlreadyAssociated = proveedoresAcontecimientoRepository.existsByProductoAndAcontecimiento(producto, acontecimiento);
+        if (isAlreadyAssociated) {
+            throw new RuntimeException("El producto ya está asociado a este acontecimiento");
+        }
+
         ProveedoresAcontecimiento proveedoresAcontecimiento = new ProveedoresAcontecimiento();
         proveedoresAcontecimiento.setProducto(producto);
         proveedoresAcontecimiento.setAcontecimiento(acontecimiento);
@@ -168,14 +195,14 @@ public class ProductoService {
     }
 
     // Método para obtener los productos por el id del acontecimiento
-    public List<ProductoDTO> getProductosByAcontecimientoId(Integer idAcontecimiento) {
-        List<Producto> productos = productoRepositorio.findByAcontecimiento_Id(idAcontecimiento);
-
-        // Convertir la lista de Productos a DTOs si es necesario
-        return productos.stream()
-                .map(this::convertirAProductoDTO)
-                .collect(Collectors.toList());
-    }
+//    public List<ProductoDTO> getProductosByAcontecimientoId(Integer idAcontecimiento) {
+//        List<Producto> productos = productoRepositorio.findByAcontecimiento_Id(idAcontecimiento);
+//
+//        // Convertir la lista de Productos a DTOs si es necesario
+//        return productos.stream()
+//                .map(this::convertirAProductoDTO)
+//                .collect(Collectors.toList());
+//    }
 
     // Método para convertir un Producto a ProductoDTO (si lo necesitas)
     private ProductoDTO convertirAProductoDTO(Producto producto) {

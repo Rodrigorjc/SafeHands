@@ -1,5 +1,6 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,10 +39,14 @@ public class Ong {
     @Column(name = "img", nullable = false, length = 1500)
     private String img;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("usuario-ong")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "ong", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<OngAcontecimiento> ongAcontecimientos;
 
 
 }

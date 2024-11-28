@@ -2,7 +2,9 @@ package com.valencia.proyecto1evaluacion.modelos;
 
 
 import ch.qos.logback.core.subst.Token;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,6 +49,16 @@ public class Usuario implements UserDetails {
 
     @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
     private TokenAcceso token;
+
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Ong> ongs;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference("usuario-ong")
+    private List<Ong> ong;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

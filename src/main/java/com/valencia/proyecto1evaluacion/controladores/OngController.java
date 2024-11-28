@@ -24,7 +24,7 @@ public class OngController {
         ongService.validarSolicitudProveedor(id);
     }
 
-    @DeleteMapping("/eliminar-proveedor/{id}")
+    @DeleteMapping("/eliminar/proveedor/{id}")
     public void eliminarProveedor(@PathVariable Integer id) {
         ongService.eliminarSolicitudProveedor(id);
     }
@@ -41,12 +41,12 @@ public class OngController {
     }
 
     @GetMapping("/detalles/{id}")
-    public Ong obtenerOngPorId(@PathVariable Integer id) {
+    public OngDTO   obtenerOngPorId(@PathVariable Integer id) {
         return ongService.obtenerOngPorId(id);
     }
 
     @PostMapping("/crear")
-    public Ong crearOng(@RequestBody OngDTO ongDto) {
+    public OngDTO crearOng(@RequestBody OngDTO ongDto) {
         return ongService.registrarOng(ongDto);
     }
 
@@ -56,6 +56,12 @@ public class OngController {
        return ongService.acontecimientoOngVincular(acontecimientoId);
 
     }
+
+    @GetMapping("/listar")
+    public List<OngDTO> listarOngs() {
+        return ongService.listar();
+    }
+
 
 //    @GetMapping("/acontecimiento/{id}")
 //    public List<Ong> obtenerOngsPorAcontecimiento(@PathVariable Integer id) {

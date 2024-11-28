@@ -1,15 +1,7 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
-import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
-import com.valencia.proyecto1evaluacion.dtos.PerfilProveedorCrearDTO;
-import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
-import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
-import com.valencia.proyecto1evaluacion.dtos.CrearProveedorDTO;
-import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
-import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
+import com.valencia.proyecto1evaluacion.dtos.*;
 import com.valencia.proyecto1evaluacion.enums.Rol;
-import com.valencia.proyecto1evaluacion.mappers.PerfilMapper;
-import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
@@ -50,7 +42,7 @@ public class ProveedorService {
         entity.setNumVoluntarios(proveedor.getNumVoluntarios());
         entity.setSede(proveedor.getSede());
         entity.setUbicacion(proveedor.getUbicacion());
-        Usuario usuario = usuarioRepositorio.findById(proveedor.getId_usuario()).orElse(null);
+        Usuario usuario = usuarioRepositorio.findById(proveedor.getIdUsuario()).orElse(null);
         entity.setUsuario(usuario);
 
         return proveedoresRepositorio.save(entity);
@@ -66,6 +58,8 @@ public class ProveedorService {
         usuarioRepositorio.save(usuario);
         Proveedores proveedor = new Proveedores();
         proveedor.setUsuario(usuario);
+        proveedor.setImg(crearProveedorDTO.getImg());
+        proveedor.setNombre(crearProveedorDTO.getNombre());
         proveedor.setNumVoluntarios(crearProveedorDTO.getNumVoluntarios());
         proveedor.setCif(crearProveedorDTO.getCif());
         proveedor.setSede(crearProveedorDTO.getSede());
@@ -87,17 +81,18 @@ public class ProveedorService {
      * listar proveedores
      */
 
-    public List<ProveedoresDTO> listarProveedores() {
+    public List<ProveedoresDTO> listarProveedoresPorValidadoFalso() {
         List<Proveedores> proveedores = proveedoresRepositorio.findByValidadoFalse();
         List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
         for (Proveedores proveedor : proveedores) {
             ProveedoresDTO dto = new ProveedoresDTO();
             dto.setId(proveedor.getId());
+            dto.setNombre(proveedor.getNombre());
             dto.setCif(proveedor.getCif());
             dto.setNumVoluntarios(proveedor.getNumVoluntarios());
             dto.setSede(proveedor.getSede());
             dto.setUbicacion(proveedor.getUbicacion());
-            dto.setId_usuario(proveedor.getUsuario().getId());
+            dto.setIdUsuario(proveedor.getUsuario().getId());
             dto.setEmail(proveedor.getUsuario().getEmail());
             dto.setUsername(proveedor.getUsuario().getUsername());
             proveedoresDTOs.add(dto);
@@ -105,9 +100,44 @@ public class ProveedorService {
         return proveedoresDTOs;
     }
 
-    /**
-     * listar proveedores
-     */
+    public ProveedoresDTO obtenerProveedorPorId(Integer idProveedor) {
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(idProveedor)
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        ProveedoresDTO dto = new ProveedoresDTO();
+        dto.setId(proveedor.getId());
+        dto.setNombre(proveedor.getNombre());
+        dto.setCif(proveedor.getCif());
+        dto.setNumVoluntarios(proveedor.getNumVoluntarios());
+        dto.setSede(proveedor.getSede());
+        dto.setUbicacion(proveedor.getUbicacion());
+        dto.setIdUsuario(proveedor.getUsuario().getId());
+        dto.setEmail(proveedor.getUsuario().getEmail());
+        dto.setUsername(proveedor.getUsuario().getUsername());
+        return dto;
+    }
 
+
+
+    public List<ProveedoresSliderDTO> listadoProveedoresSlider() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findAll();
+        List<ProveedoresSliderDTO> proveedoresSliderDTOS = new ArrayList<>();
+        for (Proveedores p: proveedores) {
+            ProveedoresSliderDTO proveedoresSliderDTO = new ProveedoresSliderDTO();
+            proveedoresSliderDTO.setNombre(p.getNombre());
+            proveedoresSliderDTO.setImg(p.getImg());
+            proveedoresSliderDTO.setId(p.getId());
+            proveedoresSliderDTOS.add(proveedoresSliderDTO);
+        }
+        return proveedoresSliderDTOS;
+    }
+
+    public List<ProveedorRankingDTO> obtenerRankingProveedores() {
+        return proveedoresRepositorio.obtenerRankingProveedores();
+    }
+
+    public List<ProveedorInfoDTO> obtenerInfoProveedores() {
+        return proveedoresRepositorio.obtenerInfoProveedores();
+    }
 }
+
 

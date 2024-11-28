@@ -17,8 +17,10 @@ create table cliente(
 create table ong(
                     id serial primary key,
                     num_voluntarios int not null,
+                    descripcion varchar(500) not null,
                     sede varchar(100) not null,
                     ubicacion varchar(500) not null,
+                    img varchar(500) not null,
                     id_usuario int not null,
                     constraint fk_ong_usuario foreign key(id_usuario) references usuario(id)
 );
@@ -31,6 +33,7 @@ create table proveedores(
                             ubicacion varchar(500) not null,
                             cif char(9) not null,
                             validado boolean default false,
+                            img varchar(500) not null,
                             id_usuario int not null,
                             constraint fk_proveedores_usuario foreign key(id_usuario) references usuario(id)
 );
@@ -71,7 +74,6 @@ create table acontecimiento(
                                nombre varchar(50) not null,
                                descripcion varchar(500) not null,
                                ubicacion varchar(500) not null,
-                               id_ong int not null,
                                constraint fk_acontecimiento_ong foreign key(id_ong) references ong(id)
 );
 
@@ -90,8 +92,8 @@ create table proveedores_acontecimiento(
                                            id_proveedores int not null,
                                            id_acontecimiento int not null,
                                             id_producto int not null,
-                                           foreign key (id_proveedores) references proveedores(id),
-                                           foreign key (id_acontecimiento) references acontecimiento(id),
+                                           constraint fk_proveedores_aconteciminetos_proveedores foreign key (id_proveedores) references proveedores(id),
+                                           constraint fk_proveedores_aconteciminetos_acontecimiento foreign key (id_acontecimiento) references acontecimiento(id),
                                            constraint fk_proveedores_aconteciminetos_producto foreign key(id_producto) references producto(id)
 );
 
@@ -108,8 +110,8 @@ CREATE TABLE ong_acontecimiento (
                                     id serial primary key,
                                     id_ong INT NOT NULL,
                                     id_acontecimiento INT NOT NULL,
-                                    FOREIGN KEY (id_ong) REFERENCES ong(id),
-                                    FOREIGN KEY (id_acontecimiento) REFERENCES acontecimiento(id)
+                                    constraint fk_ong_acontecimiento_ong FOREIGN KEY (id_ong) REFERENCES ong(id),
+                                    constraint fk_ong_acontecimiento_acontecimiento FOREIGN KEY (id_acontecimiento) REFERENCES acontecimiento(id)
 );
 
 

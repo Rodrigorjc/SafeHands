@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class AcontecimientoOngVincularDTO {
     private Integer idAcontecimiento;
     private Integer idOng;
+    private Integer idUsuario;
 }

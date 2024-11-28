@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OngDTO {
-
+    private Integer id;
     private Integer numVoluntarios;
     private String sede;
     private String descripcion;
@@ -17,5 +17,5 @@ public class OngDTO {
     private String email;
     private String username;
     private String password;
-    private Integer id_usuario;
+    private Integer idUsuario;
 }
