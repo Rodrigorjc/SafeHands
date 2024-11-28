@@ -87,6 +87,7 @@ public class ProveedorService {
         for (Proveedores proveedor : proveedores) {
             ProveedoresDTO dto = new ProveedoresDTO();
             dto.setId(proveedor.getId());
+            dto.setNombre(proveedor.getNombre());
             dto.setCif(proveedor.getCif());
             dto.setNumVoluntarios(proveedor.getNumVoluntarios());
             dto.setSede(proveedor.getSede());
@@ -104,6 +105,7 @@ public class ProveedorService {
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
         ProveedoresDTO dto = new ProveedoresDTO();
         dto.setId(proveedor.getId());
+        dto.setNombre(proveedor.getNombre());
         dto.setCif(proveedor.getCif());
         dto.setNumVoluntarios(proveedor.getNumVoluntarios());
         dto.setSede(proveedor.getSede());
