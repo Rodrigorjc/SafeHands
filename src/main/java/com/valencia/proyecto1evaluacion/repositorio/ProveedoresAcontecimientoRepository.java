@@ -18,5 +18,6 @@ public interface ProveedoresAcontecimientoRepository  extends JpaRepository<Prov
 
     public List<ProveedoresAcontecimiento> findByAcontecimientoId(Integer idAcontecimiento);
 
-
+    @Query("SELECT pa.producto FROM ProveedoresAcontecimiento pa WHERE pa.acontecimiento.id = :acontecimientoId")
+    List<Producto> findProductosByAcontecimientoId(@Param("acontecimientoId") Integer acontecimientoId);
 }

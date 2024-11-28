@@ -65,4 +65,8 @@ public class AcontecimientoController {
         return acontecimientoService.obtenerInfoAcontecimiento();
     }
 
+    @GetMapping("/getById/{id}")
+    public AcontecimientoDTO getById(@PathVariable Integer id) {
+        return acontecimientoService.getById(id);
+    }
 }

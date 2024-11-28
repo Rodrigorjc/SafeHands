@@ -25,7 +25,7 @@ public class AcontecimientoService {
     /**
      * Devuelve todos los acontecimientos
      *
-     * @return
+     * @return acontecimientosDTO
      */
     public List<AcontecimientoDTO> getAll(){
         List<Acontecimiento> acontecimientos = acontecimientoRepository.findAll();
@@ -48,8 +48,17 @@ public class AcontecimientoService {
      * @param id
      * @return
      */
-    public Acontecimiento getById(Integer id){
-        return acontecimientoRepository.findById(id).orElse(null);
+    public AcontecimientoDTO getById(Integer id){
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(id).orElse(null);
+        AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
+        acontecimientoDTO.setUbicacion(acontecimiento.getUbicacion());
+        acontecimientoDTO.setIdOng(acontecimiento.getOng().getId());
+        acontecimientoDTO.setNombre(acontecimiento.getNombre());
+        acontecimientoDTO.setDescripcion(acontecimiento.getDescripcion());
+        acontecimientoDTO.setImg(acontecimiento.getImg());
+        acontecimientoDTO.setId(acontecimiento.getId());
+
+        return acontecimientoDTO;
     }
 
     /**
@@ -101,34 +110,34 @@ public class AcontecimientoService {
         return acontecimientoRepository.save(entity);
     }
 
-    /**
-     * Elimina un acontecimiento
-     *
-     * @param id
-     */
-    public String eliminar(Integer id){
-        String mensaje;
-        Acontecimiento acontecimiento = getById(id);
-
-        if(acontecimiento == null){
-            mensaje = "El acontecimiento con el id que está buscando no existe.";
-    }
-        try{
-            acontecimientoRepository.deleteById(id);
-
-            acontecimiento = getById(id);
-            if (acontecimiento != null) {
-                mensaje = "No se ha podido eliminar el acontecimiento.";
-            }else {
-                mensaje = "Acontecimiento eliminado correctamente.";
-            }
-        }catch (Exception e){
-            mensaje = "No se ha podido eliminar el acontecimiento.";
-        }
-        return mensaje;
-
-
-    }
+//    /**
+//     * Elimina un acontecimiento
+//     *
+//     * @param id
+//     */
+//    public String eliminar(Integer id){
+//        String mensaje;
+//        Acontecimiento acontecimiento = getById(id);
+//
+//        if(acontecimiento == null){
+//            mensaje = "El acontecimiento con el id que está buscando no existe.";
+//    }
+//        try{
+//            acontecimientoRepository.deleteById(id);
+//
+//            acontecimiento = getById(id);
+//            if (acontecimiento != null) {
+//                mensaje = "No se ha podido eliminar el acontecimiento.";
+//            }else {
+//                mensaje = "Acontecimiento eliminado correctamente.";
+//            }
+//        }catch (Exception e){
+//            mensaje = "No se ha podido eliminar el acontecimiento.";
+//        }
+//        return mensaje;
+//
+//
+//    }
 
 
     public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
