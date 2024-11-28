@@ -5,6 +5,7 @@ import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
 import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.Ong;
+import com.valencia.proyecto1evaluacion.servicios.OngAcontecimientoService;
 import com.valencia.proyecto1evaluacion.servicios.OngService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 public class OngController {
 
     private final OngService ongService;
+    private final OngAcontecimientoService ongAcontecimientoService;
 
     @PostMapping("/validar/proveedor/{id}")
     public void validarProveedor(@PathVariable Integer id) {
@@ -60,6 +62,13 @@ public class OngController {
     @GetMapping("/listar")
     public List<OngDTO> listarOngs() {
         return ongService.listar();
+    }
+
+
+    @DeleteMapping("/eliminar/acontecimientosAsociados/{idOng}/{idAcontecimiento}")
+    public ResponseEntity<Void> eliminarAcontecimientosAsociados(@PathVariable Integer idOng, @PathVariable Integer idAcontecimiento) {
+        ongAcontecimientoService.eliminarAcontecimientosAsociados(idOng, idAcontecimiento);
+        return ResponseEntity.noContent().build();
     }
 
 
