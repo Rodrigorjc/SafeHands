@@ -7,14 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrearProveedorDTO {
+public class PerfilProveedoresDTO {
     private String nombre;
+    private String descripcion;
+    private String url;
     private Integer numVoluntarios;
     private String sede;
     private String ubicacion;
     private String cif;
-    private String img;
-    private String username;
-    private String email;
-    private String password;
 }

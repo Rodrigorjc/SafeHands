@@ -2,6 +2,7 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
+import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
@@ -145,4 +146,8 @@ public class AcontecimientoService {
 //        return acontecimientos;
 //
 //    }
+
+    public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento() {
+        return acontecimientoRepository.obtenerTotalesAcontecimientos();
+    }
 }
