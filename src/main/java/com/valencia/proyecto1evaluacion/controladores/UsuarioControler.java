@@ -80,5 +80,11 @@ public class UsuarioControler {
         Usuario usuarioActualizado = usuarioService.actualizarRol(id, nuevoRol);
         return ResponseEntity.ok(usuarioActualizado);
     }
+
+    @GetMapping("/rol/{id}")
+    public ResponseEntity<Rol> obtenerRolPorNombreUsuario(@PathVariable Integer id) {
+        Rol rol = usuarioService.obtenerRolPorNombreUsuario(id);
+        return ResponseEntity.ok(rol);
+    }
 }
 
