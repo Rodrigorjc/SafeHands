@@ -32,10 +32,6 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
 
-
-
-
-
     @Bean
     public SecurityFilterChain secutityFilterChain(HttpSecurity http, AuthenticationManagerBuilder authenticationManagerBuilder, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
@@ -63,6 +59,8 @@ public class SecurityConfiguration {
                     auth.requestMatchers(("peticiones/**")).permitAll();
                     auth.requestMatchers(("total/**")).permitAll();
                     auth.requestMatchers(("acontecimiento/**")).permitAll();
+                    auth.requestMatchers(("acontecimiento/admin")).permitAll();
+                    auth.requestMatchers(("acontecimiento/admin/{id}")).permitAll();
 
                     auth.anyRequest().authenticated();
                 })
