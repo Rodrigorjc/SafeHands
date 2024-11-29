@@ -15,5 +15,5 @@ public class AcontecimientoDTO {
     private String descripcion;
     private String ubicacion;
     private String img;
-    private Ong idOng;
+    private Integer idOng;
 }

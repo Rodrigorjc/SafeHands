@@ -33,6 +33,9 @@ public class Proveedores {
     @Column(name = "cif", nullable = false, length = 9)
     private String cif;
 
+    @Transient
+    private Double totalRecaudado;
+
     @Column(name = "img")
     private String img;
 

@@ -1,16 +1,16 @@
 package com.valencia.proyecto1evaluacion.dtos;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AcontecimientoCrearDTO {
+public class ConsultasProveedorDTO {
     private String nombre;
-    private String descripcion;
-    private String ubicacion;
-    private String img;
-
+    private Float totalRecaudado;
 }

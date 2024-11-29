@@ -3,10 +3,11 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
+import com.valencia.proyecto1evaluacion.dtos.ConsultaAcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.OngAcontecimientoRepository;
+import com.valencia.proyecto1evaluacion.repositorio.PagosRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,12 @@ import java.util.stream.Collectors;
 public class AcontecimientoService {
     private AcontecimientoRepository acontecimientoRepository;
     private OngAcontecimientoRepository ongAcontecimientoRepository;
+    private PagosRepository pagosRepository;
 
     /**
      * Devuelve todos los acontecimientos
      *
-     * @return
+     * @return acontecimientosDTO
      */
     public List<AcontecimientoDTO> getAll(){
         List<Acontecimiento> acontecimientos = acontecimientoRepository.findAll();
@@ -46,8 +48,18 @@ public class AcontecimientoService {
      * @param id
      * @return
      */
-    public Acontecimiento getById(Integer id){
-        return acontecimientoRepository.findById(id).orElse(null);
+    public AcontecimientoDTO getById(Integer id){
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(id).orElse(null);
+        AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
+        assert acontecimiento != null;
+        acontecimientoDTO.setUbicacion(acontecimiento.getUbicacion());
+        acontecimientoDTO.setIdOng(acontecimiento.getOng().getId());
+        acontecimientoDTO.setNombre(acontecimiento.getNombre());
+        acontecimientoDTO.setDescripcion(acontecimiento.getDescripcion());
+        acontecimientoDTO.setImg(acontecimiento.getImg());
+        acontecimientoDTO.setId(acontecimiento.getId());
+
+        return acontecimientoDTO;
     }
 
     /**
@@ -61,6 +73,7 @@ public class AcontecimientoService {
         entity.setNombre(acontecimientoCrearDTO.getNombre());
         entity.setDescripcion(acontecimientoCrearDTO.getDescripcion());
         entity.setUbicacion(acontecimientoCrearDTO.getUbicacion());
+        entity.setImg(acontecimientoCrearDTO.getImg());
 
         return acontecimientoRepository.save(entity);
     }
@@ -77,6 +90,7 @@ public class AcontecimientoService {
         entity.setNombre(dto.getNombre());
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
+        entity.setImg(dto.getImg());
 
         return acontecimientoRepository.save(entity);
     }
@@ -92,38 +106,39 @@ public class AcontecimientoService {
         entity.setNombre(dto.getNombre());
         entity.setDescripcion(dto.getDescripcion());
         entity.setUbicacion(dto.getUbicacion());
+        entity.setImg(dto.getImg());
 
         return acontecimientoRepository.save(entity);
     }
 
-    /**
-     * Elimina un acontecimiento
-     *
-     * @param id
-     */
-    public String eliminar(Integer id){
-        String mensaje;
-        Acontecimiento acontecimiento = getById(id);
-
-        if(acontecimiento == null){
-            mensaje = "El acontecimiento con el id que está buscando no existe.";
-    }
-        try{
-            acontecimientoRepository.deleteById(id);
-
-            acontecimiento = getById(id);
-            if (acontecimiento != null) {
-                mensaje = "No se ha podido eliminar el acontecimiento.";
-            }else {
-                mensaje = "Acontecimiento eliminado correctamente.";
-            }
-        }catch (Exception e){
-            mensaje = "No se ha podido eliminar el acontecimiento.";
-        }
-        return mensaje;
-
-
-    }
+//    /**
+//     * Elimina un acontecimiento
+//     *
+//     * @param id
+//     */
+//    public String eliminar(Integer id){
+//        String mensaje;
+//        Acontecimiento acontecimiento = getById(id);
+//
+//        if(acontecimiento == null){
+//            mensaje = "El acontecimiento con el id que está buscando no existe.";
+//    }
+//        try{
+//            acontecimientoRepository.deleteById(id);
+//
+//            acontecimiento = getById(id);
+//            if (acontecimiento != null) {
+//                mensaje = "No se ha podido eliminar el acontecimiento.";
+//            }else {
+//                mensaje = "Acontecimiento eliminado correctamente.";
+//            }
+//        }catch (Exception e){
+//            mensaje = "No se ha podido eliminar el acontecimiento.";
+//        }
+//        return mensaje;
+//
+//
+//    }
 
 
     public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
@@ -135,6 +150,27 @@ public class AcontecimientoService {
         acontecimiento.setImg(acontecimientoDTO.getImg());
         acontecimientoRepository.save(acontecimiento);
         return acontecimientoDTO;
+    }
+
+
+
+    public List<ConsultaAcontecimientoDTO> findTotalRecaudadoPorAcontecimiento() {
+        List<Object[]> rawResults = acontecimientoRepository.findTotalRecaudadoPorAcontecimientoRaw();
+
+        return rawResults.stream()
+                .map(result -> ConsultaAcontecimientoDTO.builder()
+                        .nombre((String) result[0])  // Mapeo del campo "nombre" del acontecimiento
+                        .totalRecaudado(((Number) result[1]).floatValue())  // Mapeo de "total_recaudado"
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+
+
+
+
+    public Double findTotalDonaciones() {
+        return pagosRepository.findTotalDonaciones();
     }
 
 //    public List<Acontecimiento> obtenerAcontecimientosPorOng(Integer ongId) {

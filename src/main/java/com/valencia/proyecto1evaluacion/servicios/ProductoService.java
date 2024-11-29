@@ -194,7 +194,7 @@ public class ProductoService {
         return dto;
     }
 
-    // Método para obtener los productos por el id del acontecimiento
+//     Método para obtener los productos por el id del acontecimiento
 //    public List<ProductoDTO> getProductosByAcontecimientoId(Integer idAcontecimiento) {
 //        List<Producto> productos = productoRepositorio.findByAcontecimiento_Id(idAcontecimiento);
 //
@@ -222,5 +222,20 @@ public class ProductoService {
     }
 
 
+
+    public List<ProductoDTO> getProductosAcontecimiento(Integer id) {
+        List<Producto> productos = proveedoresAcontecimientoRepository.findProductosByAcontecimientoId(id);
+        List<ProductoDTO> productoDTOS = new ArrayList<>();
+        for (Producto p: productos) {
+            ProductoDTO productoDTO = new ProductoDTO();
+            productoDTO.setDescripcion(p.getDescripcion());
+            productoDTO.setUrl(p.getUrl());
+            productoDTO.setPrecio(p.getPrecio());
+            productoDTO.setNombre(p.getNombre());
+            productoDTO.setId(p.getId());
+            productoDTOS.add(productoDTO);
+        }
+        return productoDTOS;
+    }
 }
 
