@@ -215,5 +215,12 @@ public class ProductoService {
         // Puedes agregar otros atributos si es necesario
         return productoDTO;
     }
+
+
+    public List<Producto> obtenerProductosPorAcontecimiento(Integer idAcontecimiento) {
+        return productoRepositorio.findProductosByAcontecimiento(idAcontecimiento);
+    }
+
+
 }
 

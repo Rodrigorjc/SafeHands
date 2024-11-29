@@ -30,4 +30,9 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
 //    List<Producto> findByAcontecimiento_Id(Integer id);
 
+    @Query("SELECT p FROM Producto p " +
+            "JOIN ProveedoresAcontecimiento pa ON p.id = pa.producto.id " +
+            "WHERE pa.acontecimiento.id = :idAcontecimiento")
+    List<Producto> findProductosByAcontecimiento(Integer idAcontecimiento);
+
 }

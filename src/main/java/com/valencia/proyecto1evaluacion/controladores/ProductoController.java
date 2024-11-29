@@ -40,22 +40,23 @@ public class    ProductoController {
         productoService.eliminarProducto(productoId);
     }
 
+/*
 
-    // Endpoint con filtros para buscar productos por precio, proveedor y nombre
-//    @GetMapping("/buscar")
-//    public ResponseEntity<List<Producto>> buscarProductos(
-//            @RequestParam(value = "precioMin", required = false) Double precioMin,
-//            @RequestParam(value = "precioMax", required = false) Double precioMax,
-//            @RequestParam(value = "proveedor", required = false) Integer proveedor,
-//            @RequestParam(value = "nombre", required = false) String nombre) {
-//
-//        // Llamar al servicio para obtener los productos filtrados
-//        List<Producto> productos = productoService.buscarProductos(precioMin, precioMax, proveedor, nombre);
-//
-//        return ResponseEntity.ok(productos);
-//    }
+//     Endpoint con filtros para buscar productos por precio, proveedor y nombre
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Producto>> buscarProductos(
+            @RequestParam(value = "precioMin", required = false) Double precioMin,
+            @RequestParam(value = "precioMax", required = false) Double precioMax,
+            @RequestParam(value = "proveedor", required = false) Integer proveedor,
+            @RequestParam(value = "nombre", required = false) String nombre) {
 
+        // Llamar al servicio para obtener los productos filtrados
+        List<Producto> productos = productoService.buscarProductos(precioMin, precioMax, proveedor, nombre);
 
+        return ResponseEntity.ok(productos);
+  }
+
+*/
 
 
     @PostMapping("/{productoId}/vincular/{acontecimientoId}")
@@ -69,4 +70,10 @@ public class    ProductoController {
 //        return productoService.getProductosByAcontecimientoId(idAcontecimiento);
 //    }
 
+
+    @GetMapping("/acontecimiento/{idAcontecimiento}")
+    public ResponseEntity<List<Producto>> obtenerProductosPorAcontecimiento(@PathVariable Integer idAcontecimiento) {
+        List<Producto> productos = productoService.obtenerProductosPorAcontecimiento(idAcontecimiento);
+        return ResponseEntity.ok(productos);
+    }
 }
