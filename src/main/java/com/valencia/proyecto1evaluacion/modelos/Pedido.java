@@ -27,6 +27,4 @@ public class Pedido {
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
-    private List<LineaPedido> lineaPedido;
 }
