@@ -40,12 +40,4 @@ public class Producto {
     @JoinColumn(name = "id_proveedores", nullable = false)
     private Proveedores proveedores;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<ProveedoresAcontecimiento> proveedoresAcontecimientos;
-
-
-
-
-
 }
