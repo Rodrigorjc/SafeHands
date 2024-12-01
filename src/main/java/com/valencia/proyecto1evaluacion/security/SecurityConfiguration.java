@@ -63,6 +63,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers(("peticiones/**")).permitAll();
                     auth.requestMatchers(("total/**")).permitAll();
                     auth.requestMatchers(("acontecimiento/**")).permitAll();
+                    auth.requestMatchers("/pedidos/**").permitAll();
 
                     auth.anyRequest().authenticated();
                 })
