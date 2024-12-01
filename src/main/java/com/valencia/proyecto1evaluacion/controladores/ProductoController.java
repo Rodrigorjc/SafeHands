@@ -35,6 +35,13 @@ public class    ProductoController {
         return productoService.anyadirProducto(productoDTO);
     }
 
+    @PutMapping("/editar")
+    public Producto editarProducto( @RequestBody ProductoDTO productoDTO) {
+        return productoService.editarProducto(productoDTO);
+    }
+
+
+
     @DeleteMapping("/eliminar/{productoId}")
     public void eliminarProducto(@PathVariable Integer productoId) {
         productoService.eliminarProducto(productoId);

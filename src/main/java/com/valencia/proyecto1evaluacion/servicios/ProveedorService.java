@@ -234,6 +234,17 @@ public class ProveedorService {
         proveedoresRepositorio.delete(proveedor);
     }
 
+    public List<ProveedoresDTO> listarProveedoresSelect() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findAllByValidadoIsTrue();
+        List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
+        for (Proveedores proveedor : proveedores) {
+            ProveedoresDTO dto = new ProveedoresDTO();
+            dto.setId(proveedor.getId());
+            dto.setNombre(proveedor.getNombre());
+            proveedoresDTOs.add(dto);
+        }
+        return proveedoresDTOs;
+    }
 }
 
 

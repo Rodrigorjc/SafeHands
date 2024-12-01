@@ -54,6 +54,12 @@ public class ProveedorController {
         return proveedorService.listadoProveedoresSlider();
     }
 
+    @GetMapping("/listarSelect")
+
+    public List<ProveedoresDTO> listarProveedoresSelect(){
+        return proveedorService.listarProveedoresSelect();
+    }
+
     @GetMapping("/ranking")
     public List<ProveedorRankingDTO> obtenerRankingProveedores() {
         return proveedorService.obtenerRankingProveedores();

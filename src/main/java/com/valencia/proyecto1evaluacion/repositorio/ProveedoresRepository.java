@@ -2,6 +2,7 @@ package com.valencia.proyecto1evaluacion.repositorio;
 
 import com.valencia.proyecto1evaluacion.dtos.ProveedorInfoDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProveedorRankingDTO;
+import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -56,6 +57,8 @@ public interface ProveedoresRepository extends JpaRepository<Proveedores, Intege
        ORDER BY SUM(lp.cantidad * lp.precioUnitario) DESC
        """)
     List<ProveedorInfoDTO> obtenerInfoProveedores();
+
+    List<Proveedores> findAllByValidadoIsTrue();
 
 
 }

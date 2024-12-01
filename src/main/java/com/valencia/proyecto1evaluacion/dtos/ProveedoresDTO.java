@@ -36,7 +36,6 @@ public class ProveedoresDTO {
 
     private String token;
 
-    private String nombre;
     private Integer cantidad;
     private Double precioUnitario;
 
