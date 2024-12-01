@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -229,6 +228,15 @@ public class ProductoService {
             productoDTOS.add(productoDTO);
         }
         return productoDTOS;
+    }
+
+    public Producto getProductoById(Integer id) {
+        try {
+            return productoRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener el producto", e);
+        }
     }
 }
 
