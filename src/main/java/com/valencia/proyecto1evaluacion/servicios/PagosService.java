@@ -5,6 +5,7 @@ import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.PagosDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.Pagos;
+import com.valencia.proyecto1evaluacion.modelos.Pedido;
 import com.valencia.proyecto1evaluacion.repositorio.PagosRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -139,5 +140,13 @@ public class PagosService {
         return pagosDTO;
     }
 
+
+    public void crearPagoPedido(Double cuantia, Pedido pedido) {
+        Pagos pago = new Pagos();
+        pago.setCuantia(cuantia.floatValue());
+        pago.setPedido(pedido);
+        pago.setEstado(true);
+        pagosRepository.save(pago);
+    }
 
 }
