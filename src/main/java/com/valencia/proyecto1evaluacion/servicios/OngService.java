@@ -76,6 +76,9 @@ public class OngService {
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
         proveedoresRepositorio.delete(proveedor);
     }
+
+
+    //añadir en el admin service y en su controlador
     public OngDTO crearOng(OngDTO ongDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();

@@ -69,4 +69,11 @@ public class    ProductoController {
 //        return productoService.getProductosByAcontecimientoId(idAcontecimiento);
 //    }
 
+    @PutMapping("/editar/{productoId}")
+    public Producto editarProducto(@PathVariable Integer productoId, @RequestBody ProductoDTO productoDto) {
+        return productoService.editarProducto(productoId, productoDto);
+    }
+
+
+
 }
