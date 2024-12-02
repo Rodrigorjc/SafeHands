@@ -30,16 +30,16 @@ public interface ProveedoresRepository extends JpaRepository<Proveedores, Intege
     Proveedores findClienteByUsuarioId(Integer id);
 
     @Query("""
-       SELECT new com.valencia.proyecto1evaluacion.dtos.ProveedorRankingDTO(
-           p.nombre,\s
-           CAST(SUM(lp.cantidad * lp.precioUnitario) AS double)
-       )\s
-       FROM LineaPedido lp
-       JOIN lp.producto pr
-       JOIN pr.proveedores p
-       GROUP BY p.id, p.nombre
-       ORDER BY SUM(lp.cantidad * lp.precioUnitario) DESC
-      \s""")
+    SELECT new com.valencia.proyecto1evaluacion.dtos.ProveedorRankingDTO(
+        p.nombre,
+        CAST(SUM(lp.cantidad * lp.precioUnitario) AS double)
+    )
+    FROM LineaPedido lp
+    JOIN lp.producto pr
+    JOIN pr.proveedores p
+    GROUP BY p.id, p.nombre
+    ORDER BY SUM(lp.cantidad * lp.precioUnitario) DESC
+""")
     List<ProveedorRankingDTO> obtenerRankingProveedores();
 
     @Query("""
