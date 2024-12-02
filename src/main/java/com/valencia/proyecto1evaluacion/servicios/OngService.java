@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -194,10 +195,15 @@ public class OngService {
 
 
     public ImgDTO getImgbyId  (Integer id){
-        Ong ong = ongRepositorio.findClienteByUsuarioId(id);
-        ImgDTO imgDTO = new ImgDTO();
-        imgDTO.setImg(ong.getImg());
-        return imgDTO;
+        Optional<Ong> optionalOng = ongRepositorio.findByUsuarioId(id);
+        if (optionalOng.isPresent()) {
+            Ong ong = optionalOng.get();
+            ImgDTO imgDTO = new ImgDTO();
+            imgDTO.setImg(ong.getImg());
+            return imgDTO;
+        } else {
+            throw new RuntimeException("ONG not found");
+        }
     }
 
     public List<OngDTO> listar(){
