@@ -63,6 +63,11 @@ public class ProveedorController {
     public List<ProveedorInfoDTO> obtenerInfoProveedores() {
         return proveedorService.obtenerInfoProveedores();
     }
+
+    @GetMapping("/id/proveedor/{id}")
+    public Integer getIdProveedorPorUsuarioId(@PathVariable Integer id) {
+        return proveedorService.getIdProveedorPorUsuarioId(id);
+    }
 }
 
 
