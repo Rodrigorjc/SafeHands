@@ -26,11 +26,16 @@ public class ProveedoresDTO {
 
     private String cif;
 
+    private Boolean validado;
+
     private Rol rol= Rol.PROVEEDOR;
+
+    private String img;
 
     private Integer idUsuario;
 
     private String username;
+
 
     private String token;
 
