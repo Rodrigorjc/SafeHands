@@ -89,5 +89,10 @@ public class UsuarioService implements UserDetailsService {
         return passwordEncoder.matches(passwordSinEncriptar, usuario.getPassword());
     }
 
+    public Rol obtenerRolPorNombreUsuario(Integer id) {
+        Usuario usuario = usuarioRepositorio.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        return usuario.getRol();
+    }
 
 }
