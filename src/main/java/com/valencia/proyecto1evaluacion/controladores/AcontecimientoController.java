@@ -2,6 +2,7 @@ package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
+import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
@@ -51,6 +52,21 @@ public class AcontecimientoController {
         AcontecimientoDTO dto = acontecimientoService.obtenerAcontecimientoPorId(id);
         return ResponseEntity.ok(dto);
     }
+    @PostMapping("/crear/acontecimiento/admin/ong")
+    public AcontecimientoDTO crearAcontecimientoAdminOng(@RequestBody AcontecimientoDTO acontecimientoDTO){
+        return acontecimientoService.crearNuevoAcontecimiento(acontecimientoDTO);
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
+        String mensaje = acontecimientoService.eliminarAcontecimiento(id);
+        return ResponseEntity.ok(mensaje);
+    }
+    @PutMapping("/editar/{id}")
+    public Acontecimiento editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
+        return acontecimientoService.editarAcontecimiento(id, acontecimientoDTO);
+    }
+
 
 
 }
