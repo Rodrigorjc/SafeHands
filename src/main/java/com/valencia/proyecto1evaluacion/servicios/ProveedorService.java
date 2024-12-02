@@ -271,6 +271,9 @@ public class ProveedorService {
         proveedoresRepositorio.delete(proveedor);
     }
 
+    public Integer getIdProveedorPorUsuarioId(Integer id) {
+        return proveedoresRepositorio.findIdByUsuarioId(id);
+    }
 }
 
 
