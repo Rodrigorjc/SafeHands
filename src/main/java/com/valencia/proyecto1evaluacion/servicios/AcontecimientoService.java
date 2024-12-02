@@ -3,11 +3,15 @@ package com.valencia.proyecto1evaluacion.servicios;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoCrearDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
+import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
+import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.OngAcontecimientoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,8 +21,10 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class AcontecimientoService {
+
     private AcontecimientoRepository acontecimientoRepository;
     private OngAcontecimientoRepository ongAcontecimientoRepository;
+    private UsuarioService usuarioService;
 
     /**
      * Devuelve todos los acontecimientos
@@ -150,6 +156,7 @@ public class AcontecimientoService {
     public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento() {
         return acontecimientoRepository.obtenerTotalesAcontecimientos();
     }
+
     public AcontecimientoDTO obtenerAcontecimientoPorId(Integer id) {
         Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
@@ -162,7 +169,61 @@ public class AcontecimientoService {
         return dto;
     }
 
+    public AcontecimientoDTO crearNuevoAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
 
+        if (usuario == null || !(usuario.getRol().equals(Rol.ONG) || usuario.getRol().equals(Rol.ADMIN))) {
+            throw new SecurityException("No tienes permiso para crear acontecimientos");
+        }
+
+        Acontecimiento acontecimiento = new Acontecimiento();
+        acontecimiento.setId(acontecimientoDTO.getId());
+        acontecimiento.setNombre(acontecimientoDTO.getNombre());
+        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
+        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
+        acontecimiento.setImg(acontecimientoDTO.getImg());
+
+        acontecimientoRepository.save(acontecimiento);
+        return acontecimientoDTO;
+    }
+
+    public String eliminarAcontecimiento(Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !(usuario.getRol().equals(Rol.ONG) || usuario.getRol().equals(Rol.ADMIN))) {
+            throw new SecurityException("No tienes permiso para eliminar acontecimientos");
+        }
+
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+
+        acontecimientoRepository.delete(acontecimiento);
+        return "Acontecimiento eliminado correctamente.";
+    }
+
+    public Acontecimiento editarAcontecimiento(Integer id, AcontecimientoDTO acontecimientoDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !(usuario.getRol().equals(Rol.ADMIN) || usuario.getRol().equals(Rol.ONG))) {
+            throw new SecurityException("No tienes permiso para editar acontecimientos");
+        }
+
+        Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
+
+        acontecimiento.setNombre(acontecimientoDTO.getNombre());
+        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
+        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
+        acontecimiento.setImg(acontecimientoDTO.getImg());
+
+        return acontecimientoRepository.save(acontecimiento);
+    }
 
 
 }
