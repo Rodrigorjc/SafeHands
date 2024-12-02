@@ -36,7 +36,7 @@ public class Ong {
     @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
 
-    @Column(name = "img", nullable = false, length = 1500)
+    @Column(name = "img",  length = 1500)
     private String img;
 
     @JsonBackReference("usuario-ong")
