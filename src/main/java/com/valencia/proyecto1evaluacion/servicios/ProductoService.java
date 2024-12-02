@@ -215,5 +215,33 @@ public class ProductoService {
         // Puedes agregar otros atributos si es necesario
         return productoDTO;
     }
+
+
+    public Producto editarProducto(Integer productoId, ProductoDTO productoDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !(usuario.getRol().equals(Rol.ADMIN) || usuario.getRol().equals(Rol.PROVEEDOR))) {
+            throw new SecurityException("No tienes permiso para editar productos");
+        }
+
+        Producto producto = productoRepositorio.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (usuario.getRol().equals(Rol.PROVEEDOR) && !producto.getProveedores().getUsuario().getId().equals(usuario.getId())) {
+            throw new SecurityException("No tienes permiso para editar este producto");
+        }
+
+        producto.setDescripcion(productoDto.getDescripcion());
+        producto.setUrl(productoDto.getUrl());
+        producto.setPrecio(productoDto.getPrecio());
+        producto.setNombre(productoDto.getNombre());
+
+        return productoRepositorio.save(producto);
+    }
+
+
+
 }
 
