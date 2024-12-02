@@ -24,6 +24,11 @@ public class AcontecimientoController {
     private final AcontecimientoService acontecimientoService;
     private final OngAcontecimientoService ongAcontecimientoService;
 
+    @GetMapping
+    public List<AcontecimientoDTO> getAllAcontecimientos() {
+        return acontecimientoService.getAll();
+    }
+
     @GetMapping("/listar")
     public List<AcontecimientoDTO> listarAcontecimientos(){
         return acontecimientoService.getAll();
@@ -90,5 +95,26 @@ public class AcontecimientoController {
     @GetMapping("/getById/{id}")
     public AcontecimientoDTO getById(@PathVariable Integer id) {
         return acontecimientoService.getById(id);
+    }
+
+    // Nuevo endpoint para la administración de acontecimientos
+    @GetMapping("/admin")
+    public List<AcontecimientoDTO> getAdminAcontecimientos() {
+        return acontecimientoService.getAll();
+    }
+
+    @PutMapping("/admin/editar")
+    public AcontecimientoDTO editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
+        return acontecimientoService.editar(acontecimientoDTO, id);
+    }
+
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
+        String resultado = acontecimientoService.eliminar(id);
+        return ResponseEntity.ok(resultado);
+    }
+    @PostMapping("/admin/crear")
+    public AcontecimientoDTO crearNuevoAcontecimiento(@RequestBody AcontecimientoDTO acontecimientoDTO) {
+        return acontecimientoService.crearAcontecimiento(acontecimientoDTO);
     }
 }
