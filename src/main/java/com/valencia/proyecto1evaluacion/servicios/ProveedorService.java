@@ -9,6 +9,8 @@ import com.valencia.proyecto1evaluacion.repositorio.UsuarioRepository;
 import com.valencia.proyecto1evaluacion.security.JwtService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class ProveedorService {
 
     @Autowired
     UsuarioRepository usuarioRepositorio;
+
+    @Autowired
+    UsuarioService usuarioService;
 
     PasswordEncoder passwordEncoder;
 
@@ -48,7 +53,6 @@ public class ProveedorService {
         return proveedoresRepositorio.save(entity);
     }
 
-
     public AuthenticationDTO registrarProveedor(CrearProveedorDTO crearProveedorDTO) {
         Usuario usuario = new Usuario();
         usuario.setEmail(crearProveedorDTO.getEmail());
@@ -60,6 +64,39 @@ public class ProveedorService {
         proveedor.setUsuario(usuario);
         proveedor.setImg(crearProveedorDTO.getImg());
         proveedor.setNombre(crearProveedorDTO.getNombre());
+        proveedor.setValidado(false);
+        proveedor.setNumVoluntarios(crearProveedorDTO.getNumVoluntarios());
+        proveedor.setCif(crearProveedorDTO.getCif());
+        proveedor.setSede(crearProveedorDTO.getSede());
+        proveedor.setUbicacion(crearProveedorDTO.getUbicacion());
+        proveedoresRepositorio.save(proveedor);
+        var jwtToken = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
+
+        return AuthenticationDTO.builder().token(jwtToken).build();
+    }
+
+
+
+    public AuthenticationDTO registrarProveedorAdmin(CrearProveedorDTO crearProveedorDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuarioNombre = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuarioNombre == null || !usuarioNombre.getRol().equals(Rol.ADMIN)) {
+            throw new SecurityException("No tienes permiso para eliminar ONGs");
+        }
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail(crearProveedorDTO.getEmail());
+        usuario.setUsername(crearProveedorDTO.getUsername());
+        usuario.setPassword(passwordEncoder.encode(crearProveedorDTO.getPassword()));
+        usuario.setRol(Rol.PROVEEDOR);
+        usuarioRepositorio.save(usuario);
+        Proveedores proveedor = new Proveedores();
+        proveedor.setUsuario(usuario);
+        proveedor.setImg(crearProveedorDTO.getImg());
+        proveedor.setNombre(crearProveedorDTO.getNombre());
+        proveedor.setValidado(true);
         proveedor.setNumVoluntarios(crearProveedorDTO.getNumVoluntarios());
         proveedor.setCif(crearProveedorDTO.getCif());
         proveedor.setSede(crearProveedorDTO.getSede());
