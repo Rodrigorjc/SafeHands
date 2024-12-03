@@ -4,6 +4,7 @@ package com.valencia.proyecto1evaluacion.controladores;
 import com.valencia.proyecto1evaluacion.dtos.*;
 import com.valencia.proyecto1evaluacion.servicios.ProveedorService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +64,15 @@ public class ProveedorController {
     public List<ProveedorInfoDTO> obtenerInfoProveedores() {
         return proveedorService.obtenerInfoProveedores();
     }
+
+
+    @GetMapping("/usuario/{usuarioId}/proveedorId")
+    public ResponseEntity<Integer> obtenerOngIdPorUsuarioId(@PathVariable Integer usuarioId) {
+        Integer proveedorId = proveedorService.obtenerProveedorIdPorUsuarioId(usuarioId);
+        return ResponseEntity.ok(proveedorId);
+    }
+
+
 }
 
 
