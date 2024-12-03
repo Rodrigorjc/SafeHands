@@ -5,6 +5,7 @@ import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
 import com.valencia.proyecto1evaluacion.dtos.ConsultaAcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
+import com.valencia.proyecto1evaluacion.modelos.Ong;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.OngAcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.PagosRepository;
@@ -21,6 +22,7 @@ public class AcontecimientoService {
     private AcontecimientoRepository acontecimientoRepository;
     private OngAcontecimientoRepository ongAcontecimientoRepository;
     private PagosRepository pagosRepository;
+
 
     /**
      * Devuelve todos los acontecimientos
@@ -81,7 +83,7 @@ public class AcontecimientoService {
     /**
      * Edita un acontecimiento
      *
-     * @param dto
+     * @param acontecimientoDTO
      * @param id
      * @return
      */
@@ -93,7 +95,7 @@ public class AcontecimientoService {
         acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
         acontecimiento.setImg(acontecimientoDTO.getImg());
         acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
-        acontecimiento.setOng(acontecimiento.getOng());
+
 
         acontecimientoRepository.save(acontecimiento);
 

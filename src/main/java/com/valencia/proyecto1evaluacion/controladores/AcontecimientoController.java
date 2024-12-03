@@ -81,7 +81,7 @@ public class AcontecimientoController {
         return acontecimientoService.getAll();
     }
 
-    @PutMapping("/admin/editar")
+    @PutMapping("/admin/editar/{id}")
     public AcontecimientoDTO editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
         return acontecimientoService.editar(acontecimientoDTO, id);
     }
