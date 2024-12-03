@@ -65,6 +65,7 @@ public class ProveedorController {
         return proveedorService.obtenerRankingProveedores();
     }
 
+
     @GetMapping("/info/proveedores")
     public List<ProveedorInfoDTO> obtenerInfoProveedores() {
         return proveedorService.obtenerInfoProveedores();
