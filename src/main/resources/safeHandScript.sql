@@ -28,6 +28,7 @@ create table ong(
 
 create table proveedores(
                             id serial primary key,
+                            nombre varchar(100) not null,
                             num_voluntarios int not null,
                             sede varchar(100) not null,
                             ubicacion varchar(500) not null,

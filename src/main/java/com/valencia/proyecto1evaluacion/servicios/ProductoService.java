@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -230,5 +229,42 @@ public class ProductoService {
         }
         return productoDTOS;
     }
+
+    public Producto getProductoById(Integer id) {
+        try {
+            return productoRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener el producto", e);
+        }
+    }
+
+
+    public Producto editarProducto(Integer productoId, ProductoDTO productoDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !(usuario.getRol().equals(Rol.ADMIN) || usuario.getRol().equals(Rol.PROVEEDOR))) {
+            throw new SecurityException("No tienes permiso para editar productos");
+        }
+
+        Producto producto = productoRepositorio.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (usuario.getRol().equals(Rol.PROVEEDOR) && !producto.getProveedores().getUsuario().getId().equals(usuario.getId())) {
+            throw new SecurityException("No tienes permiso para editar este producto");
+        }
+
+        producto.setDescripcion(productoDto.getDescripcion());
+        producto.setUrl(productoDto.getUrl());
+        producto.setPrecio(productoDto.getPrecio());
+        producto.setNombre(productoDto.getNombre());
+
+        return productoRepositorio.save(producto);
+    }
+
+
+
 }
 

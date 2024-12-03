@@ -14,26 +14,18 @@ public class ProveedoresDTO {
 
     private Integer id;
     private Integer numVoluntarios;
-
-    private String sede;
-
-    private String ubicacion;
-
-    private String email;
-
-    private String password;
-
-    private String cif;
-
-    private Rol rol= Rol.PROVEEDOR;
-
-    private Integer idUsuario;
-
-    private String username;
-
-    private String token;
-
     private String nombre;
+    private String sede;
+    private String ubicacion;
+    private String email;
+    private String password;
+    private String cif;
+    private Boolean validado;
+    private Rol rol= Rol.PROVEEDOR;
+    private String img;
+    private Integer idUsuario;
+    private String username;
+    private String token;
     private Integer cantidad;
     private Double precioUnitario;
 

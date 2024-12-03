@@ -31,6 +31,5 @@ public class Cliente {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<Pedido> pedidos;
+
 }

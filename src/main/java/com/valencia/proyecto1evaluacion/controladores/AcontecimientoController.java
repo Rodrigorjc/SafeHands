@@ -4,6 +4,7 @@ import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.ConsultaAcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
+import com.valencia.proyecto1evaluacion.dtos.ProveedoresDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
@@ -69,6 +70,27 @@ public class AcontecimientoController {
     public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento()  {
         return acontecimientoService.obtenerInfoAcontecimiento();
     }
+    @GetMapping("/detalles/{id}")
+    public ResponseEntity<AcontecimientoDTO> obtenerAcontecimientoPorId(@PathVariable Integer id) {
+        AcontecimientoDTO dto = acontecimientoService.obtenerAcontecimientoPorId(id);
+        return ResponseEntity.ok(dto);
+    }
+    @PostMapping("/crear/acontecimiento/admin/ong")
+    public AcontecimientoDTO crearAcontecimientoAdminOng(@RequestBody AcontecimientoDTO acontecimientoDTO){
+        return acontecimientoService.crearNuevoAcontecimiento(acontecimientoDTO);
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
+        String mensaje = acontecimientoService.eliminarAcontecimiento(id);
+        return ResponseEntity.ok(mensaje);
+    }
+    @PutMapping("/editar/{id}")
+    public Acontecimiento editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
+        return acontecimientoService.editarAcontecimiento(id, acontecimientoDTO);
+    }
+
+
 
     @GetMapping("/getById/{id}")
     public AcontecimientoDTO getById(@PathVariable Integer id) {
@@ -81,16 +103,17 @@ public class AcontecimientoController {
         return acontecimientoService.getAll();
     }
 
-    @PutMapping("/admin/editar/{id}")
-    public AcontecimientoDTO editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
-        return acontecimientoService.editar(acontecimientoDTO, id);
-    }
+//    @PutMapping("/admin/editar")
+//    public AcontecimientoDTO editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
+//        return acontecimientoService.editar(acontecimientoDTO, id);
+//    }
+//
+//    @DeleteMapping("/admin/{id}")
+//    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
+//        String resultado = acontecimientoService.eliminar(id);
+//        return ResponseEntity.ok(resultado);
+//    }
 
-    @DeleteMapping("/admin/{id}")
-    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
-        String resultado = acontecimientoService.eliminar(id);
-        return ResponseEntity.ok(resultado);
-    }
     @PostMapping("/admin/crear")
     public AcontecimientoDTO crearNuevoAcontecimiento(@RequestBody AcontecimientoDTO acontecimientoDTO) {
         return acontecimientoService.crearAcontecimiento(acontecimientoDTO);
