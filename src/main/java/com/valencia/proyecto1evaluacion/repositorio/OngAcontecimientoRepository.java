@@ -12,5 +12,7 @@ public interface OngAcontecimientoRepository extends JpaRepository<OngAcontecimi
     List<OngAcontecimiento> findByOngId(Integer ongId);
     boolean existsByOngAndAcontecimiento(Ong ong, Acontecimiento acontecimiento);
 
+    List<OngAcontecimiento> findByAcontecimientoId(Integer acontecimientoId);
+
 
 }

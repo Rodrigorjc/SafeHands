@@ -76,6 +76,14 @@ public class OngService {
         Proveedores proveedor = proveedoresRepositorio.findById(proveedorId)
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
         proveedoresRepositorio.delete(proveedor);
+
+        Usuario usuarioProveedor = proveedor.getUsuario();
+        if (usuarioProveedor != null) {
+            usuarioRepositorio.delete(usuarioProveedor);
+        }
+
+        // Delete the provider
+        proveedoresRepositorio.delete(proveedor);
     }
 
 
@@ -223,6 +231,12 @@ public class OngService {
             ongDTOs.add(dto);
         }
         return ongDTOs;
+    }
+
+    public Integer obtenerOngIdPorUsuarioId(Integer usuarioId) {
+        Ong ong = ongRepositorio.findByUsuarioId(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Ong no encontrada para el usuario dado"));
+        return ong.getId();
     }
 
 }

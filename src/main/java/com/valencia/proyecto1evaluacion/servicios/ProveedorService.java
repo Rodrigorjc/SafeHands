@@ -286,6 +286,17 @@ public class ProveedorService {
         }
         return proveedoresDTOs;
     }
+
+
+    public Integer obtenerProveedorIdPorUsuarioId(Integer usuarioId) {
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado para el usuario dado"));
+        return proveedor.getId();
+    }
+
 }
+
+
+
 
 
