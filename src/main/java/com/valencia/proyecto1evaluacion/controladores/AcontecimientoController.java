@@ -103,16 +103,16 @@ public class AcontecimientoController {
         return acontecimientoService.getAll();
     }
 
-    @PutMapping("/admin/editar")
-    public AcontecimientoDTO editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
-        return acontecimientoService.editar(acontecimientoDTO, id);
-    }
-
-    @DeleteMapping("/admin/{id}")
-    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
-        String resultado = acontecimientoService.eliminar(id);
-        return ResponseEntity.ok(resultado);
-    }
+//    @PutMapping("/admin/editar")
+//    public AcontecimientoDTO editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {
+//        return acontecimientoService.editar(acontecimientoDTO, id);
+//    }
+//
+//    @DeleteMapping("/admin/{id}")
+//    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
+//        String resultado = acontecimientoService.eliminar(id);
+//        return ResponseEntity.ok(resultado);
+//    }
     @PostMapping("/admin/crear")
     public AcontecimientoDTO crearNuevoAcontecimiento(@RequestBody AcontecimientoDTO acontecimientoDTO) {
         return acontecimientoService.crearAcontecimiento(acontecimientoDTO);
