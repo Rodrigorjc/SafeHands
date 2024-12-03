@@ -55,6 +55,7 @@ public class ProveedorService {
         return proveedoresRepositorio.save(entity);
     }
 
+
     public AuthenticationDTO registrarProveedor(CrearProveedorDTO crearProveedorDTO) {
         Usuario usuario = new Usuario();
         usuario.setEmail(crearProveedorDTO.getEmail());
@@ -273,6 +274,17 @@ public class ProveedorService {
 
     public Integer getIdProveedorPorUsuarioId(Integer id) {
         return proveedoresRepositorio.findIdByUsuarioId(id);
+    }
+    public List<ProveedoresDTO> listarProveedoresSelect() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findAllByValidadoIsTrue();
+        List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
+        for (Proveedores proveedor : proveedores) {
+            ProveedoresDTO dto = new ProveedoresDTO();
+            dto.setId(proveedor.getId());
+            dto.setNombre(proveedor.getNombre());
+            proveedoresDTOs.add(dto);
+        }
+        return proveedoresDTOs;
     }
 }
 

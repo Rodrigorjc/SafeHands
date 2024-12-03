@@ -39,17 +39,25 @@ public class ProductoService {
         String nombre = authentication.getName();
         Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
 
-        if (usuario == null || !usuario.getRol().equals(Rol.PROVEEDOR)) {
+        if (usuario == null || !(usuario.getRol().equals(Rol.PROVEEDOR) || usuario.getRol().equals(Rol.ADMIN))) {
             throw new SecurityException("No tienes permiso para añadir productos");
         }
 
+        Proveedores proveedor = null;
 
-//        if (productoDto.getIdProveedor() == null) {
+
+        if (productoDto.getIdProveedores() == null) {
 //            throw new IllegalArgumentException("El id del proveedor no debe ser nulo");
 //        }
-//
-        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
-                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+
+
+             proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
+                    .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        }
+        else {
+            proveedor = proveedoresRepositorio.findById(productoDto.getIdProveedores())
+                    .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        }
 
         if (!proveedoresRepositorio.existsByIdAndValidado(proveedor.getId(), true)) {
             throw new RuntimeException("El proveedor no está validado y no puede crear productos.");
@@ -82,7 +90,40 @@ public class ProductoService {
 
         return savedProducto;
 
+    }
 
+    public Producto editarProducto(ProductoDTO productoDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = authentication.getName();
+        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+
+        if (usuario == null || !(usuario.getRol().equals(Rol.PROVEEDOR) || usuario.getRol().equals(Rol.ADMIN))){
+            throw new SecurityException("No tienes permiso para editar productos");
+        }
+
+        Producto producto = productoRepositorio.findById(productoDto
+                        .getId())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if(!productoDto.getNombre().isEmpty()){
+            producto.setNombre(productoDto.getNombre());
+        }
+        if(!productoDto.getDescripcion().isEmpty()){
+            producto.setDescripcion(productoDto.getDescripcion());
+        }
+        if(!productoDto.getUrl().isEmpty()){
+            producto.setUrl(productoDto.getUrl());
+        }
+        if(productoDto.getPrecio() != null){
+            producto.setPrecio(productoDto.getPrecio());
+        }
+        if(productoDto.getIdProveedores() != null){
+            Proveedores proveedor = proveedoresRepositorio.findById(productoDto.getIdProveedores())
+                    .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+            producto.setProveedores(proveedor);
+        }
+
+        return productoRepositorio.save(producto);
 
     }
 
@@ -214,6 +255,13 @@ public class ProductoService {
         // Puedes agregar otros atributos si es necesario
         return productoDTO;
     }
+
+
+    public List<Producto> obtenerProductosPorAcontecimiento(Integer idAcontecimiento) {
+        return productoRepositorio.findProductosByAcontecimiento(idAcontecimiento);
+    }
+
+
 
     public List<ProductoDTO> getProductosAcontecimiento(Integer id) {
         List<Producto> productos = proveedoresAcontecimientoRepository.findProductosByAcontecimientoId(id);
