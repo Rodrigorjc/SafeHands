@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProveedoresSliderDTO {
     private String nombre;
-    private String img;
     private Integer id;
+    private String img;
 }
