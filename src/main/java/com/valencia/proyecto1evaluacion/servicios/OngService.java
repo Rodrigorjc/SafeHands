@@ -219,4 +219,10 @@ public class OngService {
         return ongDTOs;
     }
 
+    public Integer obtenerOngIdPorUsuarioId(Integer usuarioId) {
+        Ong ong = ongRepositorio.findByUsuarioId(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Ong no encontrada para el usuario dado"));
+        return ong.getId();
+    }
+
 }
