@@ -75,6 +75,14 @@ public class OngService {
         Proveedores proveedor = proveedoresRepositorio.findById(proveedorId)
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
         proveedoresRepositorio.delete(proveedor);
+
+        Usuario usuarioProveedor = proveedor.getUsuario();
+        if (usuarioProveedor != null) {
+            usuarioRepositorio.delete(usuarioProveedor);
+        }
+
+        // Delete the provider
+        proveedoresRepositorio.delete(proveedor);
     }
 
 
