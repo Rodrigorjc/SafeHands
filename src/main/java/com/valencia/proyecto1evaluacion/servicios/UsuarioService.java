@@ -95,4 +95,7 @@ public class UsuarioService implements UserDetailsService {
         return usuario.getRol();
     }
 
+    public Usuario getById(Integer id) {
+        return usuarioRepositorio.getById(id);
+    }
 }
