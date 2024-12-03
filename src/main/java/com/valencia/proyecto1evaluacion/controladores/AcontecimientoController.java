@@ -30,7 +30,7 @@ public class AcontecimientoController {
     }
 
     @GetMapping("/listar")
-    public List<AcontecimientoDTO> listarAcontecimientos(){
+    public List<AcontecimientoDTO> listarAcontecimientos() {
         return acontecimientoService.getAll();
     }
 

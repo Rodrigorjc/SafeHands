@@ -36,19 +36,20 @@ public class AcontecimientoService {
      *
      * @return acontecimientosDTO
      */
-    public List<AcontecimientoDTO> getAll(){
+    public List<AcontecimientoDTO> getAll() {
         List<Acontecimiento> acontecimientos = acontecimientoRepository.findAll();
-        List<AcontecimientoDTO> acontecimientoDTOS = new ArrayList<>();
-        for (Acontecimiento a : acontecimientos ) {
-            AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
-            acontecimientoDTO.setId(a.getId());
-            acontecimientoDTO.setNombre(a.getNombre());
-            acontecimientoDTO.setDescripcion(a.getDescripcion());
-            acontecimientoDTO.setImg(a.getImg());
-            acontecimientoDTO.setUbicacion(a.getUbicacion());
-            acontecimientoDTOS.add(acontecimientoDTO);
-        }
-        return acontecimientoDTOS;
+        return acontecimientos.stream()
+                .map(acontecimiento -> {
+                    AcontecimientoDTO dto = new AcontecimientoDTO();
+                    dto.setId(acontecimiento.getId());
+                    dto.setNombre(acontecimiento.getNombre());
+                    dto.setDescripcion(acontecimiento.getDescripcion());
+                    dto.setUbicacion(acontecimiento.getUbicacion());
+                    dto.setImg(acontecimiento.getImg());
+//                    dto.setOngId(acontecimiento.getOng().getId());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     /**
