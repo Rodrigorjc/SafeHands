@@ -1,5 +1,7 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
+import com.valencia.proyecto1evaluacion.dtos.ClienteDTO;
+import com.valencia.proyecto1evaluacion.dtos.ClientePerfilDTO;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
 
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
@@ -66,5 +68,10 @@ public class ClienteController {
     public ResponseEntity<ImgDTO> getImgById(@PathVariable Integer id) {
         ImgDTO imgDTO = clienteService.getImgbyId(id);
         return new ResponseEntity<>(imgDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/getByUserID/{id}")
+    public ClientePerfilDTO getCliente(@PathVariable Integer id) {
+        return clienteService.getCliente(id);
     }
 }
