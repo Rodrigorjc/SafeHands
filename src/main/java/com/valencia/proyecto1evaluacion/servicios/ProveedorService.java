@@ -79,7 +79,6 @@ public class ProveedorService {
     }
 
 
-
     public AuthenticationDTO registrarProveedorAdmin(CrearProveedorDTO crearProveedorDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
@@ -110,7 +109,7 @@ public class ProveedorService {
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
 
-    public ImgDTO getImgbyId  (Integer id){
+    public ImgDTO getImgbyId(Integer id) {
         Proveedores proveedores = proveedoresRepositorio.findClienteByUsuarioId(id);
         ImgDTO imgDTO = new ImgDTO();
         imgDTO.setImg(proveedores.getImg());
@@ -157,11 +156,10 @@ public class ProveedorService {
     }
 
 
-
     public List<ProveedoresSliderDTO> listadoProveedoresSlider() {
         List<Proveedores> proveedores = proveedoresRepositorio.findAll();
         List<ProveedoresSliderDTO> proveedoresSliderDTOS = new ArrayList<>();
-        for (Proveedores p: proveedores) {
+        for (Proveedores p : proveedores) {
             ProveedoresSliderDTO proveedoresSliderDTO = new ProveedoresSliderDTO();
             proveedoresSliderDTO.setNombre(p.getNombre());
             proveedoresSliderDTO.setImg(p.getImg());
@@ -178,6 +176,7 @@ public class ProveedorService {
     public List<ProveedorInfoDTO> obtenerInfoProveedores() {
         return proveedoresRepositorio.obtenerInfoProveedores();
     }
+
     /**
      * Este método extrae todos los perfiles de base de datos
      *
@@ -275,6 +274,7 @@ public class ProveedorService {
     public Integer getIdProveedorPorUsuarioId(Integer id) {
         return proveedoresRepositorio.findIdByUsuarioId(id);
     }
+
     public List<ProveedoresDTO> listarProveedoresSelect() {
         List<Proveedores> proveedores = proveedoresRepositorio.findAllByValidadoIsTrue();
         List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
