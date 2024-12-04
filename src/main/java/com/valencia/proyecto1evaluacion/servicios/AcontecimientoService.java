@@ -60,7 +60,7 @@ public class AcontecimientoService {
         AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
         assert acontecimiento != null;
         acontecimientoDTO.setUbicacion(acontecimiento.getUbicacion());
-        acontecimientoDTO.setIdOng(acontecimiento.getOng().getId());
+//        acontecimientoDTO.setIdOng(acontecimiento.getOng().getId());
         acontecimientoDTO.setNombre(acontecimiento.getNombre());
         acontecimientoDTO.setDescripcion(acontecimiento.getDescripcion());
         acontecimientoDTO.setImg(acontecimiento.getImg());
@@ -92,20 +92,20 @@ public class AcontecimientoService {
      * @param id
      * @return
      */
-    public AcontecimientoDTO editar(AcontecimientoDTO acontecimientoDTO, Integer id) {
-        Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Acontecimiento not found"));
-
-        acontecimiento.setNombre(acontecimientoDTO.getNombre());
-        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
-        acontecimiento.setImg(acontecimientoDTO.getImg());
-        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
-        acontecimiento.setOng(acontecimiento.getOng());
-
-        acontecimientoRepository.save(acontecimiento);
-
-        return acontecimientoDTO;
-    }
+//    public AcontecimientoDTO editar(AcontecimientoDTO acontecimientoDTO, Integer id) {
+//        Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Acontecimiento not found"));
+//
+//        acontecimiento.setNombre(acontecimientoDTO.getNombre());
+//        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
+//        acontecimiento.setImg(acontecimientoDTO.getImg());
+//        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
+//        acontecimiento.setOng(acontecimiento.getOng());
+//
+//        acontecimientoRepository.save(acontecimiento);
+//
+//        return acontecimientoDTO;
+//    }
 
     /**
      * Guarda un acontecimiento
