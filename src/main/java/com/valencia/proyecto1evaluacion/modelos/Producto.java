@@ -26,7 +26,7 @@ public class Producto {
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "url", nullable = false, length = 500)
+    @Column(name = "url", length = 500)
     private String url;
 
     @Column(name = "precio", nullable = false)
@@ -39,5 +39,9 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_proveedor", nullable = false)
     private Proveedores proveedores;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ProveedoresAcontecimiento> proveedoresAcontecimientos;
 
 }

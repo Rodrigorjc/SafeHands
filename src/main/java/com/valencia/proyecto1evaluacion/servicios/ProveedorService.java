@@ -55,6 +55,7 @@ public class ProveedorService {
         return proveedoresRepositorio.save(entity);
     }
 
+
     public AuthenticationDTO registrarProveedor(CrearProveedorDTO crearProveedorDTO) {
         Usuario usuario = new Usuario();
         usuario.setEmail(crearProveedorDTO.getEmail());
@@ -76,7 +77,6 @@ public class ProveedorService {
 
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
-
 
 
     public AuthenticationDTO registrarProveedorAdmin(CrearProveedorDTO crearProveedorDTO) {
@@ -109,7 +109,7 @@ public class ProveedorService {
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
 
-    public ImgDTO getImgbyId  (Integer id){
+    public ImgDTO getImgbyId(Integer id) {
         Proveedores proveedores = proveedoresRepositorio.findClienteByUsuarioId(id);
         ImgDTO imgDTO = new ImgDTO();
         imgDTO.setImg(proveedores.getImg());
@@ -156,11 +156,10 @@ public class ProveedorService {
     }
 
 
-
     public List<ProveedoresSliderDTO> listadoProveedoresSlider() {
         List<Proveedores> proveedores = proveedoresRepositorio.findAll();
         List<ProveedoresSliderDTO> proveedoresSliderDTOS = new ArrayList<>();
-        for (Proveedores p: proveedores) {
+        for (Proveedores p : proveedores) {
             ProveedoresSliderDTO proveedoresSliderDTO = new ProveedoresSliderDTO();
             proveedoresSliderDTO.setNombre(p.getNombre());
             proveedoresSliderDTO.setImg(p.getImg());
@@ -309,6 +308,29 @@ public class ProveedorService {
 
         return proveedoresRepositorio.findIdByUsuarioId(id);
     }
+
+    public List<ProveedoresDTO> listarProveedoresSelect() {
+        List<Proveedores> proveedores = proveedoresRepositorio.findAllByValidadoIsTrue();
+        List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
+        for (Proveedores proveedor : proveedores) {
+            ProveedoresDTO dto = new ProveedoresDTO();
+            dto.setId(proveedor.getId());
+            dto.setNombre(proveedor.getNombre());
+            proveedoresDTOs.add(dto);
+        }
+        return proveedoresDTOs;
+    }
+
+
+    public Integer obtenerProveedorIdPorUsuarioId(Integer usuarioId) {
+        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado para el usuario dado"));
+        return proveedor.getId();
+    }
+
 }
+
+
+
 
 

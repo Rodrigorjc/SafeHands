@@ -71,6 +71,12 @@ public class OngController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/usuario/{usuarioId}/ongId")
+    public ResponseEntity<Integer> obtenerOngIdPorUsuarioId(@PathVariable Integer usuarioId) {
+        Integer ongId = ongService.obtenerOngIdPorUsuarioId(usuarioId);
+        return ResponseEntity.ok(ongId);
+    }
+
 
 //    @GetMapping("/acontecimiento/{id}")
 //    public List<Ong> obtenerOngsPorAcontecimiento(@PathVariable Integer id) {

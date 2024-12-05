@@ -45,6 +45,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/usuarios/**").permitAll();
                     auth.requestMatchers("producto/crear").permitAll();
                     auth.requestMatchers(("proveedor/**")).permitAll();
+                    auth.requestMatchers("proveedor/listarSelect").permitAll();
                     auth.requestMatchers("ong/**").permitAll();
                     auth.requestMatchers("producto/{productoId}/vincular-acontecimiento/{acontecimientoId}").permitAll();
                     auth.requestMatchers("ong/validar/proveedor/{id}").permitAll();
@@ -55,6 +56,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("linea/total").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
                     auth.requestMatchers("producto/buscar").permitAll();
+                    auth.requestMatchers("producto/listar").permitAll();
                     auth.requestMatchers("producto/filtrar").permitAll();
                     auth.requestMatchers("producto/donaciones").permitAll();
                     auth.requestMatchers("producto/donaciones/registrar").permitAll();

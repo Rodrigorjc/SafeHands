@@ -2,6 +2,7 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
+import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.Ong;
 import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
@@ -55,5 +56,25 @@ public class OngAcontecimientoService {
             }
         }
     }
+    public List<OngDTO> obtenerOngsPorAcontecimiento(Integer acontecimientoId) {
+        List<OngAcontecimiento> ongAcontecimientos = ongAcontecimientoRepository.findByAcontecimientoId(acontecimientoId);
+        List<OngDTO> ongs = new ArrayList<>();
+        for (OngAcontecimiento ongAcontecimiento : ongAcontecimientos) {
+            Ong ong = ongAcontecimiento.getOng();
+            OngDTO dto = new OngDTO();
+            dto.setId(ong.getId());
+            dto.setNumVoluntarios(ong.getNumVoluntarios());
+            dto.setSede(ong.getSede());
+            dto.setDescripcion(ong.getDescripcion());
+            dto.setUbicacion(ong.getUbicacion());
+            dto.setImg(ong.getImg());
+            dto.setEmail(ong.getUsuario().getEmail());
+            dto.setUsername(ong.getUsuario().getUsername());
+            dto.setIdUsuario(ong.getUsuario().getId());
+            ongs.add(dto);
+        }
+        return ongs;
+    }
+
 
 }
