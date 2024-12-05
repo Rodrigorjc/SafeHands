@@ -89,13 +89,13 @@ public class OngService {
 
     //añadir en el admin service y en su controlador
     public OngDTO crearOng(OngDTO ongDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombre = authentication.getName();
-        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
-
-        if (usuario == null || !usuario.getRol().equals(Rol.ADMIN)) {
-            throw new SecurityException("No tienes permiso para crear ONGs");
-        }
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String nombre = authentication.getName();
+//        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+//
+//        if (usuario == null || !usuario.getRol().equals(Rol.ADMIN)) {
+//            throw new SecurityException("No tienes permiso para crear ONGs");
+//        }
 
         Ong entity = new Ong();
         entity.setId(ongDto.getId());
@@ -124,17 +124,17 @@ public class OngService {
     }
 
     public OngDTO registrarOng(OngDTO ongDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombre = authentication.getName();
-        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
-
-        if (usuario == null || !usuario.getRol().equals(Rol.ADMIN)) {
-            throw new SecurityException("No tienes permiso para registrar ONGs");
-        }
-
-        if (ongDto.getNumVoluntarios() <= 0) {
-            throw new IllegalArgumentException("El numero de voluntarios no puede ser menor o igual a 0");
-        }
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String nombre = authentication.getName();
+//        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
+//
+//        if (usuario == null || !usuario.getRol().equals(Rol.ADMIN)) {
+//            throw new SecurityException("No tienes permiso para registrar ONGs");
+//        }
+//
+//        if (ongDto.getNumVoluntarios() <= 0) {
+//            throw new IllegalArgumentException("El numero de voluntarios no puede ser menor o igual a 0");
+//        }
 
         Usuario usuarioOng = new Usuario();
         usuarioOng.setId(ongDto.getIdUsuario());

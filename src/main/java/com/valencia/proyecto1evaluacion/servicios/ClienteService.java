@@ -22,6 +22,9 @@ public class ClienteService {
 
     public ImgDTO getImgbyId  (Integer id){
         Cliente cliente = clienteRepository.findClienteByUsuarioId(id);
+        if (cliente == null) {
+            throw new RuntimeException("Cliente not found for user ID: " + id);
+        }
         ImgDTO imgDTO = new ImgDTO();
         imgDTO.setImg(cliente.getFotoPerfil());
         return imgDTO;
