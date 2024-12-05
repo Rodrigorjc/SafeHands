@@ -53,14 +53,13 @@ public class AcontecimientoService {
      * Busca un acontecimiento por id
      *
      * @param id
-     * @return
+     * @return AcontecimientoDTO
      */
     public AcontecimientoDTO getById(Integer id){
         Acontecimiento acontecimiento = acontecimientoRepository.findById(id).orElse(null);
         AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
         assert acontecimiento != null;
         acontecimientoDTO.setUbicacion(acontecimiento.getUbicacion());
-        acontecimientoDTO.setIdOng(acontecimiento.getOng().getId());
         acontecimientoDTO.setNombre(acontecimiento.getNombre());
         acontecimientoDTO.setDescripcion(acontecimiento.getDescripcion());
         acontecimientoDTO.setImg(acontecimiento.getImg());
@@ -88,7 +87,7 @@ public class AcontecimientoService {
     /**
      * Edita un acontecimiento
      *
-     * @param dto
+     * @param acontecimientoDTO
      * @param id
      * @return
      */
@@ -100,7 +99,6 @@ public class AcontecimientoService {
         acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
         acontecimiento.setImg(acontecimientoDTO.getImg());
         acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
-        acontecimiento.setOng(acontecimiento.getOng());
 
         acontecimientoRepository.save(acontecimiento);
 
@@ -211,7 +209,7 @@ public class AcontecimientoService {
         }
 
         Acontecimiento acontecimiento = new Acontecimiento();
-        acontecimiento.setId(acontecimientoDTO.getId());
+//        acontecimiento.setId(acontecimientoDTO.getId());
         acontecimiento.setNombre(acontecimientoDTO.getNombre());
         acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
         acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
