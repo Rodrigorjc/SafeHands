@@ -50,7 +50,8 @@ public class ProveedoresAcontecimeintoService {
                         producto.getDescripcion(),    // descripción del producto
                         producto.getPrecio(),         // precio del producto
                         producto.getUrl(),            // URL de imagen del producto
-                        producto.getProveedores().getId() // id del proveedor del producto
+                        producto.getProveedores().getId(), // id del proveedor del producto,
+                        producto.getProveedores().getNombre() // nombre del proveedor del producto
                 ))
                 .collect(Collectors.toList());
     }

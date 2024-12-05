@@ -66,9 +66,9 @@ public class ProductoService {
             throw new IllegalArgumentException("El precio no puede ser menor que 0");
         }
 
-//        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
-//            throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
-//        }
+   //    if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
+   //         throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
+   //    }
 
         Producto producto = new Producto();
         producto.setDescripcion(productoDto.getDescripcion());
@@ -144,17 +144,20 @@ public class ProductoService {
         String nombre = authentication.getName();
         Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
 
-        if (usuario == null || !usuario.getRol().equals(Rol.PROVEEDOR)) {
+        if (usuario != null && !(usuario.getRol().equals(Rol.PROVEEDOR) || usuario.getRol().equals(Rol.ADMIN))) {
             throw new SecurityException("No tienes permiso para eliminar productos");
         }
 
-        Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
-                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        Proveedores proveedor = null;
+        if (usuario.getRol().equals(Rol.PROVEEDOR)) {
+            proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
+                    .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        }
 
         Producto producto = productoRepositorio.findById(productoId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        if (!producto.getProveedores().getId().equals(proveedor.getId())) {
+        if (proveedor != null && !producto.getProveedores().getId().equals(proveedor.getId())) {
             throw new SecurityException("No tienes permiso para eliminar este producto");
         }
 
@@ -172,6 +175,7 @@ public class ProductoService {
             dto.setUrl(producto.getUrl());
             dto.setPrecio(producto.getPrecio());
             dto.setNombre(producto.getNombre());
+            dto.setNombreProveedor(producto.getProveedores().getNombre());
             productoDtos.add(dto);
         }
         return productoDtos;
