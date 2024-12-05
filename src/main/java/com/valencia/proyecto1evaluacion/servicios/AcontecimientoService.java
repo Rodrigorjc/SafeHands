@@ -153,6 +153,7 @@ public class AcontecimientoService {
      * @param id El identificador único del acontecimiento que se desea eliminar.
      * @return Un mensaje indicando el resultado de la operación de eliminación.
      */
+
     public String eliminar(Integer id) {
         // Busca el acontecimiento en el repositorio utilizando el ID proporcionado
         Acontecimiento acontecimiento = acontecimientoRepository.findById(id).orElse(null);

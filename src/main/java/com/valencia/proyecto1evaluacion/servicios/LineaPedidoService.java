@@ -40,6 +40,7 @@ public class LineaPedidoService {
         return totalDonacionesDTO;
     }
 
+
     /**
      * Obtiene el total recaudado por cada proveedor.
      * Este método consulta el repositorio de líneas de pedido para obtener el total recaudado por cada proveedor.

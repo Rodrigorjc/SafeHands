@@ -185,6 +185,7 @@ public class ProveedorService {
      *
      * @return Una lista de objetos PerfilProveedoresDTO que representan los perfiles de los proveedores.
      */
+
     public List<PerfilProveedoresDTO> getAll() {
         // Obtener todos los proveedores de la base de datos
         List<Proveedores> proveedor = proveedoresRepositorio.findAll();
