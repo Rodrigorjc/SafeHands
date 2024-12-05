@@ -1,7 +1,6 @@
 package com.valencia.proyecto1evaluacion.mappers;
 
 import com.valencia.proyecto1evaluacion.dtos.PerfilProveedoresDTO;
-import com.valencia.proyecto1evaluacion.modelos.PerfilProveedores;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import org.mapstruct.Mapper;
 
