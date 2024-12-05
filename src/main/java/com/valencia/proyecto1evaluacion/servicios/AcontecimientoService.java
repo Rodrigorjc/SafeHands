@@ -70,7 +70,6 @@ public class AcontecimientoService {
 
     /**
      * Crea un nuevo acontecimiento
-     *
      * @param acontecimientoCrearDTO
      * @return
      */
@@ -86,7 +85,6 @@ public class AcontecimientoService {
 
     /**
      * Edita un acontecimiento
-     *
      * @param acontecimientoDTO
      * @param id
      * @return
@@ -107,7 +105,6 @@ public class AcontecimientoService {
 
     /**
      * Guarda un acontecimiento
-     *
      * @param dto
      * @return
      */
@@ -139,7 +136,11 @@ public class AcontecimientoService {
         }
     }
 
-
+    /**
+     * Metodo para crear un acontecimiento
+     * @param acontecimientoDTO
+     * @return AcontecimientoDTO
+     */
     public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
         Acontecimiento acontecimiento = new Acontecimiento();
         acontecimiento.setId(acontecimientoDTO.getId());
@@ -172,6 +173,11 @@ public class AcontecimientoService {
         return acontecimientoRepository.obtenerTotalesAcontecimientos();
     }
 
+    /**
+     * Metodo para obtener un acontecimiento por id
+     * @param id
+     * @return AcontecimientoDTO
+     */
     public AcontecimientoDTO obtenerAcontecimientoPorId(Integer id) {
         Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
@@ -183,6 +189,12 @@ public class AcontecimientoService {
         dto.setImg(acontecimiento.getImg());
         return dto;
     }
+
+    /**
+     * Metodo para crear un nuevo acontecimiento teniendo obligatoriaente un rol de ong o admin
+     * @param acontecimientoDTO
+     * @return AcontecimientoDTO
+     */
 
     public AcontecimientoDTO crearNuevoAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -204,7 +216,11 @@ public class AcontecimientoService {
         return acontecimientoDTO;
     }
 
-    public String eliminarAcontecimiento(Integer id) {
+    /**
+     * Metodo para eliminar un acontecimiento siendo ong o admin
+     * @param id
+     */
+    public void eliminarAcontecimiento(Integer id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
         Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
@@ -216,10 +232,15 @@ public class AcontecimientoService {
         Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
 
-        acontecimientoRepository.delete(acontecimiento);
-        return "Acontecimiento eliminado correctamente.";
+         acontecimientoRepository.delete(acontecimiento);
     }
 
+    /**
+     * Metodo para editar un acontecimiento siendo ong o admin
+     * @param id
+     * @param acontecimientoDTO
+     * @return Acontecimiento
+     */
     public Acontecimiento editarAcontecimiento(Integer id, AcontecimientoDTO acontecimientoDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
