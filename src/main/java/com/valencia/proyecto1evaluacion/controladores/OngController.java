@@ -55,7 +55,7 @@ public class OngController {
 
     @PostMapping("/asociarAcontecimiento/{acontecimientoId}")
     public AcontecimientoOngVincularDTO asociarAcontecimiento(@PathVariable Integer acontecimientoId) {
-       return ongService.acontecimientoOngVincular(acontecimientoId);
+       return ongAcontecimientoService.acontecimientoOngVincular(acontecimientoId);
 
     }
 
