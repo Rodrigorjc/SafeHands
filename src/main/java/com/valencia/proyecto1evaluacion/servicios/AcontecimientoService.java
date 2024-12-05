@@ -60,7 +60,6 @@ public class AcontecimientoService {
         AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
         assert acontecimiento != null;
         acontecimientoDTO.setUbicacion(acontecimiento.getUbicacion());
-        acontecimientoDTO.setIdOng(acontecimiento.getOng().getId());
         acontecimientoDTO.setNombre(acontecimiento.getNombre());
         acontecimientoDTO.setDescripcion(acontecimiento.getDescripcion());
         acontecimientoDTO.setImg(acontecimiento.getImg());
