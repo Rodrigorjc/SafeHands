@@ -151,6 +151,11 @@ public class OngService {
         return crearOng(ongDto);
     }
 
+    /**
+     * Metodo para obtener una ONG por su id
+     * @param id
+     * @return OngDTO
+     */
     public OngDTO obtenerOngPorId(Integer id) {
         Ong ong = ongRepositorio.findOngByUsuarioId(id)
                 .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
@@ -169,38 +174,6 @@ public class OngService {
         return dto;
     }
 
-    public AcontecimientoOngVincularDTO   acontecimientoOngVincular(Integer acontecimientoId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombre = authentication.getName();
-        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
-
-        if (usuario == null || !usuario.getRol().equals(Rol.ONG)) {
-            throw new SecurityException("No tienes permiso para vincular acontecimientos a ONGs");
-        }
-
-        Ong ong = ongRepositorio.findByUsuarioId(usuario.getId())
-                .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
-
-        Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
-                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
-
-        boolean exists = ongAcontecimientoRepository.existsByOngAndAcontecimiento(ong, acontecimiento);
-        if (exists) {
-            throw new RuntimeException("La ONG ya está vinculada a este acontecimiento");
-        }
-
-        OngAcontecimiento ongAcontecimiento = new OngAcontecimiento();
-        ongAcontecimiento.setOng(ong);
-        ongAcontecimiento.setAcontecimiento(acontecimiento);
-        ongAcontecimientoRepository.save(ongAcontecimiento);
-
-        AcontecimientoOngVincularDTO dto = new AcontecimientoOngVincularDTO();
-        dto.setIdAcontecimiento(acontecimiento.getId());
-        dto.setIdOng(ong.getId());
-
-        return dto;
-    }
-
 
     public ImgDTO getImgbyId  (Integer id){
         Optional<Ong> optionalOng = ongRepositorio.findByUsuarioId(id);
@@ -214,6 +187,10 @@ public class OngService {
         }
     }
 
+    /**
+     * Metodo para listar todas las ONGs
+     * @return List<OngDTO>
+     */
     public List<OngDTO> listar(){
       List<Ong> ongs = ongRepositorio.findAll();
       List<OngDTO> ongDTOs = new ArrayList<>();
@@ -232,6 +209,12 @@ public class OngService {
         }
         return ongDTOs;
     }
+
+    /**
+     * metodo para obtener el id de una ONG por el id de un usuario
+     * @param usuarioId
+     * @return Integer
+     */
 
     public Integer obtenerOngIdPorUsuarioId(Integer usuarioId) {
         Ong ong = ongRepositorio.findByUsuarioId(usuarioId)
