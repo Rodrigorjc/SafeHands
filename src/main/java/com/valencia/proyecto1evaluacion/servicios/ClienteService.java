@@ -31,23 +31,54 @@ public class ClienteService {
     }
 
 
+    /**
+     * Recupera todos los clientes de la base de datos.
+     * Este método interactúa con el `ClienteRepository` para obtener todas las entidades `Cliente`.
+     * Devuelve una lista de todos los clientes disponibles en la base de datos.
+     *
+     * @return una lista de objetos `Cliente` que representan a todos los clientes en la base de datos
+     */
+
     // Obtener todos los clientes
     public List<Cliente> findAll() {
         return clienteRepository.findAll();
     }
 
-
-    // Obtener un cliente por su ID
+    /**
+     * Busca un cliente por su ID.
+     * Este método interactúa con el `ClienteRepository` para buscar un cliente específico
+     * en la base de datos utilizando su ID.
+     * Devuelve un `Optional<Cliente>` que contiene el cliente si se encuentra, o vacío si no.
+     *
+     * @param id el ID del cliente a buscar
+     * @return un `Optional<Cliente>` que contiene el cliente encontrado o vacío si no se encuentra
+     */
     public Optional<Cliente> findById(Integer id) {
         return clienteRepository.findById(id);
     }
 
-    // Crear un nuevo cliente
+    /**
+     * Crea un nuevo cliente.
+     * Este método guarda un nuevo cliente en la base de datos.
+     * Devuelve el cliente creado.
+     *
+     * @param cliente el cliente a crear
+     * @return el cliente creado
+     */
     public Cliente createCliente(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 
-    // Actualizar un cliente existente
+    /**
+     * Actualiza un cliente existente.
+     * Este método busca un cliente por su ID y actualiza sus detalles con la información proporcionada.
+     * Si el cliente existe, se actualizan sus campos y se guarda en la base de datos.
+     * Devuelve un `Optional<Cliente>` que contiene el cliente actualizado si se encuentra, o vacío si no.
+     *
+     * @param id el ID del cliente a actualizar
+     * @param clienteDetails los detalles del cliente a actualizar
+     * @return un `Optional<Cliente>` que contiene el cliente actualizado o vacío si no se encuentra
+     */
     public Optional<Cliente> updateCliente(Integer id, Cliente clienteDetails) {
         return clienteRepository.findById(id).map(existingCliente -> {
             existingCliente.setDni(clienteDetails.getDni());
@@ -56,7 +87,14 @@ public class ClienteService {
         });
     }
 
-    // Eliminar un cliente por su ID
+    /**
+     * Elimina un cliente por su ID.
+     *
+     * Este método interactúa con el `ClienteRepository` para eliminar un cliente específico
+     * de la base de datos utilizando su ID.
+     *
+     * @param id el ID del cliente a eliminar
+     */
     public void deleteCliente(Integer id) {
         clienteRepository.deleteById(id);
     }

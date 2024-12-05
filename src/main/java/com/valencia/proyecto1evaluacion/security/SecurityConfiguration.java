@@ -55,6 +55,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("ong/:id").permitAll();
                     auth.requestMatchers("linea/total").permitAll();
                     auth.requestMatchers("producto/**").permitAll();
+                    auth.requestMatchers("producto/editar").permitAll();
                     auth.requestMatchers("producto/buscar").permitAll();
                     auth.requestMatchers("producto/listar").permitAll();
                     auth.requestMatchers("producto/filtrar").permitAll();

@@ -16,10 +16,24 @@ public class DonacionService {
 
     private final List<DonacionDTO> donacionesSimuladas = new ArrayList<>();
 
-    // Método para obtener todas las donaciones realizadas
+    /**
+     * Devuelve todas las donaciones.
+     * Este método devuelve una lista de todas las donaciones simuladas.
+     * Las donaciones simuladas se almacenan en una lista en memoria.
+     *
+     * @return una lista de objetos `DonacionDTO` que representan todas las donaciones realizadas
+     */
     public List<DonacionDTO> obtenerDonaciones() {
         return donacionesSimuladas;
     }
+
+    /**
+     * Devuelve todas las donaciones de un usuario.
+     * Este método devuelve una lista de todas las donaciones realizadas por un usuario específico.
+     * Las donaciones se filtran por el ID del usuario.
+     *
+     * @return una lista de objetos `DonacionDTO` que representan todas las donaciones realizadas por el usuario
+     */
 
     // Método para registrar una nueva donación
     public boolean registrarDonacion(DonacionDTO donacionDTO) {
