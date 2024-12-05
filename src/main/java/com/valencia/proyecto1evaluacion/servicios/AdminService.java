@@ -32,7 +32,7 @@ public class AdminService {
     /**
      * Registra un nuevo administrador
      * @param userDTO
-     * @return
+     * @return AuthenticationDTO
      */
 
     public AuthenticationDTO registerAdmin(UsuarioDto userDTO) {
@@ -69,6 +69,8 @@ public class AdminService {
     /**
      * Edita una ONG siendo administrador
      * @param ongId
+     * @param ongDto
+     * @return OngDTO
      */
     public OngDTO editarOng(Integer ongId, OngDTO ongDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -117,7 +119,8 @@ public class AdminService {
     /**
      * Registra un nuevo proveedor siendo administrador
      * @param proveedorDto
-     * @return
+     * @param id
+     * @return ProveedoresDTO
      */
     public ProveedoresDTO editarProveedor(Integer id, ProveedoresDTO proveedorDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -169,6 +172,11 @@ public class AdminService {
         return resultDto;
     }
 
+    /**
+     * eliminar un proveedor siendo administrador
+     * @param id
+     */
+
     public void eliminarProveedor(Integer id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
@@ -185,17 +193,6 @@ public class AdminService {
     }
 
 
-
-
-    /**
-     * crear proveedores siendo administrador
-     */
-
-
-
-    /**
-     *
-     */
 
 
 }
