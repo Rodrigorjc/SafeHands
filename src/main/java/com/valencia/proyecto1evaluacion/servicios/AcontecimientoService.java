@@ -92,20 +92,6 @@ public class AcontecimientoService {
      * @param id
      * @return
      */
-//    public AcontecimientoDTO editar(AcontecimientoDTO acontecimientoDTO, Integer id) {
-//        Acontecimiento acontecimiento = acontecimientoRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Acontecimiento not found"));
-//
-//        acontecimiento.setNombre(acontecimientoDTO.getNombre());
-//        acontecimiento.setDescripcion(acontecimientoDTO.getDescripcion());
-//        acontecimiento.setImg(acontecimientoDTO.getImg());
-//        acontecimiento.setUbicacion(acontecimientoDTO.getUbicacion());
-//        acontecimiento.setOng(acontecimiento.getOng());
-//
-//        acontecimientoRepository.save(acontecimiento);
-//
-//        return acontecimientoDTO;
-//    }
 
     /**
      * Guarda un acontecimiento
@@ -142,7 +128,6 @@ public class AcontecimientoService {
     }
 
 
-
     public AcontecimientoDTO crearAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
         Acontecimiento acontecimiento = new Acontecimiento();
         acontecimiento.setId(acontecimientoDTO.getId());
@@ -153,8 +138,6 @@ public class AcontecimientoService {
         acontecimientoRepository.save(acontecimiento);
         return acontecimientoDTO;
     }
-
-
 
     public List<ConsultaAcontecimientoDTO> findTotalRecaudadoPorAcontecimiento() {
         List<Object[]> rawResults = acontecimientoRepository.findTotalRecaudadoPorAcontecimientoRaw();
@@ -168,22 +151,10 @@ public class AcontecimientoService {
     }
 
 
-
-
-
     public Double findTotalDonaciones() {
         return pagosRepository.findTotalDonaciones();
     }
 
-//    public List<Acontecimiento> obtenerAcontecimientosPorOng(Integer ongId) {
-//        List<OngAcontecimiento> ongAcontecimientos = ongAcontecimientoRepository.findByOngId(ongId);
-//        List<Acontecimiento> acontecimientos = new ArrayList<>();
-//        for (OngAcontecimiento ongAcontecimiento : ongAcontecimientos) {
-//            acontecimientos.add(ongAcontecimiento.getAcontecimiento());
-//        }
-//        return acontecimientos;
-//
-//    }
 
     public List<AcontecimientoInfoDTO> obtenerInfoAcontecimiento() {
         return acontecimientoRepository.obtenerTotalesAcontecimientos();
@@ -259,4 +230,3 @@ public class AcontecimientoService {
 
 
 }
-
