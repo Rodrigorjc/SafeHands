@@ -6,7 +6,6 @@ import com.valencia.proyecto1evaluacion.dtos.AcontecimientoInfoDTO;
 import com.valencia.proyecto1evaluacion.dtos.ConsultaAcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Acontecimiento;
-import com.valencia.proyecto1evaluacion.modelos.OngAcontecimiento;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.AcontecimientoRepository;
 import com.valencia.proyecto1evaluacion.repositorio.OngAcontecimientoRepository;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
 public class AcontecimientoService {
 
     private AcontecimientoRepository acontecimientoRepository;
-    private OngAcontecimientoRepository ongAcontecimientoRepository;
     private PagosRepository pagosRepository;
     private UsuarioService usuarioService;
 
