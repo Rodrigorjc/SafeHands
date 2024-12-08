@@ -1,6 +1,5 @@
 package com.valencia.proyecto1evaluacion.modelos;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +8,6 @@ import lombok.*;
 @Table(name = "acontecimiento", schema = "safe_hand", catalog = "postgres")
 @Getter
 @Setter
-@ToString(exclude = "ong")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -32,7 +30,6 @@ public class Acontecimiento {
 
     @Column(name = "ubicacion", nullable = false, length = 500)
     private String ubicacion;
-
 
 }
 
