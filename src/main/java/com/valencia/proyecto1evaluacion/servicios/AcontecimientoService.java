@@ -68,6 +68,10 @@ public class AcontecimientoService {
         return acontecimientoDTO;
     }
 
+    public Acontecimiento getAconteciminetoById(Integer id){
+        return acontecimientoRepository.findById(id).orElse(null);
+    }
+
     /**
      * Crea un nuevo acontecimiento
      *
