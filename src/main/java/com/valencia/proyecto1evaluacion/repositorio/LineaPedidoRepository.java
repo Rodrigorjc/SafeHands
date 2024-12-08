@@ -6,6 +6,7 @@ import com.valencia.proyecto1evaluacion.modelos.LineaPedido;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,16 +33,17 @@ public interface LineaPedidoRepository  extends JpaRepository<LineaPedido, Integ
             "GROUP BY p.nombre", nativeQuery = true)
     List<Object[]> findTotalRecaudadoPorProveedorRaw();
 
-    /**
-     * Esta consulta recupera el resumen de las líneas de pedido.
-     *
-     * - Selecciona el ID del pedido, la suma de las cantidades, el promedio de los precios unitarios y la suma del total de cada línea.
-     * - Agrupa los resultados por el ID del pedido.
-     *
-     * @return una lista de LineaPedidoSummaryDTO que contiene el ID del pedido, la cantidad total, el precio promedio y el total de la línea.
-     */
-    @Query("SELECT (lp.pedido.id, SUM(lp.cantidad), AVG(lp.precioUnitario), SUM(lp.cantidad * lp.precioUnitario)) " +
-            "FROM LineaPedido lp " +
-            "GROUP BY lp.pedido.id")
-    List<LineaPedido> findLineaPedidoSummary();
+    @Query("SELECT p.nombre, p.url FROM LineaPedido lp " +
+            "JOIN Producto p ON lp.producto.id = p.id " +
+            "JOIN Pedido ped ON lp.pedido.id = ped.id " +
+            "JOIN Cliente c ON ped.cliente.id = c.id " +
+            "WHERE c.usuario.id = :userId")
+    List<Object[]> findDonatedProductsByUserId(@Param("userId") Integer userId);
+
+    @Query("SELECT a.nombre, a.img FROM LineaPedido lp " +
+            "JOIN Acontecimiento a ON lp.acontecimiento.id = a.id " +
+            "JOIN Pedido ped ON lp.pedido.id = ped.id " +
+            "JOIN Cliente c ON ped.cliente.id = c.id " +
+            "WHERE c.usuario.id = :userId")
+    List<Object[]> findDonatedEventsByUserId(@Param("userId") Integer userId);
 }
