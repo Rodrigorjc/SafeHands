@@ -15,5 +15,6 @@ public class ProductoCarritoDTO {
     private Integer cantidad;
     private Double precioUnitario;
     private Double total;
+    private Integer idAcontecimiento;
 
 }
