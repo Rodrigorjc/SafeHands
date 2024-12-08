@@ -1,12 +1,10 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
-import com.valencia.proyecto1evaluacion.dtos.ClienteDTO;
 import com.valencia.proyecto1evaluacion.dtos.ClientePerfilDTO;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
 
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.servicios.ClienteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,5 +71,15 @@ public class ClienteController {
     @GetMapping("/getByUserID/{id}")
     public ClientePerfilDTO getCliente(@PathVariable Integer id) {
         return clienteService.getCliente(id);
+    }
+
+    @PutMapping("/perfil/{id}")
+    public ResponseEntity<Void> updateClientePerfil(@PathVariable Integer id, @RequestBody ClientePerfilDTO clientePerfilDTO) {
+        Optional<Cliente> updatedCliente = clienteService.updateClientePerfil(id, clientePerfilDTO);
+        if (updatedCliente.isPresent()) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
