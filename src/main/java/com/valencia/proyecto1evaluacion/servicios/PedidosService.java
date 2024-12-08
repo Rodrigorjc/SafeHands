@@ -25,6 +25,7 @@ public class PedidosService {
     private final LineaPedidoRepository lineaPedidoRepository;
     private final PagosService pagosService;
     private final ProductoService productoService;
+    private final AcontecimientoService acontecimientoService;
 
     public void realizarPedido(PedidoDTO pedidoDTO) {
         Pedido pedido = new Pedido();
@@ -38,6 +39,7 @@ public class PedidosService {
             lineaPedido.setCantidad(p.getCantidad());
             lineaPedido.setProducto(productoService.getProductoById(p.getIdProducto()));
             lineaPedido.setPrecioUnitario(p.getPrecioUnitario().floatValue());
+            lineaPedido.setAcontecimiento(acontecimientoService.getAconteciminetoById(p.getIdAcontecimiento()));
             lineaPedidoRepository.save(lineaPedido);
             total += p.getTotal();
         }
