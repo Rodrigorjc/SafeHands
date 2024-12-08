@@ -2,7 +2,6 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 
 import com.valencia.proyecto1evaluacion.dtos.AuthenticationDTO;
-import com.valencia.proyecto1evaluacion.dtos.AuthenticationRequestDTO;
 import com.valencia.proyecto1evaluacion.dtos.UsuarioDto;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
@@ -97,5 +96,9 @@ public class UsuarioService implements UserDetailsService {
 
     public Usuario getById(Integer id) {
         return usuarioRepositorio.getById(id);
+    }
+
+    public void updateUsuario(Usuario usuario) {
+        usuarioRepositorio.save(usuario);
     }
 }
