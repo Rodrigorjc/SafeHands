@@ -1,7 +1,6 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
 
-import com.valencia.proyecto1evaluacion.dtos.ClienteDTO;
 import com.valencia.proyecto1evaluacion.dtos.ClientePerfilDTO;
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
@@ -70,5 +69,23 @@ public class ClienteService {
         clientePerfilDTO.setImg(cliente.getFotoPerfil());
         clientePerfilDTO.setDni(cliente.getDni());
         return clientePerfilDTO;
+    }
+
+    public Optional<Cliente> updateClientePerfil(Integer id, ClientePerfilDTO clientePerfilDTO) {
+        Cliente cliente = clienteRepository.findClienteByUsuarioId(id);
+        if (cliente != null) {
+            cliente.setFotoPerfil(clientePerfilDTO.getImg());
+            cliente.setDni(clientePerfilDTO.getDni());
+
+            // Update the email in the Usuario entity
+            Usuario usuario = cliente.getUsuario();
+            usuario.setEmail(clientePerfilDTO.getEmail());
+            usuario.setUsername(clientePerfilDTO.getUsername());
+            usuarioService.updateUsuario(usuario);
+
+            clienteRepository.save(cliente);
+            return Optional.of(cliente);
+        }
+        return Optional.empty();
     }
 }
