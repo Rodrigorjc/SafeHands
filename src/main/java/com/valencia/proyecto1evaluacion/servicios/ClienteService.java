@@ -3,12 +3,15 @@ package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.ClientePerfilDTO;
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
+import com.valencia.proyecto1evaluacion.dtos.NombreImgDTO;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ClienteRepository;
+import com.valencia.proyecto1evaluacion.repositorio.LineaPedidoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,7 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final UsuarioService usuarioService;
+    private final LineaPedidoRepository lineaPedidoRepository;
 
     public ImgDTO getImgbyId  (Integer id){
         Cliente cliente = clienteRepository.findClienteByUsuarioId(id);
@@ -87,5 +91,31 @@ public class ClienteService {
             return Optional.of(cliente);
         }
         return Optional.empty();
+    }
+
+    public List<NombreImgDTO> getProductosDonados(Integer userId) {
+        List<Object[]> results = lineaPedidoRepository.findDonatedProductsByUserId(userId);
+        List<NombreImgDTO> productos = new ArrayList<>();
+
+        for (Object[] result : results) {
+            String nombre = (String) result[0];
+            String img = (String) result[1];
+            productos.add(new NombreImgDTO(nombre, img));
+        }
+
+        return productos;
+    }
+
+    public List<NombreImgDTO> getAconteciminetosDonados(Integer userId) {
+        List<Object[]> results = lineaPedidoRepository.findDonatedEventsByUserId(userId);
+        List<NombreImgDTO> acontecimientos = new ArrayList<>();
+
+        for (Object[] result : results) {
+            String nombre = (String) result[0];
+            String img = (String) result[1];
+            acontecimientos.add(new NombreImgDTO(nombre, img));
+        }
+
+        return acontecimientos;
     }
 }
