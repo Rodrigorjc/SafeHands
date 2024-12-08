@@ -1,7 +1,6 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
-import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
 import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Ong;
@@ -9,7 +8,6 @@ import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.OngRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
-import com.valencia.proyecto1evaluacion.modelos.*;
 import com.valencia.proyecto1evaluacion.repositorio.*;
 import com.valencia.proyecto1evaluacion.security.JwtService;
 import lombok.AllArgsConstructor;
@@ -41,11 +39,10 @@ public class OngService {
     @Autowired
     JwtService jwtService;
 
-    @Autowired
-    AcontecimientoRepository acontecimientoRepository;
-
-    @Autowired
-    OngAcontecimientoRepository ongAcontecimientoRepository;
+    /**
+     * Metodo para validar una solicitud de proveedor siendo ONG
+     * @param proveedorId
+     */
 
     public void validarSolicitudProveedor(Integer proveedorId) {
 
@@ -63,6 +60,10 @@ public class OngService {
         proveedoresRepositorio.save(proveedor);
     }
 
+    /**
+     * Metodo para eliminar una solicitud de proveedor siendo ONG
+     * @param proveedorId
+     */
     public void eliminarSolicitudProveedor(Integer proveedorId) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -82,12 +83,10 @@ public class OngService {
             usuarioRepositorio.delete(usuarioProveedor);
         }
 
-        // Delete the provider
         proveedoresRepositorio.delete(proveedor);
     }
 
 
-    //añadir en el admin service y en su controlador
     public OngDTO crearOng(OngDTO ongDto) {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String nombre = authentication.getName();
@@ -122,6 +121,12 @@ public class OngService {
 
         return resultDto;
     }
+
+    /**
+     * Metodo para registrar una ONG siendo ADMIN
+     * @param ongDto
+     * @return OngDTO
+     */
 
     public OngDTO registrarOng(OngDTO ongDto) {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
