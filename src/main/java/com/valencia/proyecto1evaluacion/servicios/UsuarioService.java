@@ -6,6 +6,7 @@ import com.valencia.proyecto1evaluacion.dtos.UsuarioDto;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
 import com.valencia.proyecto1evaluacion.modelos.Proveedores;
+import com.valencia.proyecto1evaluacion.modelos.TokenAcceso;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.ClienteRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
@@ -19,11 +20,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @AllArgsConstructor
 public class UsuarioService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepositorio;
+    private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final ProveedoresRepository proveedoresRepositorio;
@@ -49,6 +53,37 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepositorio.save(usuario);
     }
 
+    public AuthenticationDTO login(UsuarioDto usuarioDTO) {
+        Usuario usuario;
+        try {
+            usuario = (Usuario) loadUserByUsername(usuarioDTO.getUsername());
+        } catch (UsernameNotFoundException e) {
+            usuario = null;
+        }
+
+        String apiKey = null;
+        String mensaje;
+
+        if (usuario == null) {
+            mensaje = "Usuario No encontrado";
+        } else if (!validarPassword(usuario, usuarioDTO.getPassword())) {
+            mensaje = "Contraseña no válida";
+        } else {
+            if (usuario.getToken() == null || jwtService.isTokenExpired(usuario.getToken().getToken())) {
+                apiKey = jwtService.generateToken(usuario, usuario.getId(), usuario.getRol().name());
+                TokenAcceso token = usuario.getToken() == null ? new TokenAcceso() : usuario.getToken();
+                token.setUsuario(usuario);
+                token.setToken(apiKey);
+                token.setFechaExpiracion(LocalDateTime.now().plusDays(1));
+                tokenService.save(token);
+            } else {
+                apiKey = usuario.getToken().getToken();
+            }
+        }
+
+        return AuthenticationDTO.builder().token(apiKey).build();
+    }
+
     public AuthenticationDTO register(UsuarioDto userDTO) {
         Usuario usuario = new Usuario();
         usuario.setUsername(userDTO.getUsername());
@@ -65,9 +100,6 @@ public class UsuarioService implements UserDetailsService {
         return AuthenticationDTO.builder().token(jwtToken).build();
     }
 
-//    public AuthenticationDTO authenticate(AuthenticationRequestDTO dto) {
-//        return authenticationService.authenticate(dto);
-//    }
 
     @Transactional
     public Usuario actualizarRol(Integer id, Rol nuevoRol) {
