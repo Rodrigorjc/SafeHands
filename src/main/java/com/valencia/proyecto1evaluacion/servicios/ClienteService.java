@@ -11,9 +11,7 @@ import com.valencia.proyecto1evaluacion.repositorio.LineaPedidoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -95,7 +93,7 @@ public class ClienteService {
 
     public List<NombreImgDTO> getProductosDonados(Integer userId) {
         List<Object[]> results = lineaPedidoRepository.findDonatedProductsByUserId(userId);
-        List<NombreImgDTO> productos = new ArrayList<>();
+        Set<NombreImgDTO> productos = new HashSet<>();
 
         for (Object[] result : results) {
             String nombre = (String) result[0];
@@ -103,12 +101,12 @@ public class ClienteService {
             productos.add(new NombreImgDTO(nombre, img));
         }
 
-        return productos;
+        return new ArrayList<>(productos);
     }
 
     public List<NombreImgDTO> getAconteciminetosDonados(Integer userId) {
         List<Object[]> results = lineaPedidoRepository.findDonatedEventsByUserId(userId);
-        List<NombreImgDTO> acontecimientos = new ArrayList<>();
+        Set<NombreImgDTO> acontecimientos = new HashSet<>();
 
         for (Object[] result : results) {
             String nombre = (String) result[0];
@@ -116,6 +114,6 @@ public class ClienteService {
             acontecimientos.add(new NombreImgDTO(nombre, img));
         }
 
-        return acontecimientos;
+        return new ArrayList<>(acontecimientos);
     }
 }
