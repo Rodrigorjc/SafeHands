@@ -1,6 +1,5 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.valencia.proyecto1evaluacion.dtos.AconteciminetoProveedorVinculacionDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
@@ -193,7 +192,7 @@ public class ProductoService {
 
 
     /**
-     * Metodo para vincular un producto a un acontecimiento
+     * Metodo para vincular un producto a un acontecimiento teniendo el rol de PROVEEDOR
      * @param productoId
      * @param acontecimientoId
      * @return AconteciminetoProveedorVinculacionDTO
