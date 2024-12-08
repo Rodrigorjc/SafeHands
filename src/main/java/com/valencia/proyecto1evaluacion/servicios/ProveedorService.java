@@ -130,6 +130,7 @@ public class ProveedorService {
             dto.setCif(proveedor.getCif());
             dto.setNumVoluntarios(proveedor.getNumVoluntarios());
             dto.setSede(proveedor.getSede());
+            dto.setImg(proveedor.getImg());
             dto.setUbicacion(proveedor.getUbicacion());
             dto.setIdUsuario(proveedor.getUsuario().getId());
             dto.setEmail(proveedor.getUsuario().getEmail());
@@ -206,7 +207,7 @@ public class ProveedorService {
      * Busca perfiles por coincidencia en nombre, descripcion o sede
      *
      * @param busqueda
-     * @return
+     * @return List<PerfilProveedoresDTO>
      */
     public List<PerfilProveedoresDTO> buscar(String busqueda) {
         return perfilMapper.toDTO(proveedoresRepositorio.buscar(busqueda));
