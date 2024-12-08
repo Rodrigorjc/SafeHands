@@ -30,4 +30,8 @@ public class LineaPedido {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido", nullable = false)
     private Pedido pedido;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_acontecimiento", nullable = false)
+    private Acontecimiento acontecimiento;
 }
