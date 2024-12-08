@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.ClientePerfilDTO;
+import com.valencia.proyecto1evaluacion.dtos.NombreImgDTO;
 import com.valencia.proyecto1evaluacion.modelos.Cliente;
 
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
@@ -83,5 +84,15 @@ public class ClienteController {
         }
     }
 
+    @GetMapping("/{userId}/productos-donados")
+    public ResponseEntity<List<NombreImgDTO>> getProductosDonados(@PathVariable Integer userId) {
+        List<NombreImgDTO> productos = clienteService.getProductosDonados(userId);
+        return ResponseEntity.ok(productos);
+    }
 
+    @GetMapping("/{userId}/acontecimientos-donados")
+    public ResponseEntity<List<NombreImgDTO>> getAconteciminetosDonados(@PathVariable Integer userId) {
+        List<NombreImgDTO> acontecimientos = clienteService.getAconteciminetosDonados(userId);
+        return ResponseEntity.ok(acontecimientos);
+    }
 }
