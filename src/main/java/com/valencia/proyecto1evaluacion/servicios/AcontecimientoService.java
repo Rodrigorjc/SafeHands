@@ -329,6 +329,7 @@ public class AcontecimientoService {
                 .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
 
          acontecimientoRepository.delete(acontecimiento);
+         return "Acontecimiento eliminado con exito";
     }
 
     /**
