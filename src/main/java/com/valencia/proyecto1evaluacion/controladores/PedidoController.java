@@ -29,8 +29,8 @@ public class PedidoController {
         }
     }
 
-    @PostMapping("/crear")
-    public PedidoDTO crearPedido(@RequestBody PedidoDTO pedidoDTO){
-        return pedidosService.crearPedido(pedidoDTO);
-    }
+//    @PostMapping("/crear")
+//    public PedidoDTO crearPedido(@RequestBody PedidoDTO pedidoDTO){
+//        return pedidosService.crearPedido(pedidoDTO);
+//    }
 }

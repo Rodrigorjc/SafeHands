@@ -20,9 +20,9 @@ public class PagosController {
         return pagosService.findTotalDonaciones();
     }
 
-    @PostMapping("/crear")
-    public PagosDTO crearPagos(@RequestBody PagosDTO pagosDTO){
-        return pagosService.crearPagos(pagosDTO);
-    }
+//    @PostMapping("/crear")
+//    public PagosDTO crearPagos(@RequestBody PagosDTO pagosDTO){
+//        return pagosService.crearPagos(pagosDTO);
+//    }
 
 }
