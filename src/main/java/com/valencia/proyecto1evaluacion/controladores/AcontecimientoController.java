@@ -31,7 +31,7 @@ public class AcontecimientoController {
     }
 
     @GetMapping("/listar")
-    public List<AcontecimientoDTO> listarAcontecimientos(){
+    public List<AcontecimientoDTO> listarAcontecimientos() {
         return acontecimientoService.getAll();
     }
 
@@ -119,6 +119,7 @@ public class AcontecimientoController {
 //        String resultado = acontecimientoService.eliminar(id);
 //        return ResponseEntity.ok(resultado);
 //    }
+
     @PostMapping("/admin/crear")
     public AcontecimientoDTO crearNuevoAcontecimiento(@RequestBody AcontecimientoDTO acontecimientoDTO) {
         return acontecimientoService.crearAcontecimiento(acontecimientoDTO);

@@ -1,11 +1,10 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 import com.valencia.proyecto1evaluacion.dtos.PagosDTO;
+import com.valencia.proyecto1evaluacion.dtos.PedidoDTO;
 import com.valencia.proyecto1evaluacion.servicios.PagosService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +19,10 @@ public class PagosController {
     public PagosDTO totalDonaciones() {
         return pagosService.findTotalDonaciones();
     }
+
+//    @PostMapping("/crear")
+//    public PagosDTO crearPagos(@RequestBody PagosDTO pagosDTO){
+//        return pagosService.crearPagos(pagosDTO);
+//    }
 
 }

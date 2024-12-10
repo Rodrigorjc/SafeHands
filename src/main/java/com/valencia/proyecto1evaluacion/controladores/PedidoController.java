@@ -1,6 +1,7 @@
 package com.valencia.proyecto1evaluacion.controladores;
 
 
+import com.valencia.proyecto1evaluacion.dtos.AcontecimientoDTO;
 import com.valencia.proyecto1evaluacion.dtos.PedidoDTO;
 import com.valencia.proyecto1evaluacion.servicios.PedidosService;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +28,9 @@ public class PedidoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al realizar el pedido");
         }
     }
+
+//    @PostMapping("/crear")
+//    public PedidoDTO crearPedido(@RequestBody PedidoDTO pedidoDTO){
+//        return pedidosService.crearPedido(pedidoDTO);
+//    }
 }

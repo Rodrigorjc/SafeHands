@@ -16,4 +16,8 @@ public class AcontecimientoDTO {
     private String ubicacion;
     private String img;
     private Integer idOng;
+
+    public Integer getOngId() {
+        return idOng;
+    }
 }
