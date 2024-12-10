@@ -88,6 +88,18 @@ public class ProductoService {
         return savedProductoDto;
     }
 
+    /**
+     * Edita un producto existente.
+     *
+     * Este método permite a un usuario con rol de PROVEEDOR o ADMIN editar un producto existente.
+     * Se validan los permisos del usuario y se actualizan los campos del producto según los datos proporcionados.
+     *
+     * @param productoDto el objeto ProductoDTO que contiene los datos actualizados del producto
+     * @return el producto actualizado
+     * @throws SecurityException si el usuario no tiene permiso para editar productos
+     * @throws RuntimeException si el producto o el proveedor no se encuentran
+     */
+
     public Producto editarProducto(ProductoDTO productoDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
@@ -241,6 +253,15 @@ public class ProductoService {
 
 
 
+    /**
+     * Método para convertir un Producto a ProductoDTO.
+     *
+     * Este método convierte un objeto Producto a un objeto ProductoDTO.
+     *
+     * @param producto el objeto Producto a convertir
+     * @return el objeto ProductoDTO convertido
+     */
+
     // Método para convertir un Producto a ProductoDTO (si lo necesitas)
     private ProductoDTO convertirAProductoDTO(Producto producto) {
         ProductoDTO productoDTO = new ProductoDTO();
@@ -252,6 +273,15 @@ public class ProductoService {
         // Puedes agregar otros atributos si es necesario
         return productoDTO;
     }
+
+    /**
+     * Método para obtener los productos por el id del acontecimiento.
+     *
+     * Este método devuelve una lista de productos asociados a un acontecimiento específico.
+     *
+     * @param idAcontecimiento el id del acontecimiento
+     * @return una lista de productos asociados al acontecimiento
+     */
 
 
     public List<Producto> obtenerProductosPorAcontecimiento(Integer idAcontecimiento) {

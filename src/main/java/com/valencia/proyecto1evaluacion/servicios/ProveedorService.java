@@ -284,6 +284,14 @@ public class ProveedorService {
         return proveedoresRepositorio.findIdByUsuarioId(id);
     }
 
+    /**
+     * Este método obtiene una lista de proveedores validados.
+     *
+     * Este método recupera todos los proveedores que han sido validados y los convierte en una lista de objetos ProveedoresDTO.
+     *
+     * @return una lista de objetos ProveedoresDTO que representan los proveedores validados.
+     */
+
     public List<ProveedoresDTO> listarProveedoresSelect() {
         List<Proveedores> proveedores = proveedoresRepositorio.findAllByValidadoIsTrue();
         List<ProveedoresDTO> proveedoresDTOs = new ArrayList<>();
