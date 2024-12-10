@@ -1,6 +1,5 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.valencia.proyecto1evaluacion.dtos.AconteciminetoProveedorVinculacionDTO;
 import com.valencia.proyecto1evaluacion.dtos.ProductoDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
@@ -34,7 +33,12 @@ public class ProductoService {
     ProveedoresAcontecimientoRepository proveedoresAcontecimientoRepository;
 
 
-    public Producto anyadirProducto(ProductoDTO productoDto) {
+    /**
+     * Metodo para añadir un producto siendo proveedor y admin
+     * @param productoDto
+     * @return Producto
+     */
+    public ProductoDTO anyadirProducto(ProductoDTO productoDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
         Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
@@ -43,18 +47,12 @@ public class ProductoService {
             throw new SecurityException("No tienes permiso para añadir productos");
         }
 
-        Proveedores proveedor = null;
-
+        Proveedores proveedor;
 
         if (productoDto.getIdProveedores() == null) {
-//            throw new IllegalArgumentException("El id del proveedor no debe ser nulo");
-//        }
-
-
-             proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
+            proveedor = proveedoresRepositorio.findByUsuarioId(usuario.getId())
                     .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
-        }
-        else {
+        } else {
             proveedor = proveedoresRepositorio.findById(productoDto.getIdProveedores())
                     .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
         }
@@ -62,13 +60,13 @@ public class ProductoService {
         if (!proveedoresRepositorio.existsByIdAndValidado(proveedor.getId(), true)) {
             throw new RuntimeException("El proveedor no está validado y no puede crear productos.");
         }
-        if (productoDto.getPrecio() < 0) {
+        if (productoDto.getPrecio() <= 0) {
             throw new IllegalArgumentException("El precio no puede ser menor que 0");
         }
 
-//        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
-//            throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
-//        }
+        if (!proveedor.getUsuario().getId().equals(usuario.getId())) {
+            throw new SecurityException("No tienes permiso para añadir productos para este proveedor");
+        }
 
         Producto producto = new Producto();
         producto.setDescripcion(productoDto.getDescripcion());
@@ -78,18 +76,16 @@ public class ProductoService {
         producto.setProveedores(proveedor);
         Producto savedProducto = productoRepositorio.save(producto);
 
+        // Convert the saved Producto to ProductoDTO
+        ProductoDTO savedProductoDto = new ProductoDTO();
+        savedProductoDto.setId(savedProducto.getId());
+        savedProductoDto.setDescripcion(savedProducto.getDescripcion());
+        savedProductoDto.setUrl(savedProducto.getUrl());
+        savedProductoDto.setPrecio(savedProducto.getPrecio());
+        savedProductoDto.setNombre(savedProducto.getNombre());
+        savedProductoDto.setIdProveedores(savedProducto.getProveedores().getId());
 
-        // Para comprobar que se ha creado correctamente el producto(OPCIONAL)
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String json = objectMapper.writeValueAsString(savedProducto);
-            System.out.println("Producto en JSON: " + json);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return savedProducto;
-
+        return savedProductoDto;
     }
 
     public Producto editarProducto(ProductoDTO productoDto) {
@@ -127,6 +123,10 @@ public class ProductoService {
 
     }
 
+    /**
+     * Metodo para eliminar un producto siendo proveedor
+     * @param productoId
+     */
     public void eliminarProducto(Integer productoId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
@@ -150,6 +150,10 @@ public class ProductoService {
     }
 
 
+    /**
+     * Metodo para obtener todos los productos
+     * @return List<ProductoDTO>
+     */
     public List<ProductoDTO> getAll() {
         List<ProductoDTO> productoDtos = new ArrayList<>();
         List<Producto> productos = productoRepositorio.findAll();
@@ -166,15 +170,11 @@ public class ProductoService {
     }
 
 
-    // Método que recibe los parámetros de filtro y llama al repositorio
-//    public List<Producto> buscarProductos(Double precioMin, Double precioMax, Integer proveedor, String nombre) {
-//        return productoRepositorio.buscarProductos(precioMin, precioMax, proveedor, nombre);
-//    }
-
-
-
-
-
+    /**
+     * Metodo para obtener los productos por el id del proveedor
+     * @param proveedorId
+     * @return List<ProductoDTO>
+     */
     public List<ProductoDTO> getProductosByProveedorId(Integer proveedorId) {
         List<Producto> productos = productoRepositorio.findByProveedoresUsuarioId(proveedorId);
         List<ProductoDTO> productoDtos = new ArrayList<>();
@@ -191,7 +191,12 @@ public class ProductoService {
     }
 
 
-
+    /**
+     * Metodo para vincular un producto a un acontecimiento teniendo el rol de PROVEEDOR
+     * @param productoId
+     * @param acontecimientoId
+     * @return AconteciminetoProveedorVinculacionDTO
+     */
     public AconteciminetoProveedorVinculacionDTO vincularProductoAcontecimiento(Integer productoId, Integer acontecimientoId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
@@ -234,15 +239,7 @@ public class ProductoService {
         return dto;
     }
 
-//     Método para obtener los productos por el id del acontecimiento
-//    public List<ProductoDTO> getProductosByAcontecimientoId(Integer idAcontecimiento) {
-//        List<Producto> productos = productoRepositorio.findByAcontecimiento_Id(idAcontecimiento);
-//
-//        // Convertir la lista de Productos a DTOs si es necesario
-//        return productos.stream()
-//                .map(this::convertirAProductoDTO)
-//                .collect(Collectors.toList());
-//    }
+
 
     // Método para convertir un Producto a ProductoDTO (si lo necesitas)
     private ProductoDTO convertirAProductoDTO(Producto producto) {
@@ -288,6 +285,13 @@ public class ProductoService {
     }
 
 
+    /**
+     * Metodo para editar un producto siendo proveedor y admin
+     * @param productoId
+     * @param productoDto
+     * @return Producto
+     */
+
     public Producto editarProducto(Integer productoId, ProductoDTO productoDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
@@ -315,4 +319,3 @@ public class ProductoService {
 
 
 }
-

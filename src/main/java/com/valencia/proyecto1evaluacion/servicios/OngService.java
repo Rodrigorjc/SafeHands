@@ -1,7 +1,6 @@
 package com.valencia.proyecto1evaluacion.servicios;
 
 import com.valencia.proyecto1evaluacion.dtos.ImgDTO;
-import com.valencia.proyecto1evaluacion.dtos.AcontecimientoOngVincularDTO;
 import com.valencia.proyecto1evaluacion.dtos.OngDTO;
 import com.valencia.proyecto1evaluacion.enums.Rol;
 import com.valencia.proyecto1evaluacion.modelos.Ong;
@@ -9,7 +8,6 @@ import com.valencia.proyecto1evaluacion.modelos.Proveedores;
 import com.valencia.proyecto1evaluacion.modelos.Usuario;
 import com.valencia.proyecto1evaluacion.repositorio.OngRepository;
 import com.valencia.proyecto1evaluacion.repositorio.ProveedoresRepository;
-import com.valencia.proyecto1evaluacion.modelos.*;
 import com.valencia.proyecto1evaluacion.repositorio.*;
 import com.valencia.proyecto1evaluacion.security.JwtService;
 import lombok.AllArgsConstructor;
@@ -41,11 +39,10 @@ public class OngService {
     @Autowired
     JwtService jwtService;
 
-    @Autowired
-    AcontecimientoRepository acontecimientoRepository;
-
-    @Autowired
-    OngAcontecimientoRepository ongAcontecimientoRepository;
+    /**
+     * Metodo para validar una solicitud de proveedor siendo ONG
+     * @param proveedorId
+     */
 
     public void validarSolicitudProveedor(Integer proveedorId) {
 
@@ -63,6 +60,10 @@ public class OngService {
         proveedoresRepositorio.save(proveedor);
     }
 
+    /**
+     * Metodo para eliminar una solicitud de proveedor siendo ONG
+     * @param proveedorId
+     */
     public void eliminarSolicitudProveedor(Integer proveedorId) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -82,12 +83,10 @@ public class OngService {
             usuarioRepositorio.delete(usuarioProveedor);
         }
 
-        // Delete the provider
         proveedoresRepositorio.delete(proveedor);
     }
 
 
-    //añadir en el admin service y en su controlador
     public OngDTO crearOng(OngDTO ongDto) {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String nombre = authentication.getName();
@@ -123,6 +122,12 @@ public class OngService {
         return resultDto;
     }
 
+    /**
+     * Metodo para registrar una ONG siendo ADMIN
+     * @param ongDto
+     * @return OngDTO
+     */
+
     public OngDTO registrarOng(OngDTO ongDto) {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String nombre = authentication.getName();
@@ -151,6 +156,11 @@ public class OngService {
         return crearOng(ongDto);
     }
 
+    /**
+     * Metodo para obtener una ONG por su id
+     * @param id
+     * @return OngDTO
+     */
     public OngDTO obtenerOngPorId(Integer id) {
         Ong ong = ongRepositorio.findOngByUsuarioId(id)
                 .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
@@ -169,38 +179,6 @@ public class OngService {
         return dto;
     }
 
-    public AcontecimientoOngVincularDTO   acontecimientoOngVincular(Integer acontecimientoId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombre = authentication.getName();
-        Usuario usuario = usuarioService.buscarUsuarioPorNombre(nombre);
-
-        if (usuario == null || !usuario.getRol().equals(Rol.ONG)) {
-            throw new SecurityException("No tienes permiso para vincular acontecimientos a ONGs");
-        }
-
-        Ong ong = ongRepositorio.findByUsuarioId(usuario.getId())
-                .orElseThrow(() -> new RuntimeException("ONG no encontrada"));
-
-        Acontecimiento acontecimiento = acontecimientoRepository.findById(acontecimientoId)
-                .orElseThrow(() -> new RuntimeException("Acontecimiento no encontrado"));
-
-        boolean exists = ongAcontecimientoRepository.existsByOngAndAcontecimiento(ong, acontecimiento);
-        if (exists) {
-            throw new RuntimeException("La ONG ya está vinculada a este acontecimiento");
-        }
-
-        OngAcontecimiento ongAcontecimiento = new OngAcontecimiento();
-        ongAcontecimiento.setOng(ong);
-        ongAcontecimiento.setAcontecimiento(acontecimiento);
-        ongAcontecimientoRepository.save(ongAcontecimiento);
-
-        AcontecimientoOngVincularDTO dto = new AcontecimientoOngVincularDTO();
-        dto.setIdAcontecimiento(acontecimiento.getId());
-        dto.setIdOng(ong.getId());
-
-        return dto;
-    }
-
 
     public ImgDTO getImgbyId  (Integer id){
         Optional<Ong> optionalOng = ongRepositorio.findByUsuarioId(id);
@@ -214,6 +192,10 @@ public class OngService {
         }
     }
 
+    /**
+     * Metodo para listar todas las ONGs
+     * @return List<OngDTO>
+     */
     public List<OngDTO> listar(){
       List<Ong> ongs = ongRepositorio.findAll();
       List<OngDTO> ongDTOs = new ArrayList<>();
@@ -232,6 +214,12 @@ public class OngService {
         }
         return ongDTOs;
     }
+
+    /**
+     * metodo para obtener el id de una ONG por el id de un usuario
+     * @param usuarioId
+     * @return Integer
+     */
 
     public Integer obtenerOngIdPorUsuarioId(Integer usuarioId) {
         Ong ong = ongRepositorio.findByUsuarioId(usuarioId)

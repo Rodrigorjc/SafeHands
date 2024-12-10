@@ -59,6 +59,10 @@ public class Usuario implements UserDetails {
     @JsonManagedReference("usuario-ong")
     private List<Ong> ong;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Proveedores> proveedores;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -30,8 +30,7 @@ public class    ProductoController {
     }
 
     @PostMapping("/crear")
-//    @PreAuthorize("hasAuthority('PROVEEDOR')")
-    public Producto crearProducto(@RequestBody ProductoDTO productoDTO){
+    public ProductoDTO crearProducto(@RequestBody ProductoDTO productoDTO){
         return productoService.anyadirProducto(productoDTO);
     }
 

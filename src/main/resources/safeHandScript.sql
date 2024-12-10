@@ -46,8 +46,8 @@ create table producto(
                          url varchar(500) not null,
                          precio float not null,
                          descripcion varchar(500) not null,
-                         id_proveedores int not null,
-                         constraint fk_producto_proveedores foreign key (id_proveedores) references proveedores(id)
+                         id_proveedor int not null,
+                         constraint fk_producto_proveedores foreign key (id_proveedor) references proveedores(id)
 
 );
 

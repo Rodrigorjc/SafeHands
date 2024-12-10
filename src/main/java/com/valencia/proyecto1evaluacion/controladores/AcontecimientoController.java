@@ -82,9 +82,8 @@ public class AcontecimientoController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> eliminarAcontecimiento(@PathVariable Integer id) {
-        String mensaje = acontecimientoService.eliminarAcontecimiento(id);
-        return ResponseEntity.ok(mensaje);
+    public void eliminarAcontecimiento(@PathVariable Integer id) {
+       acontecimientoService.eliminarAcontecimiento(id);
     }
     @PutMapping("/editar/{id}")
     public Acontecimiento editarAcontecimiento(@PathVariable Integer id, @RequestBody AcontecimientoDTO acontecimientoDTO) {

@@ -22,6 +22,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProveedorService {
 
+
+
     @Autowired
     ProveedoresRepository proveedoresRepositorio;
 
@@ -36,26 +38,11 @@ public class ProveedorService {
 
     JwtService jwtService;
 
-
     /**
-     * crearProveedor con todos sus campos mediante la dto
-     *
-     * @param proveedor
-     * @return
+     * Este metodo registra un proveedor en la base de datos
+     * @param crearProveedorDTO
+     * @return AuthenticationDTO
      */
-    public Proveedores crearProveedor(ProveedoresDTO proveedor) {
-        Proveedores entity = new Proveedores();
-        entity.setCif(proveedor.getCif());
-        entity.setNumVoluntarios(proveedor.getNumVoluntarios());
-        entity.setSede(proveedor.getSede());
-        entity.setUbicacion(proveedor.getUbicacion());
-        Usuario usuario = usuarioRepositorio.findById(proveedor.getIdUsuario()).orElse(null);
-        entity.setUsuario(usuario);
-
-        return proveedoresRepositorio.save(entity);
-    }
-
-
     public AuthenticationDTO registrarProveedor(CrearProveedorDTO crearProveedorDTO) {
         Usuario usuario = new Usuario();
         usuario.setEmail(crearProveedorDTO.getEmail());
@@ -79,6 +66,11 @@ public class ProveedorService {
     }
 
 
+    /**
+     * Este metodo registra un proveedor en la base de datos como administrador
+     * @param crearProveedorDTO
+     * @return AuthenticationDTO
+     */
     public AuthenticationDTO registrarProveedorAdmin(CrearProveedorDTO crearProveedorDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String nombre = authentication.getName();
@@ -117,7 +109,8 @@ public class ProveedorService {
     }
 
     /**
-     * listar proveedores
+     * Este metodo muestra una lista de los proveedores que no han sido validados
+     * @return List<ProveedoresDTO>
      */
 
     public List<ProveedoresDTO> listarProveedoresPorValidadoFalso() {
@@ -139,6 +132,12 @@ public class ProveedorService {
         }
         return proveedoresDTOs;
     }
+
+    /**
+     * Este metodo obtiene un proveedor por su id de usuario
+     * @param idProveedor
+     * @return ProveedoresDTO
+     */
 
     public ProveedoresDTO obtenerProveedorPorId(Integer idProveedor) {
         Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(idProveedor)
@@ -223,23 +222,6 @@ public class ProveedorService {
         return proveedoresRepositorio.findById(id).orElse(null);
     }
 
-    /**
-     * Este método guarda un perfilProveedor nuevo o modifica uno existente
-     *
-     * @param dto
-     * @return
-     */
-    public Proveedores guardar(PerfilProveedorCrearDTO dto) {
-        Proveedores perfilGuardar = new Proveedores();
-        perfilGuardar.setNombre(dto.getNombre());
-        perfilGuardar.setImg(dto.getUrl());
-        perfilGuardar.setNumVoluntarios(dto.getNumVoluntarios());
-        perfilGuardar.setSede(dto.getSede());
-        perfilGuardar.setCif(dto.getCif());
-        perfilGuardar.setUbicacion(dto.getUbicacion());
-
-        return proveedoresRepositorio.save(perfilGuardar);
-    }
 
     /**
      * Elimina un perfilProveedor a traves de su id
@@ -288,6 +270,11 @@ public class ProveedorService {
         return proveedoresDTOs;
     }
 
+    /**
+     * Este metodo obtiene el id de un proveedor a partir del id de un usuario
+     * @param usuarioId
+     * @return Integer
+     */
 
     public Integer obtenerProveedorIdPorUsuarioId(Integer usuarioId) {
         Proveedores proveedor = proveedoresRepositorio.findByUsuarioId(usuarioId)
