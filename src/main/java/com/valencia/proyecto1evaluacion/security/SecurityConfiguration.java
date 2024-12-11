@@ -70,6 +70,10 @@ public class SecurityConfiguration {
                     auth.requestMatchers("admin/**").permitAll();
                     auth.requestMatchers(("acontecimiento/admin")).permitAll();
                     auth.requestMatchers(("acontecimiento/admin/{id}")).permitAll();
+                    auth.requestMatchers("/swagger-ui/**",  // Permite acceso a Swagger UI
+                            "/v3/api-docs/**", // Permite acceso a la documentación OpenAPI
+                            "/swagger-resources/**",
+                            "/webjars/**").permitAll();
 
                     auth.anyRequest().authenticated();
                 })
